@@ -1,4 +1,4 @@
-package com.example.audientesapp;
+package com.example.AudientesAPP;
 
 import androidx.appcompat.app.AppCompatActivity;
 
