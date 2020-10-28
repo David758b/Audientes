@@ -6,13 +6,25 @@
     <fragment
         android:id="@+id/libraryMain"
         android:name="com.example.AudientesAPP.UI.LibraryMain"
-        android:label="LibraryMain" />
+        android:label="LibraryMain" >
+        <action
+            android:id="@+id/action_libraryMain_to_presetMain2"
+            app:destination="@id/presetMain" />
+    </fragment>
     <fragment
         android:id="@+id/presetMain"
         android:name="com.example.AudientesAPP.UI.PresetMain"
-        android:label="PresetMain" />
+        android:label="PresetMain" >
+        <action
+            android:id="@+id/action_presetMain_to_hearingtestMain"
+            app:destination="@id/hearingtestMain" />
+    </fragment>
     <fragment
         android:id="@+id/hearingtestMain"
         android:name="com.example.AudientesAPP.UI.HearingtestMain"
-        android:label="HearingtestMain" />
+        android:label="HearingtestMain" >
+        <action
+            android:id="@+id/action_hearingtestMain_to_libraryMain"
+            app:destination="@id/libraryMain" />
+    </fragment>
 </navigation>
