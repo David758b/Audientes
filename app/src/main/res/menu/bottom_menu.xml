@@ -2,6 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- todo - Christiannnn min ven. Det er her du kan designe bund-menuen og hvert item i den-->
+
     <!--The design og the bottom navigiation menu.
      The items listed below are the items on the navigation menu-->
     <item
