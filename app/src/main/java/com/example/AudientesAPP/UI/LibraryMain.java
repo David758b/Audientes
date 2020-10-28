@@ -25,7 +25,8 @@ public class LibraryMain extends Fragment implements AdapterView.OnItemClickList
 
         View rod = inflater.inflate(R.layout.library_main, container, false);
 
-        String[] lande = {"Danmark", "Norge", "Sverige", "Japan", "Kina", "Rusland", "Tyskland"};
+        String[] lande = {"Danmark", "Norge", "Sverige", "Japan", "Kina", "Afganistan", "Karstenstan"
+        ,"DTU-stan", "Irak", "lallal", "lalalalal", "lalalal"};
 
         ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),
                 R.layout.category_list_element, R.id.textViewCategoryELement, lande) {
@@ -40,10 +41,18 @@ public class LibraryMain extends Fragment implements AdapterView.OnItemClickList
 
                 return view;
             }
+
         };
+
+
 
         categoryList = rod.findViewById(R.id.categoryListview);
         categoryList.setAdapter(arrayAdapter);
+
+        categoryList.setPadding(0,75,0,20);
+        categoryList.setDividerHeight(25);
+
+
 
         //med setselector kan man vælge hvad der skal ske når man vælger et liste element.
         // i dette tilfælde anvendes en af androids egne features (rød boks når der klikkes)
