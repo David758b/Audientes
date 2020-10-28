@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--The design og the bottom navigiation menu.
+     The items listed below are the items on the navigation menu-->
+    <item
+        android:id="@+id/ic_library"
+        android:icon="@drawable/ic_baseline_library_music_24"
+        android:title="Library"
+        app:showAsAction="ifRoom"
+        android:enabled="true"/>
+
+    <item
+        android:id="@+id/ic_preset"
+        android:icon="@drawable/ic_baseline_tune_24"
+        android:title="Preset"
+        app:showAsAction="always"
+        android:enabled="true"/>
+
+    <item
+        android:id="@+id/ic_hearingTest"
+        android:icon="@drawable/ic_baseline_hearing_24"
+        android:title="HearingTest"
+        app:showAsAction="always"
+        android:enabled="true"/>
 
 </menu>
