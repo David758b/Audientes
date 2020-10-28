@@ -7,7 +7,7 @@
 
     <!-- Listviewet der er en container for listen over kategorier -->
     <ListView
-        android:id="@+id/categoryList"
+        android:id="@+id/categoryListview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="1dp"

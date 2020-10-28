@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- todo .. lav formen for listelelentet færdigt -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="#FFFF"/>
+    <corners android:radius="30dp"/>
+    <stroke android:width="2dp" android:color="#FFFF" />
+    <size android:width="800dp" android:height="80dp"/>
+</shape>
