@@ -13,7 +13,7 @@ public class HearingtestMain extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rod = inflater.inflate(R.layout.preset_main, container, false);
+        View rod = inflater.inflate(R.layout.hearingtest_main, container, false);
         TextView text = rod.findViewById(R.id.textViewTest3);
 
         return rod;

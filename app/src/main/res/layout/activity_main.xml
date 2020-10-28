@@ -13,7 +13,8 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="509dp"
-        app:defaultNavHost="true" />
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/navigation_graph"/>
 
     <!--Navigationsmenuen (Sætter bottom_menu.xml som layout for denne)-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
