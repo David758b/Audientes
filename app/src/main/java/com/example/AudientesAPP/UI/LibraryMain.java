@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-
 import androidx.fragment.app.Fragment;
 
 import com.example.AudientesAPP.R;
@@ -37,6 +36,9 @@ public class LibraryMain extends Fragment implements AdapterView.OnItemClickList
 
                 View view = super.getView(position, cachedView, parent);
                 ImageView imageView = view.findViewById(R.id.imageViewCategoryElement);
+
+                // todo -- lav switchcases for hver position for at skifte billede og tekst
+
                 imageView.setImageResource(R.drawable.ic_launcher_background);
 
                 return view;

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <!-- todo - Christiannnn min ven. Det er her du kan designe bund-menuen og hvert item i den-->
 
     <!--The design og the bottom navigiation menu.
