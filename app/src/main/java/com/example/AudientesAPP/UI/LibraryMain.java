@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -22,10 +23,11 @@ public class LibraryMain extends Fragment implements AdapterView.OnItemClickList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rod = inflater.inflate(R.layout.library_main, container, false);
+        final View rod = inflater.inflate(R.layout.library_main, container, false);
 
-        String[] lande = {"Danmark", "Norge", "Sverige", "Japan", "Kina", "Afganistan", "Karstenstan"
-        ,"DTU-stan", "Irak", "lallal", "lalalalal", "lalalal"};
+        //todo dette er mega hardcoded... sæt det ind i en ressurcefil istedet og referer den
+        String[] lande = {"Presets", "Norge", "Sverige", "Japan", "Kina", "Afganistan", "Karstenstan"
+        ,"DTU-stan", "asfdjkfadsæ", "lallal", "lalalalal", "lalalal"};
 
         ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),
                 R.layout.category_list_element, R.id.textViewCategoryELement, lande) {
@@ -36,10 +38,20 @@ public class LibraryMain extends Fragment implements AdapterView.OnItemClickList
 
                 View view = super.getView(position, cachedView, parent);
                 ImageView imageView = view.findViewById(R.id.imageViewCategoryElement);
+                TextView textView = rod.findViewById(R.id.textViewCategoryELement);
 
-                // todo -- lav switchcases for hver position for at skifte billede og tekst
 
-                imageView.setImageResource(R.drawable.ic_launcher_background);
+                switch(position){
+
+                    //preset category
+                    case 0: imageView.setImageResource(R.drawable.ic_baseline_tune_24);
+                    break;
+                    case 1: imageView.setImageResource(R.drawable.ic_baseline_tune_24);
+                    default: System.out.println("blalalal");
+                    break;
+                }
+
+
 
                 return view;
             }
