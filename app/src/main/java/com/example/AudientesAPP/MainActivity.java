@@ -50,14 +50,16 @@ public class MainActivity extends AppCompatActivity implements
 
         //eks. hvis der trykkes på Library item, skal navcontrolleren navigerer til fragmentet
         //libraryMain
-        if (menuItem.getItemId() == R.id.library_nav){
+        if (menuItem.getItemId() == R.id.library_nav) {
             navController.navigate(R.id.libraryMain);
+        }
+        else if (menuItem.getItemId() == R.id.preset_nav){
+                navController.navigate(R.id.presetMain);
+        }
 
-        else if (menuItem.getItemId() == R.id.ic_preset)
-            navController.navigate(R.id.presetMain);
-
-        else if (menuItem.getItemId() == R.id.hearingTest_nav)
+        else if (menuItem.getItemId() == R.id.hearingTest_nav) {
             navController.navigate(R.id.hearingtestMain);
+        }
 
 
         return true;
