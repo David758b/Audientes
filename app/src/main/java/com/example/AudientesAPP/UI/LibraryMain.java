@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.AudientesAPP.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class LibraryMain extends Fragment implements AdapterView.OnItemClickListener {
 
@@ -29,6 +30,9 @@ public class LibraryMain extends Fragment implements AdapterView.OnItemClickList
 
         //todo dette er mega hardcoded... sæt det ind i en ressurcefil istedet og referer den
         String[] lande = {"Presets", "Sleep", "Nature", "Ocean", "Music"};
+
+        BottomNavigationView bottomNavigationView = rod.findViewById(R.id.tabMenu);
+        bottomNavigationView.setVisibility(View.VISIBLE);
 
         ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),
                 R.layout.category_list_element, R.id.textViewCategoryELement, lande) {
