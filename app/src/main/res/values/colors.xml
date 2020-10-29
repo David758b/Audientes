@@ -6,5 +6,7 @@
     <color name="colorListElement2">#fff6</color>
     <color name="colorListElement3">#ff46</color>
     <color name="colorListElement4">#03DAC5</color>
-
+    <color name="AudientesOrange">#F2994A</color>
+    <color name="LightGrey">#828282</color>
+    <color name="DarkGrey">#333333</color>
 </resources>
