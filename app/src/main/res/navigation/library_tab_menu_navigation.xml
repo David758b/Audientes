@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/library_tab_menu_navigation"
+    app:startDestination="@id/libraryListCategory">
+
+    <fragment
+        android:id="@+id/libraryListCategory"
+        android:name="com.example.AudientesAPP.UI.LibraryListCategory"
+        android:label="LibraryListCategory" >
+        <action
+            android:id="@+id/action_libraryListCategory_to_libraryListSound"
+            app:destination="@id/libraryListSound" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/libraryListSound"
+        android:name="com.example.AudientesAPP.UI.LibraryListSound"
+        android:label="LibraryListSound" />
+</navigation>

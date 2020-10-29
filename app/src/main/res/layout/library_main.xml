@@ -4,33 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/audientes">
+    android:background="@drawable/audientes"
+    android:orientation="vertical">
 
-
-    <!-- Listviewet der er en container for listen over kategorier -->
-
-    <ListView
-
-        android:id="@+id/Library_Listview"
-        android:layout_width="409dp"
-        android:layout_height="600dp"
-        android:layout_marginTop="128dp"
+    <!--NavhostFragment der styrer navigationen (dvs en container for destinationerne -->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/List_Navhost"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="415dp"
+        android:layout_height="553dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tabMenu"
+        app:navGraph="@navigation/library_tab_menu_navigation" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/tabMenu"
         android:layout_width="413dp"
-        android:layout_height="55dp"
+        android:layout_height="0dp"
         android:layout_marginTop="4dp"
+        android:layout_marginBottom="69dp"
+        app:layout_constraintBottom_toTopOf="@+id/navHost"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/library_tab_menu"/>
+        app:menu="@menu/library_tab_menu" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
