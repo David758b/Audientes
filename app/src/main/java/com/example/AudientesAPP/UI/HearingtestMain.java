@@ -39,6 +39,7 @@ public class HearingtestMain extends Fragment implements View.OnClickListener {
         }
         catch(Exception e){
             intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=dk.alen.audientes"));
+            startActivity(intent);
         }
 
     }
