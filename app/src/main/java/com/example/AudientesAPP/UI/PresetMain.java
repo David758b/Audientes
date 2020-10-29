@@ -22,7 +22,6 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
 
         View rod = inflater.inflate(R.layout.preset_main, container, false);
         String[] lande = {"Preset 1", "Preset 2", "Preset 3", "Preset 4", "Preset 5"};
-
         ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),
                 R.layout.category_list_element, R.id.textViewCategoryELement, lande) {
 
