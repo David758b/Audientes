@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -12,31 +13,32 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import com.example.AudientesAPP.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class LibraryMain extends Fragment implements AdapterView.OnItemClickListener {
+public class LibraryMain extends Fragment implements AdapterView.OnItemClickListener,
+        BottomNavigationView.OnNavigationItemSelectedListener {
 
     private ListView categoryList,soundlist;
-    int positionInList = 0;
+    private View rod;
+    private ArrayAdapter arrayAdapterSoundList,arrayAdapterCategoryList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        final View rod = inflater.inflate(R.layout.library_main, container, false);
+        rod = inflater.inflate(R.layout.library_main, container, false);
 
         //todo dette er mega hardcoded... sæt det ind i en ressurcefil istedet og referer den
         String[] lande = {"Presets", "Sleep", "Nature", "Ocean", "Music"};
 
-        BottomNavigationView bottomNavigationView = rod.findViewById(R.id.tabMenu);
-        bottomNavigationView.setVisibility(View.VISIBLE);
+        BottomNavigationView tabNavigationBar = rod.findViewById(R.id.tabMenu);
+        tabNavigationBar.setVisibility(View.VISIBLE);
 
 
 
-        ArrayAdapter arrayAdapterCategoryList = new ArrayAdapter(getActivity(),
+        arrayAdapterCategoryList = new ArrayAdapter(getActivity(),
                 R.layout.category_list_element, R.id.textViewCategoryELement, lande) {
 
             // overskiver getview ( læg mærke til {} parenteserne )
@@ -85,7 +87,7 @@ public class LibraryMain extends Fragment implements AdapterView.OnItemClickList
 
 
         //arrayadaper til sound listen (denne skal jo se anderledes ud)
-        ArrayAdapter arrayAdapterSoundList = new ArrayAdapter(getActivity(),
+        arrayAdapterSoundList = new ArrayAdapter(getActivity(),
                 R.layout.sound_list_element, R.id.textViewCategoryELement, lande) {
 
             // overskiver getview ( læg mærke til {} parenteserne )
@@ -94,22 +96,26 @@ public class LibraryMain extends Fragment implements AdapterView.OnItemClickList
 
                 View view = super.getView(position, cachedView, parent);
                 ImageView imageView1 = view.findViewById(R.id.sound_list_element_options);
-                ImageView imageView2 = view.
-                TextView textView = view.findViewById(R.id.textViewCategoryELement);
+                TextView title = view.findViewById(R.id.sound_title);
+                TextView tag = view.findViewById(R.id.tag_title);
+                TextView soundLength = view.findViewById(R.id.sound_length);
 
                 return view;
             }
 
         };
 
-        //Opretter en enstans af dette listview, tildeler denne en adapter og laver lidt design
-        //(mellemrum mellem liste-elementerne)
-        soundlist = rod.findViewById(R.id.Library_Listview);
-        soundlist.setAdapter(arrayAdapterSoundList);
-        soundlist.setPadding(0,75,0,20);
-        soundlist.setDividerHeight(25);
+        categoryList = rod.findViewById(R.id.Library_Listview);
+        categoryList.setAdapter(arrayAdapterCategoryList);
+        categoryList.setPadding(0,75,0,20);
+        categoryList.setDividerHeight(25);
 
-        soundlist.setOnItemClickListener(this);
+        tabNavigationBar.setOnNavigationItemSelectedListener(this);
+
+
+
+        //-------------------------------------------------------------------------------
+
 
         return rod;
     }
@@ -120,5 +126,18 @@ public class LibraryMain extends Fragment implements AdapterView.OnItemClickList
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.d("ListItemClick", "Du klikkede på " + position);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        if(menuItem.getItemId() == R.id.Category_tab){
+
+        }
+        else if(menuItem.getItemId()== R.id.Sounds_tab){
+
+        }
+
+        return false;
     }
 }
