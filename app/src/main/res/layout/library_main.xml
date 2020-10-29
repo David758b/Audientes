@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/audientes"
-    android:orientation="vertical">
+    android:background="@drawable/audientes">
 
     <!--NavhostFragment der styrer navigationen (dvs en container for destinationerne -->
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/List_Navhost"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="413dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,7 +24,7 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/tabMenu"
-        android:layout_width="413dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="69dp"
