@@ -4,19 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/audientes">
 
 
     <!-- Listviewet der er en container for listen over kategorier -->
+
     <ListView
 
-        android:id="@+id/categoryListview"
-        android:layout_width="411dp"
-        android:layout_height="675dp"
-        android:layout_marginTop="56dp"
-        android:background="@drawable/audientes"
+        android:id="@+id/Library_Listview"
+        android:layout_width="409dp"
+        android:layout_height="600dp"
+        android:layout_marginTop="128dp"
+        <!-- skal laves transparent  -->
+        android:background=""
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

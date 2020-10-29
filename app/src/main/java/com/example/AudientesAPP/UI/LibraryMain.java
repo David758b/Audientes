@@ -20,7 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class LibraryMain extends Fragment implements AdapterView.OnItemClickListener {
 
-    private ListView categoryList;
+    private ListView categoryList,soundlist;
     int positionInList = 0;
 
     @Override
@@ -34,7 +34,9 @@ public class LibraryMain extends Fragment implements AdapterView.OnItemClickList
         BottomNavigationView bottomNavigationView = rod.findViewById(R.id.tabMenu);
         bottomNavigationView.setVisibility(View.VISIBLE);
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),
+
+
+        ArrayAdapter arrayAdapterCategoryList = new ArrayAdapter(getActivity(),
                 R.layout.category_list_element, R.id.textViewCategoryELement, lande) {
 
             // overskiver getview ( læg mærke til {} parenteserne )
@@ -76,28 +78,39 @@ public class LibraryMain extends Fragment implements AdapterView.OnItemClickList
                     break;
                 }
 
-
                 return view;
             }
 
         };
 
 
+        //arrayadaper til sound listen (denne skal jo se anderledes ud)
+        ArrayAdapter arrayAdapterSoundList = new ArrayAdapter(getActivity(),
+                R.layout.sound_list_element, R.id.textViewCategoryELement, lande) {
 
-        categoryList = rod.findViewById(R.id.categoryListview);
-        categoryList.setAdapter(arrayAdapter);
+            // overskiver getview ( læg mærke til {} parenteserne )
+            @Override
+            public View getView(int position, View cachedView, ViewGroup parent) {
 
-        categoryList.setPadding(0,75,0,20);
-        categoryList.setDividerHeight(25);
+                View view = super.getView(position, cachedView, parent);
+                ImageView imageView1 = view.findViewById(R.id.sound_list_element_options);
+                ImageView imageView2 = view.
+                TextView textView = view.findViewById(R.id.textViewCategoryELement);
 
+                return view;
+            }
 
+        };
 
-        //med setselector kan man vælge hvad der skal ske når man vælger et liste element.
-        // i dette tilfælde anvendes en af androids egne features (rød boks når der klikkes)
-        //listView.setSelector(android.R.drawable.ic_notification_overlay);
-        //TextView text = rod.findViewById(R.id.textViewTest1);
+        //Opretter en enstans af dette listview, tildeler denne en adapter og laver lidt design
+        //(mellemrum mellem liste-elementerne)
+        soundlist = rod.findViewById(R.id.Library_Listview);
+        soundlist.setAdapter(arrayAdapterSoundList);
+        soundlist.setPadding(0,75,0,20);
+        soundlist.setDividerHeight(25);
 
-        categoryList.setOnItemClickListener(this);
+        soundlist.setOnItemClickListener(this);
+
         return rod;
     }
 
