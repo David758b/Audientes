@@ -8,16 +8,19 @@
     android:orientation="vertical">
 
     <!--NavhostFragment der styrer navigationen (dvs en container for destinationerne -->
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/List_Navhost"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="415dp"
-        android:layout_height="553dp"
+        android:layout_width="413dp"
+        android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabMenu"
+        app:layout_constraintVertical_bias="0.0"
         app:navGraph="@navigation/library_tab_menu_navigation" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
