@@ -3,6 +3,7 @@ package com.example.AudientesAPP;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -49,17 +50,17 @@ public class MainActivity extends AppCompatActivity implements
 
         //eks. hvis der trykkes på Library item, skal navcontrolleren navigerer til fragmentet
         //libraryMain
-        if (menuItem.getItemId() == R.id.ic_library)
+        if (menuItem.getItemId() == R.id.library_nav){
             navController.navigate(R.id.libraryMain);
 
         else if (menuItem.getItemId() == R.id.ic_preset)
             navController.navigate(R.id.presetMain);
 
-        else if (menuItem.getItemId() == R.id.ic_hearingTest)
+        else if (menuItem.getItemId() == R.id.hearingTest_nav)
             navController.navigate(R.id.hearingtestMain);
 
 
-        return false;
+        return true;
     }
 
 }
