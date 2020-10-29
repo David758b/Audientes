@@ -12,11 +12,22 @@
         android:layout_height="0dp"
         android:layout_centerInParent="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/audienteshearingtest1"
+        android:src="@drawable/hearingtestbackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/hearingtestbutton"
+        android:layout_width="199dp"
+        android:layout_height="353dp"
+        android:onClick="playstore"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/heartestbutton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
