@@ -16,11 +16,16 @@ import com.example.AudientesAPP.R;
 public class PresetMain extends Fragment implements AdapterView.OnItemClickListener {
 
     private ListView presetList;
+    private ImageView imageView; //SKAL DER OVERHOVEDET VÆRE ET IMAGEVIEW?
+    private TextView presetName;
+
+    View v;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        v = inflater.inflate(R.layout.preset_main, container, false);
+        initialize(v);
 
-        View rod = inflater.inflate(R.layout.preset_main, container, false);
         String[] lande = {"Preset 1", "Preset 2", "Preset 3", "Preset 4", "Preset 5"};
         ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),
                 R.layout.category_list_element, R.id.textViewCategoryELement, lande) {
@@ -39,9 +44,7 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
         };
 
 
-        presetList = rod.findViewById(R.id.presetListview);
         presetList.setAdapter(arrayAdapter);
-
         presetList.setPadding(0,75,0,20);
         presetList.setDividerHeight(25);
 
@@ -53,7 +56,14 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
         //TextView text = rod.findViewById(R.id.textViewTest1);
 
         presetList.setOnItemClickListener(this);
-        return rod;
+        return v;
+    }
+
+    private void initialize(View v){
+        imageView = v.findViewById(R.id.imageViewCategoryElement);
+        presetName = v.findViewById(R.id.textViewCategoryELement);
+        presetList = v.findViewById(R.id.presetListview);
+
     }
 
 
