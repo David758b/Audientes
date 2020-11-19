@@ -11,13 +11,21 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.AudientesAPP.R;
 
-public class PresetMain extends Fragment implements AdapterView.OnItemClickListener {
+import java.util.HashMap;
 
+public class PresetMain extends Fragment implements AdapterView.OnItemClickListener {
     private ListView presetList;
     private ImageView imageView; //SKAL DER OVERHOVEDET VÆRE ET IMAGEVIEW?
     private TextView presetName;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter presetItemAdapter;
+    private PresetItem presetItem;
+
+    HashMap<String, PresetItem> presetItems;
 
     View v;
 
@@ -26,9 +34,9 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
         v = inflater.inflate(R.layout.preset_main, container, false);
         initialize(v);
 
-        String[] lande = {"Preset 1", "Preset 2", "Preset 3", "Preset 4", "Preset 5"};
+
         ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),
-                R.layout.category_list_element, R.id.textViewCategoryELement, lande) {
+                R.layout.category_list_element, R.id.textViewCategoryELement) {
 
             // overskiver getview ( læg mærke til {} parenteserne )
             @Override
@@ -63,6 +71,9 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
         imageView = v.findViewById(R.id.imageViewCategoryElement);
         presetName = v.findViewById(R.id.textViewCategoryELement);
         presetList = v.findViewById(R.id.presetListview);
+
+        presetItems = new HashMap<>();
+
 
     }
 
