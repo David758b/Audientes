@@ -14,11 +14,13 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.AudientesAPP.LydSpiller;
 import com.example.AudientesAPP.R;
 
 public class LibraryListSound extends Fragment implements AdapterView.OnItemClickListener {
 
     MediaPlayer test;
+    LydSpiller lydSpiller;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rod = inflater.inflate(R.layout.library_list_sound_frag, container, false);
@@ -51,6 +53,9 @@ public class LibraryListSound extends Fragment implements AdapterView.OnItemClic
         test = MediaPlayer.create(getActivity(), R.raw.testlyd);
         test.setVolume(1,1);
 
+        //mega hardcoding (lappeløsning for at teste)
+        lydSpiller = new LydSpiller(test);
+
         soundList.setAdapter(arrayAdapterSoundList);
         soundList.setPadding(0,75,0,20);
         soundList.setDividerHeight(25);
@@ -67,49 +72,43 @@ public class LibraryListSound extends Fragment implements AdapterView.OnItemClic
         switch (position){
             case 0:
                 onDestroy();
-                test = MediaPlayer.create(getActivity(), R.raw.testlyd);
-                test.start();
+                lydSpiller.playNewSound(0,getActivity());
+
             break;
             case 1: {
                 onDestroy();
-                test = MediaPlayer.create(getActivity(), R.raw.brown_noise);
-                test.start();
+                lydSpiller.playNewSound(1,getActivity());
             }
             break;
             case 2: {
                 onDestroy();
-                test = MediaPlayer.create(getActivity(), R.raw.train_nature);
-                test.start();
+                lydSpiller.playNewSound(2,getActivity());
+
             }
             break;
             case 3: {
                 onDestroy();
-                test = MediaPlayer.create(getActivity(), R.raw.rain_street);
-                test.start();
+                lydSpiller.playNewSound(3,getActivity());
             }
             break;
             case 4: {
                 onDestroy();
-                test = MediaPlayer.create(getActivity(), R.raw.cricket);
-                test.start();
+                lydSpiller.playNewSound(4,getActivity());
             }
             break;
             case 5: {
                 onDestroy();
-                test = MediaPlayer.create(getActivity(), R.raw.chihuahua);
-                test.start();
+                lydSpiller.playNewSound(5,getActivity());
             }
             break;
             case 6: {
                 onDestroy();
-                test = MediaPlayer.create(getActivity(), R.raw.andreangelo);
-                test.start();
+                lydSpiller.playNewSound(6,getActivity());
             }
             break;
             case 7: {
                 onDestroy();
-                test = MediaPlayer.create(getActivity(), R.raw.melarancida__monks_praying);
-                test.start();
+                lydSpiller.playNewSound(7,getActivity());
             }
             break;
             default:
@@ -120,8 +119,7 @@ public class LibraryListSound extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onDestroy() {
-        test.stop();
-        test.release();
+        lydSpiller.stop();
         super.onDestroy();
     }
 
