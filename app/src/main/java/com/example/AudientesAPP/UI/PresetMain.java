@@ -10,12 +10,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.AudientesAPP.DTO.PresetItemDTO;
 import com.example.AudientesAPP.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class PresetMain extends Fragment implements AdapterView.OnItemClickListener {
     private ListView presetList;
@@ -23,6 +29,8 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
     private TextView presetName;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter presetItemAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
     private PresetItem presetItem;
 
     HashMap<String, PresetItem> presetItems;
@@ -35,7 +43,7 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
         initialize(v);
 
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),
+        /*ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),
                 R.layout.category_list_element, R.id.textViewCategoryELement) {
 
             // overskiver getview ( læg mærke til {} parenteserne )
@@ -49,12 +57,28 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
                 return view;
             }
 
-        };
+        };*/
+
+        recyclerView = (RecyclerView) v.findViewById(R.id.presets_RV);
+
+        layoutManager = new LinearLayoutManager(this.getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        List<String> presetNames = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            presetNames.add("Preset " + i);
+        }
 
 
-        presetList.setAdapter(arrayAdapter);
-        presetList.setPadding(0,75,0,20);
-        presetList.setDividerHeight(25);
+
+        presetItemAdapter = new MyAdapter(presetNames);
+        recyclerView.setAdapter(presetItemAdapter);
+
+        recyclerView.setPadding(0,75,0,20);
+        //recyclerView.setDividerHeight(25);
+        //presetList.setAdapter(arrayAdapter);
+        //presetList.setPadding(0,75,0,20);
+        //presetList.setDividerHeight(25);
 
 
 
@@ -63,14 +87,14 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
         //listView.setSelector(android.R.drawable.ic_notification_overlay);
         //TextView text = rod.findViewById(R.id.textViewTest1);
 
-        presetList.setOnItemClickListener(this);
+        //presetList.setOnItemClickListener(this);
         return v;
     }
 
+    //Skal initialisere vores view
     private void initialize(View v){
-        imageView = v.findViewById(R.id.imageViewCategoryElement);
+        //imageView = v.findViewById(R.id.imageViewCategoryElement);
         presetName = v.findViewById(R.id.textViewCategoryELement);
-        presetList = v.findViewById(R.id.presetListview);
 
         presetItems = new HashMap<>();
 
@@ -83,6 +107,43 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.d("ListItemClick", "Du klikkede på " + position);
+    }
+}
+
+class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
+
+    private List<String> mPresetSet;
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
+        public TextView presetTextView;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            presetTextView = itemView.findViewById(R.id.presetName_TV);
+        }
+    }
+    public MyAdapter(List<String> myPresetSet){
+        mPresetSet = myPresetSet;
+    }
+
+    @NonNull
+    @Override
+    public MyAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.preset_item, parent, false);
+        MyViewHolder vh = new MyViewHolder(v);
+        return vh;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
+            //Her hentes data objekterne i fremtiden ...
+
+            holder.presetTextView.setText(mPresetSet.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return mPresetSet.size();
     }
 }
 
