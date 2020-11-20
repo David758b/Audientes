@@ -24,7 +24,10 @@ public class LibraryListSound extends Fragment implements AdapterView.OnItemClic
         View rod = inflater.inflate(R.layout.library_list_sound_frag, container, false);
 
         ListView soundList = rod.findViewById(R.id.Library_Sound_Listview);
-        String[] lande = {"Sound 1", "Sound 2", "Sound 3", "Sound 4", "Sound 5"};
+
+        // todo --> igen mega hardcoding og skal laves et andet sted.
+        String[] lande = {"Pink noise", "Brown noise", "Train", "Rain", "Cricket", "Chihuahua",
+                            "Angelo", "JESUS"};
 
         //arrayadaper til sound listen (denne skal jo se anderledes ud)
         ArrayAdapter arrayAdapterSoundList = new ArrayAdapter(getActivity(),
@@ -56,10 +59,54 @@ public class LibraryListSound extends Fragment implements AdapterView.OnItemClic
         return rod;
     }
 
+    // todo --> Dette er mega meget hardcoding og skal foregå i logikken i stedet
+    //  (men dette er bare en test)
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("position : " + position, "onItemClick: ");
-        test.start();
+
+        switch (position){
+            case 0: test.start();
+            break;
+            case 1: {
+                test = MediaPlayer.create(getActivity(), R.raw.brown_noise);
+                test.start();
+            }
+            break;
+            case 2: {
+                test = MediaPlayer.create(getActivity(), R.raw.train_nature);
+                test.start();
+            }
+            break;
+            case 3: {
+                test = MediaPlayer.create(getActivity(), R.raw.rain_street);
+                test.start();
+            }
+            break;
+            case 4:
+            {
+                test = MediaPlayer.create(getActivity(), R.raw.cricket);
+                test.start();
+            }
+            break;
+            case 5: {
+                test = MediaPlayer.create(getActivity(), R.raw.chihuahua);
+                test.start();
+            }
+            break;
+            case 6: {
+                test = MediaPlayer.create(getActivity(), R.raw.andreangelo);
+                test.start();
+            }
+            break;
+            case 7: {
+                test = MediaPlayer.create(getActivity(), R.raw.melarancida__monks_praying);
+                test.start();
+            }
+            break;
+            default:
+                Log.d("lyden kunne ikke afspilles", "onItemClick: ");
+        }
+
     }
 
 
