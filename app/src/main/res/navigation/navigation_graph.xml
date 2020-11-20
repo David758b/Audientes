@@ -19,7 +19,16 @@
         <action
             android:id="@+id/action_presetMain_to_hearingtestMain"
             app:destination="@id/hearingtestMain" />
+        <action
+            android:id="@+id/action_presetMain_to_preset_item_new"
+            app:destination="@id/preset_item_new"
+            />
     </fragment>
+    <fragment
+        android:id="@+id/preset_item_new"
+        android:name="com.example.AudientesAPP.UI.PresetItemNew"
+        android:label="presetItemNew"
+        />
 
     <fragment
         android:id="@+id/hearingtestMain"

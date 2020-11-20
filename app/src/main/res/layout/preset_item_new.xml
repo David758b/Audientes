@@ -6,6 +6,13 @@
     android:orientation="vertical"
     android:background="@drawable/audientes">
 
+    <ImageView
+        android:id="@+id/preset_backarrow"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
+        app:tint="@color/white" />
+
     <EditText
         android:id="@+id/presetTitle_ET"
         android:layout_width="match_parent"
@@ -13,9 +20,11 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="32dp"
-        android:layout_marginTop="60dp"
+
         android:fontFamily="@font/audientes_font"
-        android:text="Preset Title"/>
+        android:text="Preset Title"
+
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/presetSound_RV"
