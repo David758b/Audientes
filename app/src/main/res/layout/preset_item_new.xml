@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/audientes">
+
+    <EditText
+        android:id="@+id/presetTitle_ET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="32dp"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/audientes_font"
+        android:text="Preset Title"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/presetSound_RV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/preset_addSound"
+        android:layout_height="40dp"
+        android:layout_width="325dp"
+        android:src="@drawable/ic_baseline_add_24"
+        android:background="@drawable/round_outline"
+        android:backgroundTint="@color/AudientesOrange"
+        app:tint="@color/white"
+        android:layout_gravity="center"/>
+
+</LinearLayout>
