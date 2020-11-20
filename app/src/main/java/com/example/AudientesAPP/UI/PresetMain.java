@@ -18,14 +18,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.AudientesAPP.DTO.PresetItemDTO;
 import com.example.AudientesAPP.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class PresetMain extends Fragment implements AdapterView.OnItemClickListener {
-    private ListView presetList;
     private ImageView imageView; //SKAL DER OVERHOVEDET VÆRE ET IMAGEVIEW?
+    private FloatingActionButton addPreset;
     private TextView presetName;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter presetItemAdapter;
@@ -93,12 +95,19 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
 
     //Skal initialisere vores view
     private void initialize(View v){
-        //imageView = v.findViewById(R.id.imageViewCategoryElement);
+        addPreset = v.findViewById(R.id.add_preset);
         presetName = v.findViewById(R.id.textViewCategoryELement);
 
         presetItems = new HashMap<>();
 
 
+        addPreset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
 
