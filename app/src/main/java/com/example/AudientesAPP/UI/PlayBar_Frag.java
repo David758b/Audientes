@@ -12,6 +12,10 @@ import com.example.AudientesAPP.LydSpiller;
 import com.example.AudientesAPP.MainActivity;
 import com.example.AudientesAPP.R;
 
+
+/**
+ * test fragment til en playbar (dvs en menu hvor man kan pause og play en lyd)
+ */
 public class PlayBar_Frag extends Fragment implements View.OnClickListener {
 
     Button play, pause;

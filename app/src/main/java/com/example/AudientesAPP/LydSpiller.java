@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.media.MediaPlayer;
 import android.util.Log;
 
-
+/**
+ * Test klasse til afspilning af lyde. skal nok laves om
+ */
 public class LydSpiller {
 
     MediaPlayer mediaPlayer;
