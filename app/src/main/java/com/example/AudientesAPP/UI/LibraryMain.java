@@ -9,11 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+
+import com.example.AudientesAPP.MainActivity;
 import com.example.AudientesAPP.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class LibraryMain extends Fragment implements BottomNavigationView.OnNavigationItemSelectedListener {
-
+    private MainActivity mainActivity;
     private NavController navListController;
 
     @Override
@@ -36,7 +38,8 @@ public class LibraryMain extends Fragment implements BottomNavigationView.OnNavi
         tabNavigationBar.setVisibility(View.VISIBLE);
 
         tabNavigationBar.setOnNavigationItemSelectedListener(this);
-
+        //mainActivity = (MainActivity) getActivity();
+        mainActivity = (MainActivity) navHostFragment.getParentFragment().getActivity();
 
 
         return rod;
@@ -59,5 +62,9 @@ public class LibraryMain extends Fragment implements BottomNavigationView.OnNavi
         }
 
         return false;
+    }
+
+    public MainActivity getMainActivity() {
+        return mainActivity;
     }
 }

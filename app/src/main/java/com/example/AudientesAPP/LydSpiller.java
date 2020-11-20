@@ -9,8 +9,9 @@ public class LydSpiller {
 
     MediaPlayer mediaPlayer;
 
-    public LydSpiller(MediaPlayer mediaPlayer){
+    public LydSpiller(MediaPlayer mediaPlayer, Activity activity){
         this.mediaPlayer = mediaPlayer;
+        this.mediaPlayer = MediaPlayer.create(activity, R.raw.testlyd);
     }
 
     public void playNewSound(int position, Activity activity){

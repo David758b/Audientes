@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +18,8 @@ public class MainActivity extends AppCompatActivity implements
 
 
     private NavController navController;
+    MediaPlayer test;
+    LydSpiller lydSpiller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements
         //Sætter en listener, så man kan håndterer hvad der skal ske, når der trykkes på et
         //menu item
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-
+        lydSpiller = new LydSpiller(test, this);
 
     }
 
@@ -65,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements
         return true;
     }
 
+    public LydSpiller getLydSpiller() {
+        return lydSpiller;
+    }
 }
 
 

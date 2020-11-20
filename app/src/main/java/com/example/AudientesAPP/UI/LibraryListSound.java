@@ -13,14 +13,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.AudientesAPP.LydSpiller;
+import com.example.AudientesAPP.MainActivity;
 import com.example.AudientesAPP.R;
 
 public class LibraryListSound extends Fragment implements AdapterView.OnItemClickListener {
-
-    MediaPlayer test;
     LydSpiller lydSpiller;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rod = inflater.inflate(R.layout.library_list_sound_frag, container, false);
@@ -49,12 +50,20 @@ public class LibraryListSound extends Fragment implements AdapterView.OnItemClic
             }
 
         };
+        //test = MediaPlayer.create(getActivity(), R.raw.testlyd);
+        //test.setVolume(1,1);
 
-        test = MediaPlayer.create(getActivity(), R.raw.testlyd);
-        test.setVolume(1,1);
+        //MEGA MEGA MEGA hardcoding (lappeløsning for at teste)
+        //LibraryMain libraryMain = (LibraryMain) LibraryListSound.this.getParentFragment();
 
-        //mega hardcoding (lappeløsning for at teste)
-        lydSpiller = new LydSpiller(test);
+        NavHostFragment navHostFragment = (NavHostFragment) getParentFragment();
+        NavHostFragment navHostFragment2 = (NavHostFragment) getParentFragment();
+        Fragment parent = (Fragment) navHostFragment2.getParentFragment();
+
+        MainActivity main = (MainActivity) navHostFragment2.getActivity();
+        lydSpiller = main.getLydSpiller();
+
+
 
         soundList.setAdapter(arrayAdapterSoundList);
         soundList.setPadding(0,75,0,20);
