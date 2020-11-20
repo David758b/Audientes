@@ -1,5 +1,6 @@
 package com.example.AudientesAPP.UI;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.example.AudientesAPP.R;
 
 public class LibraryListSound extends Fragment implements AdapterView.OnItemClickListener {
 
+    MediaPlayer test;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rod = inflater.inflate(R.layout.library_list_sound_frag, container, false);
@@ -43,10 +45,13 @@ public class LibraryListSound extends Fragment implements AdapterView.OnItemClic
 
         };
 
+        test = MediaPlayer.create(getActivity(), R.raw.testlyd);
+        test.setVolume(1,1);
 
         soundList.setAdapter(arrayAdapterSoundList);
         soundList.setPadding(0,75,0,20);
         soundList.setDividerHeight(25);
+        soundList.setOnItemClickListener(this);
 
         return rod;
     }
@@ -54,5 +59,8 @@ public class LibraryListSound extends Fragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.d("position : " + position, "onItemClick: ");
+        test.start();
     }
+
+
 }
