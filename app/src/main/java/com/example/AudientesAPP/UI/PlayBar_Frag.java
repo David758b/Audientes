@@ -8,11 +8,14 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.AudientesAPP.LydSpiller;
+import com.example.AudientesAPP.MainActivity;
 import com.example.AudientesAPP.R;
 
 public class PlayBar_Frag extends Fragment implements View.OnClickListener {
 
     Button play, pause;
+    LydSpiller lydSpiller;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -20,7 +23,12 @@ public class PlayBar_Frag extends Fragment implements View.OnClickListener {
 
         play = rod.findViewById(R.id.playbar_playbutton);
         pause = rod.findViewById(R.id.playbar_pausebutton);
+        play.setOnClickListener(this);
+        pause.setOnClickListener(this);
 
+
+        MainActivity main = (MainActivity) getActivity();
+        lydSpiller = main.getLydSpiller();
 
         return rod;
     }
@@ -28,6 +36,10 @@ public class PlayBar_Frag extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-
+        if (v == play) {
+            lydSpiller.playSound();
+        } else if (v == pause) {
+            lydSpiller.pause();
+        }
     }
 }

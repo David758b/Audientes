@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.AudientesAPP.UI.PlayBar_Frag;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements
@@ -43,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements
         //Sætter en listener, så man kan håndterer hvad der skal ske, når der trykkes på et
         //menu item
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+        getSupportFragmentManager().beginTransaction().add(R.id.playBar, new PlayBar_Frag()).addToBackStack(null).commit();
+
         lydSpiller = new LydSpiller(test, this);
 
     }

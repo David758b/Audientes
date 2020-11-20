@@ -69,12 +69,13 @@ public class LydSpiller {
         }
     }
 
-    public void playNewSound(){
+    public void playSound(){
         mediaPlayer.start();
     }
 
     public void pause(){
         mediaPlayer.pause();
+        System.out.println("pause");
     }
 
     public void stop(){
