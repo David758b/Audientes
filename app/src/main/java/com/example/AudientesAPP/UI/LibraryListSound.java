@@ -65,40 +65,49 @@ public class LibraryListSound extends Fragment implements AdapterView.OnItemClic
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         switch (position){
-            case 0: test.start();
+            case 0:
+                onDestroy();
+                test = MediaPlayer.create(getActivity(), R.raw.testlyd);
+                test.start();
             break;
             case 1: {
+                onDestroy();
                 test = MediaPlayer.create(getActivity(), R.raw.brown_noise);
                 test.start();
             }
             break;
             case 2: {
+                onDestroy();
                 test = MediaPlayer.create(getActivity(), R.raw.train_nature);
                 test.start();
             }
             break;
             case 3: {
+                onDestroy();
                 test = MediaPlayer.create(getActivity(), R.raw.rain_street);
                 test.start();
             }
             break;
-            case 4:
-            {
+            case 4: {
+                onDestroy();
                 test = MediaPlayer.create(getActivity(), R.raw.cricket);
                 test.start();
             }
             break;
             case 5: {
+                onDestroy();
                 test = MediaPlayer.create(getActivity(), R.raw.chihuahua);
                 test.start();
             }
             break;
             case 6: {
+                onDestroy();
                 test = MediaPlayer.create(getActivity(), R.raw.andreangelo);
                 test.start();
             }
             break;
             case 7: {
+                onDestroy();
                 test = MediaPlayer.create(getActivity(), R.raw.melarancida__monks_praying);
                 test.start();
             }
@@ -107,6 +116,13 @@ public class LibraryListSound extends Fragment implements AdapterView.OnItemClic
                 Log.d("lyden kunne ikke afspilles", "onItemClick: ");
         }
 
+    }
+
+    @Override
+    public void onDestroy() {
+        test.stop();
+        test.release();
+        super.onDestroy();
     }
 
 
