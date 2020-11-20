@@ -1,9 +1,11 @@
 package com.example.AudientesAPP.UI;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -13,7 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.AudientesAPP.R;
 
-public class LibraryListSound extends Fragment {
+public class LibraryListSound extends Fragment implements AdapterView.OnItemClickListener {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -47,5 +49,10 @@ public class LibraryListSound extends Fragment {
         soundList.setDividerHeight(25);
 
         return rod;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d("position : " + position, "onItemClick: ");
     }
 }
