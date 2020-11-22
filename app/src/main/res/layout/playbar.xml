@@ -3,30 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="41dp">
+    android:layout_height="41dp"
+    android:background="@color/DarkGrey"
+    >
 
-    <Button
+    <ImageView
         android:id="@+id/playbar_playbutton"
         android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="134dp"
-        android:text="play"
-        android:textSize="10dp"
+        android:layout_height="0dp"
+
+        android:layout_marginStart="271dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="7dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/playbar_pausebutton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_play_circle_outline_24" />
 
-    <Button
+    <ImageView
         android:id="@+id/playbar_pausebutton"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="157dp"
-        android:text="pause"
-        android:textSize="10dp"
+        android:layout_width="48dp"
+        android:layout_height="27dp"
+
+        android:layout_marginEnd="21dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/playbar_playbutton"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_pause_circle_outline_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>
