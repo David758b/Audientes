@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 
@@ -18,7 +19,7 @@ import com.example.AudientesAPP.R;
  */
 public class PlayBar_Frag extends Fragment implements View.OnClickListener {
 
-    Button play, pause;
+    ImageView play, pause;
     LydSpiller lydSpiller;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
