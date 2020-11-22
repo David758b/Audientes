@@ -10,6 +10,7 @@ import android.util.Log;
 public class LydSpiller {
 
     MediaPlayer mediaPlayer;
+    boolean isPlaying;
 
     public LydSpiller(MediaPlayer mediaPlayer, Activity activity){
         this.mediaPlayer = mediaPlayer;
@@ -17,6 +18,7 @@ public class LydSpiller {
     }
 
     public void playNewSound(int position, Activity activity){
+        isPlaying = true;
 
         switch (position){
             case 0:
@@ -73,17 +75,25 @@ public class LydSpiller {
 
     public void playSound(){
         mediaPlayer.start();
+        isPlaying = true;
     }
 
     public void pause(){
         mediaPlayer.pause();
         System.out.println("pause");
+        isPlaying = false;
     }
 
     public void stop(){
         mediaPlayer.stop();
         mediaPlayer.release();
+        isPlaying = false;
     }
+
+    public boolean isPlaying(){
+        return isPlaying;
+    }
+
 
 
 

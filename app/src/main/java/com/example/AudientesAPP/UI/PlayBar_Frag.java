@@ -19,7 +19,8 @@ import com.example.AudientesAPP.R;
  */
 public class PlayBar_Frag extends Fragment implements View.OnClickListener {
 
-    ImageView play, pause;
+    ImageView play;
+
     LydSpiller lydSpiller;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,13 +28,16 @@ public class PlayBar_Frag extends Fragment implements View.OnClickListener {
         View rod = inflater.inflate(R.layout.playbar, container, false);
 
         play = rod.findViewById(R.id.playbar_playbutton);
-        pause = rod.findViewById(R.id.playbar_pausebutton);
         play.setOnClickListener(this);
-        pause.setOnClickListener(this);
-
 
         MainActivity main = (MainActivity) getActivity();
         lydSpiller = main.getLydSpiller();
+
+        // TODO: 22/11/2020 Der skal laves en eller anden form for listener på lydspiller 
+        //Der skal laves en eller anden form for listener på lydspiller
+        //så når der bliver valgt en lyd skal kanppen ændre sig
+
+
 
         return rod;
     }
@@ -41,10 +45,18 @@ public class PlayBar_Frag extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v == play) {
-            lydSpiller.playSound();
-        } else if (v == pause) {
-            lydSpiller.pause();
+
+        if(v == play){
+            if(!lydSpiller.isPlaying()){
+                play.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24);
+                lydSpiller.playSound();
+
+            }
+            else{
+                play.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
+                lydSpiller.pause();
+
+            }
         }
     }
 }
