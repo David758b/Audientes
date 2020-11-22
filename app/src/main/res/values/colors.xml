@@ -10,4 +10,5 @@
     <color name="AudientesOrange">#F2994A</color>
     <color name="LightGrey">#828282</color>
     <color name="DarkGrey">#333333</color>
+    <color name="white">#FFFFFF</color>
 </resources>
