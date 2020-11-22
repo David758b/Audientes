@@ -68,7 +68,7 @@ public class LibraryListSound extends Fragment implements AdapterView.OnItemClic
         soundList.setAdapter(arrayAdapterSoundList);
         soundList.setPadding(0,75,0,20);
         soundList.setDividerHeight(25);
-        soundList.setSelector(android.R.drawable.ic_notification_overlay);
+        soundList.setSelector(R.drawable.list_element_selector);
         soundList.setOnItemClickListener(this);
 
         return rod;
