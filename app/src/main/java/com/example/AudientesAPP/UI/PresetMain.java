@@ -46,22 +46,6 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
         initialize(v);
 
 
-        /*ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),
-                R.layout.category_list_element, R.id.textViewCategoryELement) {
-
-            // overskiver getview ( læg mærke til {} parenteserne )
-            @Override
-            public View getView(int position, View cachedView, ViewGroup parent) {
-
-                View view = super.getView(position, cachedView, parent);
-                ImageView imageView = view.findViewById(R.id.imageViewCategoryElement);
-                TextView textView = view.findViewById(R.id.textViewCategoryELement);
-
-                return view;
-            }
-
-        };*/
-
         recyclerView = (RecyclerView) v.findViewById(R.id.presets_RV);
 
         layoutManager = new LinearLayoutManager(this.getContext());
@@ -78,10 +62,6 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
         recyclerView.setAdapter(presetItemAdapter);
 
         recyclerView.setPadding(0,75,0,20);
-        //recyclerView.setDividerHeight(25);
-        //presetList.setAdapter(arrayAdapter);
-        //presetList.setPadding(0,75,0,20);
-        //presetList.setDividerHeight(25);
 
 
 

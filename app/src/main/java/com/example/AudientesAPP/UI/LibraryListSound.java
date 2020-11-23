@@ -13,12 +13,17 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.AudientesAPP.model.LydSpiller;
 import com.example.AudientesAPP.R;
 
 public class LibraryListSound extends Fragment implements AdapterView.OnItemClickListener {
     LydSpiller lydSpiller;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter presetItemAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
