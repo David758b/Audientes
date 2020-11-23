@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PresetMain extends Fragment implements AdapterView.OnItemClickListener {
-    private ImageView imageView; //SKAL DER OVERHOVEDET VÆRE ET IMAGEVIEW?
+    private TextView presetListTV;
     private FloatingActionButton addPreset;
     private TextView presetName;
     private RecyclerView recyclerView;
@@ -67,6 +67,7 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
 
     //Skal initialisere vores view
     private void initialize(View v){
+        presetListTV = v.findViewById(R.id.presetList_TV);
         addPreset = v.findViewById(R.id.add_preset);
         presetName = v.findViewById(R.id.textViewCategoryELement);
 
