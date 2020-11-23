@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".UI.MainActivity"
-    android:background="@color/AudientesOrange"
+    android:background="@drawable/audientes"
     android:scaleType = "centerCrop">
 
     <!--NavhostFragment der styrer navigationen (dvs en container for destinationerne -->
@@ -15,10 +15,10 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_navigation"
-        android:layout_marginBottom="40dp"
+        android:layout_above="@id/playBar"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/navigation_graph" />
+        app:navGraph="@navigation/navigation_graph"
+        />
 
     <!--Navigationsmenuen (Sætter bottom_menu.xml som layout for denne)-->
 

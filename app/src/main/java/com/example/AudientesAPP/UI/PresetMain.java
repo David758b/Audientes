@@ -105,6 +105,10 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     private List<String> mPresetSet;
 
+    public MyAdapter(List<String> myPresetSet){
+        mPresetSet = myPresetSet;
+    }
+
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView presetTextView;
 
@@ -113,9 +117,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
             presetTextView = itemView.findViewById(R.id.presetName_TV);
         }
     }
-    public MyAdapter(List<String> myPresetSet){
-        mPresetSet = myPresetSet;
-    }
+
 
     @NonNull
     @Override
