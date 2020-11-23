@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PresetMain extends Fragment implements AdapterView.OnItemClickListener {
-    private ImageView imageView; //SKAL DER OVERHOVEDET VÆRE ET IMAGEVIEW?
+    private TextView presetListTV;
     private FloatingActionButton addPreset;
     private TextView presetName;
     private RecyclerView recyclerView;
@@ -64,18 +64,12 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
         recyclerView.setPadding(0,75,0,20);
 
 
-
-        //med setselector kan man vælge hvad der skal ske når man vælger et liste element.
-        // i dette tilfælde anvendes en af androids egne features (rød boks når der klikkes)
-        //listView.setSelector(android.R.drawable.ic_notification_overlay);
-        //TextView text = rod.findViewById(R.id.textViewTest1);
-
-        //presetList.setOnItemClickListener(this);
         return v;
     }
 
     //Skal initialisere vores view
     private void initialize(View v){
+        presetListTV = v.findViewById(R.id.presetList_TV);
         addPreset = v.findViewById(R.id.add_preset);
         presetName = v.findViewById(R.id.textViewCategoryELement);
 
@@ -86,8 +80,8 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_presetMain_to_preset_item_new);
-                Snackbar.make(v, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(v, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                  //      .setAction("Action", null).show();
             }
         });
     }
