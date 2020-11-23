@@ -1,9 +1,8 @@
-package com.example.AudientesAPP;
+package com.example.AudientesAPP.UI;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.media.MediaPlayer;
@@ -11,7 +10,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.UI.PlayBar_Frag;
+import com.example.AudientesAPP.model.LydSpiller;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements

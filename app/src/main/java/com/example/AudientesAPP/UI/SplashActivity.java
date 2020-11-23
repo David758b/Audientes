@@ -1,10 +1,12 @@
-package com.example.AudientesAPP;
+package com.example.AudientesAPP.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.AudientesAPP.R;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -18,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent=new Intent(SplashActivity.this,MainActivity.class);
+                Intent intent=new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }

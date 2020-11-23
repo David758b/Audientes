@@ -1,8 +1,10 @@
-package com.example.AudientesAPP;
+package com.example.AudientesAPP.model;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.util.Log;
+
+import com.example.AudientesAPP.R;
 
 /**
  * Test klasse til afspilning af lyde. skal nok laves om

@@ -1,6 +1,5 @@
 package com.example.AudientesAPP.UI;
 
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,8 +14,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.AudientesAPP.LydSpiller;
-import com.example.AudientesAPP.MainActivity;
+import com.example.AudientesAPP.model.LydSpiller;
 import com.example.AudientesAPP.R;
 
 public class LibraryListSound extends Fragment implements AdapterView.OnItemClickListener {

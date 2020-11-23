@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.AudientesAPP.MainActivity;
 import com.example.AudientesAPP.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
