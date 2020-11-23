@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.AudientesAPP.R;
 
@@ -37,6 +38,13 @@ public class PresetItemNew extends Fragment implements AdapterView.OnItemClickLi
         backarrow = v.findViewById(R.id.preset_backarrow);
         presetTitle_ET = v.findViewById(R.id.presetTitle_ET);
         newSoundBtn = v.findViewById(R.id.preset_addSound);
+
+        backarrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigateUp();
+            }
+        });
 
     }
 

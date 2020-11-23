@@ -45,23 +45,6 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
         v = inflater.inflate(R.layout.preset_main, container, false);
         initialize(v);
 
-
-        /*ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),
-                R.layout.category_list_element, R.id.textViewCategoryELement) {
-
-            // overskiver getview ( læg mærke til {} parenteserne )
-            @Override
-            public View getView(int position, View cachedView, ViewGroup parent) {
-
-                View view = super.getView(position, cachedView, parent);
-                ImageView imageView = view.findViewById(R.id.imageViewCategoryElement);
-                TextView textView = view.findViewById(R.id.textViewCategoryELement);
-
-                return view;
-            }
-
-        };*/
-
         recyclerView = (RecyclerView) v.findViewById(R.id.presets_RV);
 
         layoutManager = new LinearLayoutManager(this.getContext());
@@ -78,19 +61,7 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
         recyclerView.setAdapter(presetItemAdapter);
 
         recyclerView.setPadding(0,75,0,20);
-        //recyclerView.setDividerHeight(25);
-        //presetList.setAdapter(arrayAdapter);
-        //presetList.setPadding(0,75,0,20);
-        //presetList.setDividerHeight(25);
 
-
-
-        //med setselector kan man vælge hvad der skal ske når man vælger et liste element.
-        // i dette tilfælde anvendes en af androids egne features (rød boks når der klikkes)
-        //listView.setSelector(android.R.drawable.ic_notification_overlay);
-        //TextView text = rod.findViewById(R.id.textViewTest1);
-
-        //presetList.setOnItemClickListener(this);
         return v;
     }
 
@@ -106,8 +77,8 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_presetMain_to_preset_item_new);
-                Snackbar.make(v, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(v, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                  //      .setAction("Action", null).show();
             }
         });
     }
