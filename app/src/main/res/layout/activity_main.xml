@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".UI.MainActivity"
-    android:background="@drawable/audientes"
+    android:background="@drawable/audientes_background"
     android:scaleType = "centerCrop">
 
     <!--NavhostFragment der styrer navigationen (dvs en container for destinationerne -->
