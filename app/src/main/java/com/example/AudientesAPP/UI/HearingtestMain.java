@@ -20,7 +20,6 @@ public class HearingtestMain extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View rod = inflater.inflate(R.layout.hearingtest_main, container,
                 false);
-        ImageView imageView = (ImageView) rod.findViewById(R.id.hearingTestImage);
 
         testButton = (ImageView) rod.findViewById(R.id.hearingtestbutton);
         testButton.setOnClickListener(this);
