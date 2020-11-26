@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/Audientes"
         android:layout_centerHorizontal="true"
-        android:text="Hearing therapy"
+        android:text="Sound therapy"
         android:textColor="@color/white"
         android:fontFamily="@font/montserrat"
         android:textSize="20dp"
