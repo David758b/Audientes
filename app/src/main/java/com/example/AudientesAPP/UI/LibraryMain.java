@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -14,9 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.AudientesAPP.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class LibraryMain extends Fragment implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class LibraryMain extends Fragment implements View.OnClickListener {
     private MainActivity mainActivity;
     private NavController navListController;
+    private TextView categories;
+    private TextView sounds;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,42 +33,32 @@ public class LibraryMain extends Fragment implements BottomNavigationView.OnNavi
                 .findFragmentById(R.id.List_Navhost);
 
         navListController = navHostFragment.getNavController();
+        categories = rod.findViewById(R.id.categories_page);
+        sounds = rod.findViewById(R.id.sounds_page);
+        categories.setOnClickListener(this);
+        sounds.setOnClickListener(this);
 
-
-        //todo dette er mega hardcoded... sæt det ind i en ressurcefil istedet og referer den
-        String[] lande = {"Presets", "Sleep", "Nature", "Ocean", "Music"};
-
-        BottomNavigationView tabNavigationBar = rod.findViewById(R.id.tabMenu);
-        tabNavigationBar.setVisibility(View.VISIBLE);
-
-        tabNavigationBar.setOnNavigationItemSelectedListener(this);
-        //mainActivity = (MainActivity) getActivity();
         mainActivity = (MainActivity) navHostFragment.getParentFragment().getActivity();
 
 
         return rod;
     }
 
-
+    public MainActivity getMainActivity() {
+        return mainActivity;
+    }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-        if(menuItem.getItemId() == R.id.Category_tab){
+    public void onClick(View v) {
+        if(v == categories){
 
             navListController.navigate(R.id.libraryListCategory);
 
         }
-        else if(menuItem.getItemId()== R.id.Sounds_tab){
+        else if(v == sounds){
 
             navListController.navigate(R.id.libraryListSound);
 
         }
-
-        return false;
-    }
-
-    public MainActivity getMainActivity() {
-        return mainActivity;
     }
 }
