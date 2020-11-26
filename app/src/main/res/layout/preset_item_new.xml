@@ -21,7 +21,8 @@
         android:textSize="32dp"
 
         android:fontFamily="@font/audientes_font"
-        android:text="Preset Title"
+        android:hint="Enter preset title"
+        android:textColorHint="@color/LightGrey"
 
         />
 
