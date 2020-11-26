@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="50dp">
+        android:paddingBottom="0dp">
         
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/sounds_RV"
