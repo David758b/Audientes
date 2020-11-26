@@ -7,6 +7,7 @@
 
     <!--NavhostFragment der styrer navigationen (dvs en container for destinationerne -->
 
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/List_Navhost"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -16,11 +17,10 @@
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolBar"
-        app:navGraph="@navigation/library_tab_menu_navigation">
-    </androidx.fragment.app.FragmentContainerView>
-
+        app:navGraph="@navigation/library_tab_menu_navigation" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/toolBar"
@@ -32,9 +32,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -42,41 +44,39 @@
                 android:layout_height="44dp"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                />
 
             <TextView
                 android:id="@+id/categories_page"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="83dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="0.5"
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="onClick"
                 android:text="Categories"
+                android:fontFamily="@font/montserrat_regular"
                 android:textColor="@color/AudientesOrange"
                 app:itemTextColor="@color/library_tab_menu_item"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                />
 
             <TextView
                 android:id="@+id/sounds_page"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="94dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="0.5"
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="onClick"
                 android:text="Sounds"
+                android:fontFamily="@font/montserrat_regular"
                 android:textColor="@color/AudientesOrange"
                 app:itemTextColor="@color/library_tab_menu_item"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
