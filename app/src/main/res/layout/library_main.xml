@@ -11,32 +11,86 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/List_Navhost"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabMenu"
-        app:layout_constraintVertical_bias="0.0"
-        app:navGraph="@navigation/library_tab_menu_navigation" />
+        app:layout_constraintTop_toBottomOf="@+id/toolBar"
+        app:navGraph="@navigation/library_tab_menu_navigation"></androidx.fragment.app.FragmentContainerView>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/tabMenu"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/navHost"
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@+id/List_Navhost"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/categories_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="83dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onClick"
+                android:text="Categories"
+                android:textColor="@color/AudientesOrange"
+                app:itemTextColor="@color/library_tab_menu_item"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/sounds_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="94dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onClick"
+                android:text="Sounds"
+                android:textColor="@color/AudientesOrange"
+                app:itemTextColor="@color/library_tab_menu_item"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/tabMenu"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
         app:itemIconTint="@color/library_tab_menu_item"
         app:itemTextColor="@color/library_tab_menu_item"
-        app:menu="@menu/library_tab_menu"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/List_Navhost"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolBar"
+        app:menu="@menu/library_tab_menu" /> -->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
