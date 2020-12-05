@@ -7,13 +7,11 @@
 
     <!--NavhostFragment der styrer navigationen (dvs en container for destinationerne -->
 
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/List_Navhost"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="4dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +22,7 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/toolBar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/List_Navhost"

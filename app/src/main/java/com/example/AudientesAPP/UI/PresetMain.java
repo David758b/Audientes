@@ -6,9 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,10 +14,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.AudientesAPP.DTO.PresetItemDTO;
 import com.example.AudientesAPP.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,7 +53,7 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
 
 
 
-        presetItemAdapter = new MyAdapter(presetNames);
+        presetItemAdapter = new PresetAdapter(presetNames);
         recyclerView.setAdapter(presetItemAdapter);
 
         recyclerView.setPadding(0,75,0,20);
@@ -95,11 +90,11 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
     }
 }
 
-class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
+class PresetAdapter extends RecyclerView.Adapter<PresetAdapter.MyViewHolder>{
 
     private List<String> mPresetSet;
 
-    public MyAdapter(List<String> myPresetSet){
+    public PresetAdapter(List<String> myPresetSet){
         mPresetSet = myPresetSet;
     }
 
@@ -115,14 +110,14 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     @NonNull
     @Override
-    public MyAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PresetAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.preset_item, parent, false);
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PresetAdapter.MyViewHolder holder, int position) {
             //Her hentes data objekterne i fremtiden ...
 
             holder.presetTextView.setText(mPresetSet.get(position));
