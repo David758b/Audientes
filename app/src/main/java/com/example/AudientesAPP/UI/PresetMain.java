@@ -28,12 +28,9 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
     private RecyclerView recyclerView;
     private RecyclerView.Adapter presetItemAdapter;
     private RecyclerView.LayoutManager layoutManager;
-
     private PresetItem presetItem;
-
-    HashMap<String, PresetItem> presetItems;
-
-    View v;
+    private HashMap<String, PresetItem> presetItems;
+    private View v;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

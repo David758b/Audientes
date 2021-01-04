@@ -10,7 +10,7 @@ import com.example.AudientesAPP.R;
 
 public class SplashActivity extends AppCompatActivity {
 
-    Handler handler;
+    private Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
