@@ -23,8 +23,7 @@ public class PresetItemNew extends Fragment implements AdapterView.OnItemClickLi
     private RecyclerView.Adapter presetSoundAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ImageView newSoundBtn;
-
-    View v;
+    private View v;
 
     @Nullable
     @Override

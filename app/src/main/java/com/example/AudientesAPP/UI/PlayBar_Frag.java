@@ -17,9 +17,8 @@ import com.example.AudientesAPP.R;
  */
 public class PlayBar_Frag extends Fragment implements View.OnClickListener {
 
-    ImageView play;
-
-    LydSpiller lydSpiller;
+    private ImageView play;
+    private LydSpiller lydSpiller;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

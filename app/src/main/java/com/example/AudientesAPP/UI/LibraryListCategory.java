@@ -23,6 +23,7 @@ public class LibraryListCategory extends Fragment {
         View rod = inflater.inflate(R.layout.library_list_category_frag, container, false);
 
         ListView categoryList = rod.findViewById(R.id.Library_Category_Listview);
+        // HHAAAARRDDDCOOOODDDDEEEDDD
         String[] lande = {"Presets", "Sleep", "Nature", "Ocean", "Music"};
 
         ArrayAdapter arrayAdapterCategoryList = new ArrayAdapter(getActivity(),

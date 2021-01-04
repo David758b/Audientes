@@ -1,34 +1,20 @@
 package com.example.AudientesAPP.UI;
 
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.AudientesAPP.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-public class LibraryMain extends Fragment implements View.OnClickListener{
-    private MainActivity mainActivity;
+public class LibraryMain extends Fragment{
+
     private NavController navListController;
-    private TextView categories;
-    private TextView sounds;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,35 +54,7 @@ public class LibraryMain extends Fragment implements View.OnClickListener{
 
             }
         });
-        /*categories = rod.findViewById(R.id.categories_page);
-        sounds = rod.findViewById(R.id.sounds_page);
-        categories.setOnClickListener(this);
-        sounds.setOnClickListener(this);*/
-
-
-
-        mainActivity = (MainActivity) navHostFragment.getParentFragment().getActivity();
-
 
         return rod;
-    }
-
-
-    public MainActivity getMainActivity() {
-        return mainActivity;
-    }
-
-    @Override
-    public void onClick(View v) {
-        if(v == categories){
-
-            navListController.navigate(R.id.libraryListCategory);
-
-        }
-        else if(v == sounds){
-
-            navListController.navigate(R.id.libraryListSound);
-
-        }
     }
 }
