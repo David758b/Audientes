@@ -11,8 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.AudientesAPP.R;
-import com.example.AudientesAPP.UI.PlayBar_Frag;
-import com.example.AudientesAPP.model.LydSpiller;
+import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements
@@ -21,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private NavController navController;
     MediaPlayer test;
-    LydSpiller lydSpiller;
+    LydAfspiller lydAfspiller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements
 
         getSupportFragmentManager().beginTransaction().add(R.id.playBar, new PlayBar_Frag()).addToBackStack(null).commit();
 
-        lydSpiller = new LydSpiller(test, this);
+        lydAfspiller = new LydAfspiller(test, this);
 
     }
 
@@ -74,8 +73,8 @@ public class MainActivity extends AppCompatActivity implements
         return true;
     }
 
-    public LydSpiller getLydSpiller() {
-        return lydSpiller;
+    public LydAfspiller getLydAfspiller() {
+        return lydAfspiller;
     }
 }
 

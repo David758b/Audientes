@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.AudientesAPP.model.LydSpiller;
+import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.example.AudientesAPP.R;
 
 
@@ -18,7 +18,7 @@ import com.example.AudientesAPP.R;
 public class PlayBar_Frag extends Fragment implements View.OnClickListener {
 
     private ImageView play;
-    private LydSpiller lydSpiller;
+    private LydAfspiller lydAfspiller;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -28,7 +28,7 @@ public class PlayBar_Frag extends Fragment implements View.OnClickListener {
         play.setOnClickListener(this);
 
         MainActivity main = (MainActivity) getActivity();
-        lydSpiller = main.getLydSpiller();
+        lydAfspiller = main.getLydAfspiller();
 
         // TODO: 22/11/2020 Der skal laves en eller anden form for listener på lydspiller 
         //Der skal laves en eller anden form for listener på lydspiller
@@ -44,14 +44,14 @@ public class PlayBar_Frag extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
 
         if(v == play){
-            if(!lydSpiller.isPlaying()){
+            if(!lydAfspiller.isPlaying()){
                 play.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24);
-                lydSpiller.playSound();
+                lydAfspiller.playSound();
 
             }
             else{
                 play.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
-                lydSpiller.pause();
+                lydAfspiller.pause();
 
             }
         }

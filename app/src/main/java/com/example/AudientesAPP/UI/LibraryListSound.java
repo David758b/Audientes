@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,7 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.AudientesAPP.model.LydSpiller;
+import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.example.AudientesAPP.R;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LibraryListSound extends Fragment implements SoundAdapter.OnItemClicked {
-    LydSpiller lydSpiller;
+    LydAfspiller lydAfspiller;
     ImageView imageView1;
     TextView title;
     TextView tag;
@@ -63,7 +62,7 @@ public class LibraryListSound extends Fragment implements SoundAdapter.OnItemCli
         Fragment parent = (Fragment) navHostFragment2.getParentFragment();
 
         MainActivity main = (MainActivity) navHostFragment2.getActivity();
-        lydSpiller = main.getLydSpiller();
+        lydAfspiller = main.getLydAfspiller();
 
 
         soundItemAdapter.setOnClick(LibraryListSound.this);
@@ -83,7 +82,7 @@ public class LibraryListSound extends Fragment implements SoundAdapter.OnItemCli
 
     @Override
     public void onDestroy() {
-        lydSpiller.stop();
+        lydAfspiller.stop();
         super.onDestroy();
     }
 
@@ -95,43 +94,43 @@ public class LibraryListSound extends Fragment implements SoundAdapter.OnItemCli
         switch (position){
             case 0:
                 onDestroy();
-                lydSpiller.playNewSound(0,getActivity());
+                lydAfspiller.playNewSound(0,getActivity());
 
                 break;
             case 1: {
                 onDestroy();
-                lydSpiller.playNewSound(1,getActivity());
+                lydAfspiller.playNewSound(1,getActivity());
             }
             break;
             case 2: {
                 onDestroy();
-                lydSpiller.playNewSound(2,getActivity());
+                lydAfspiller.playNewSound(2,getActivity());
 
             }
             break;
             case 3: {
                 onDestroy();
-                lydSpiller.playNewSound(3,getActivity());
+                lydAfspiller.playNewSound(3,getActivity());
             }
             break;
             case 4: {
                 onDestroy();
-                lydSpiller.playNewSound(4,getActivity());
+                lydAfspiller.playNewSound(4,getActivity());
             }
             break;
             case 5: {
                 onDestroy();
-                lydSpiller.playNewSound(5,getActivity());
+                lydAfspiller.playNewSound(5,getActivity());
             }
             break;
             case 6: {
                 onDestroy();
-                lydSpiller.playNewSound(6,getActivity());
+                lydAfspiller.playNewSound(6,getActivity());
             }
             break;
             case 7: {
                 onDestroy();
-                lydSpiller.playNewSound(7,getActivity());
+                lydAfspiller.playNewSound(7,getActivity());
             }
             break;
             default:

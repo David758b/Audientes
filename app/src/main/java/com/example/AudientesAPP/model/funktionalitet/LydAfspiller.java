@@ -1,4 +1,4 @@
-package com.example.AudientesAPP.model;
+package com.example.AudientesAPP.model.funktionalitet;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
@@ -9,12 +9,12 @@ import com.example.AudientesAPP.R;
 /**
  * Test klasse til afspilning af lyde. skal nok laves om
  */
-public class LydSpiller {
+public class LydAfspiller {
 
     MediaPlayer mediaPlayer;
     boolean isPlaying;
 
-    public LydSpiller(MediaPlayer mediaPlayer, Activity activity){
+    public LydAfspiller(MediaPlayer mediaPlayer, Activity activity){
         this.mediaPlayer = mediaPlayer;
         this.mediaPlayer = MediaPlayer.create(activity, R.raw.testlyd);
     }
