@@ -5,23 +5,28 @@ import android.media.MediaPlayer;
 import android.util.Log;
 
 import com.example.AudientesAPP.R;
+import com.example.AudientesAPP.UI.PlayBar_Frag;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Test klasse til afspilning af lyde. skal nok laves om
  */
 public class LydAfspiller {
 
-    MediaPlayer mediaPlayer;
+    public static MediaPlayer mediaPlayer;
     boolean isPlaying;
+    List<OnLydAfspillerListener> listeners;
 
     public LydAfspiller(MediaPlayer mediaPlayer, Activity activity){
         this.mediaPlayer = mediaPlayer;
         this.mediaPlayer = MediaPlayer.create(activity, R.raw.testlyd);
+        this.listeners = new ArrayList<>();
     }
 
     public void playNewSound(int position, Activity activity){
         isPlaying = true;
-
         switch (position){
             case 0:
 
@@ -73,30 +78,58 @@ public class LydAfspiller {
             default:
                 Log.d("lyden kunne ikke afspilles", "onItemClick: ");
         }
+        notifyListeners();
     }
 
     public void playSound(){
         mediaPlayer.start();
         isPlaying = true;
+        notifyListeners();
     }
 
     public void pause(){
         mediaPlayer.pause();
         System.out.println("pause");
         isPlaying = false;
+        notifyListeners();
     }
 
     public void stop(){
         mediaPlayer.stop();
         mediaPlayer.release();
         isPlaying = false;
+        notifyListeners();
     }
 
     public boolean isPlaying(){
         return isPlaying;
     }
 
+    public int getCurrentPosition(){
+        return mediaPlayer.getCurrentPosition();
+    }
 
+    public int getDuration(){
+        return mediaPlayer.getDuration();
+    }
 
+    public void seekTo(int progress){
+        mediaPlayer.seekTo(progress);
+    }
+
+    public void addOnLydAfspillerListener(OnLydAfspillerListener listener){
+        listeners.add(listener);
+    }
+
+    private void notifyListeners(){
+        for (OnLydAfspillerListener listener: listeners) {
+            listener.updateLydAfspiller(this);
+        }
+    }
+
+    public interface OnLydAfspillerListener{
+        void updateLydAfspiller(LydAfspiller lydAfspiller);
+
+    }
 
 }

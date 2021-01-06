@@ -183,7 +183,6 @@ class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull SoundViewHolder holder, final int position) {
-
         holder.soundTextView.setText(mSoundSet.get(position));
         holder.soundTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,7 +190,6 @@ class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHolder> {
                 onClick.onItemClick(position);
             }
         });
-
     }
 
     @Override
