@@ -6,27 +6,28 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class SoundDB extends SQLiteOpenHelper {
 
-        static final int VERSION = 1;
-        static final String DATABASE = "sound.db";
-        static final String TABEL_Sounds = "Sounds";
-        static final String TABEL_Category = "Category";
-        static final String TABEL_Presets = "Presets";
-        static final String TABEL_PresetCategories = "PresetsCategories";
-        static final String TABEL_SoundCategories = "SoundCategories";
-        static final String TABEL_PresetElements = "PresetElements";
+
+        public static final int VERSION = 1;
+        public static final String DATABASE = "sound.db";
+        public static final String TABEL_Sounds = "Sounds";
+        public static final String TABEL_Category = "Category";
+        public static final String TABEL_Presets = "Presets";
+        public static final String TABEL_PresetCategories = "PresetsCategories";
+        public static final String TABEL_SoundCategories = "SoundCategories";
+        public static final String TABEL_PresetElements = "PresetElements";
 
         //------------------Sounds----------------------
-        static final String SOUND_NAME = "soundName";
-        static final String PATH = "path";
-        static final String DURATION = "duration";
+        public static final String SOUND_NAME = "soundName";
+        public static final String PATH = "path";
+        public static final String DURATION = "duration";
         //----------------------------------------------
 
         //---------------Category-----------------------
-        static final String CATEGORY_NAME = "categoryName";
+        public static final String CATEGORY_NAME = "categoryName";
         //----------------------------------------------
 
         //---------------PRESETS-----------------------
-        static final String PRESET_NAME = "presetName";
+        public static final String PRESET_NAME = "presetName";
         //----------------------------------------------
 
         //---------------PRESET CATEGORIES-----------------------
@@ -40,10 +41,10 @@ public class SoundDB extends SQLiteOpenHelper {
         //---------------PRESET_ELEMENTS-----------------------
         //Skal bruge preset_name og sound_name som primær og foreign keys
 
-        static final String CUSTOM_DURATION = "customDuration";
-        static final String VOLUME = "volume";
-        static final String DELAY_BEFORE_PLAYING = "delay";
-        static final String LOOP = "loop";
+        public static final String CUSTOM_DURATION = "customDuration";
+        public static final String VOLUME = "volume";
+        public static final String DELAY_BEFORE_PLAYING = "delay";
+        public static final String LOOP = "loop";
         //----------------------------------------------
 
 
