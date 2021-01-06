@@ -61,7 +61,8 @@ public class SoundDB extends SQLiteOpenHelper {
                 db.execSQL("CREATE TABLE " + TABEL1 + " (" + ID + " INTEGER PRIMARY KEY, "
                         + NAVN + " TEXT, " + POINT + " INTEGER)");
 
-                db.execSQL("CREATE TABLE "+TABEL_Sounds+" ("+);
+                db.execSQL("CREATE TABLE "+TABEL_Sounds+" ("+SOUND_NAME+" TEXT PRIMARY KEY, "+
+                        PATH+" TEXT, "+DURATION+" INTEGER");
 
 
 
