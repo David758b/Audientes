@@ -60,54 +60,8 @@ public class MainActivity extends AppCompatActivity implements
         lydAfspiller = new LydAfspiller(test, this);
 
 
-        //---------------------------------------------------------------------
-        // todo ---- virker. nu skal vi bare hente filen igen og afspille den
-        String dir = this.getExternalFilesDir(Environment.DIRECTORY_MUSIC).toString();
-        System.out.println(dir);
-        //storage/emulated/0/Android/data/com.example.audientesapp/files/Music
 
-
-        File data = getAppSpecificAlbumStorageDir(this, "Audientes");
-
-
-        // Alt skal ligge der!
-        System.out.println(data.getAbsolutePath());
-        // /storage/emulated/0/Android/data/com.example.audientesapp/files/Music/Audientes
-
-        File chihua = new File(data, "chihuahua");
-        try{
-
-
-
-            System.out.println(chihua.getAbsolutePath());
-            ///storage/emulated/0/Android/data/com.example.audientesapp/files/Music/Audientes/chihuahua
-
-            System.out.println(chihua.length());
-            //378471 BYTES
-
-
-
-        InputStream in = getResources().openRawResource(R.raw.chihuahua);
-        FileOutputStream out = new FileOutputStream(chihua.getAbsolutePath());
-        byte[] buff = new byte[1024];
-        int read = 0;
-
-        try {
-            while ((read = in.read(buff)) > 0) {
-                out.write(buff, 0, read);
-            }
-        } finally {
-            in.close();
-            out.close();
-            System.out.println("DET VIRKER!!!!");
-        }
-
-        }catch (Exception e){
-            System.out.println("FAAAAAAAAAAAAAAIIILLLLL");
-            e.printStackTrace();
-        }
-
-
+        /*
         //test ----det virker sgu !!!
         try {
             MediaPlayer mPlayer = new MediaPlayer();
@@ -120,10 +74,43 @@ public class MainActivity extends AppCompatActivity implements
         }catch (Exception e){
             e.printStackTrace();
         }
+        */
+
     }
 
 
+    public String makeDirectory(){
+        File directory = new File(this.getExternalFilesDir(Environment.DIRECTORY_MUSIC),"Audientes");
+        directory.mkdir();
+        return directory.getAbsolutePath();
+    }
 
+
+    //TODO change RID to new path where the files are
+    public void fileSaving(int RID, String directoryPath, String newFileName){
+
+        File newFile = new File(directoryPath, newFileName);
+
+        try {
+            InputStream in = getResources().openRawResource(RID);
+            FileOutputStream out = new FileOutputStream(newFile.getAbsolutePath());
+            byte[] buff = new byte[1024];
+            int read = 0;
+
+            try {
+                while ((read = in.read(buff)) > 0) {
+                    out.write(buff, 0, read);
+                }
+            } finally {
+                in.close();
+                out.close();
+                System.out.println("DET VIRKER!!!!");
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
 
 
 
@@ -153,100 +140,7 @@ public class MainActivity extends AppCompatActivity implements
         return lydAfspiller;
     }
 
-    File getAppSpecificAlbumStorageDir(Context context, String albumName) {
-        // Get the pictures directory that's inside the app-specific directory on
-        // external storage.
-        File file = new File(context.getExternalFilesDir(
-                Environment.DIRECTORY_MUSIC), albumName);
-        if (file == null || !file.mkdirs()) {
-            System.out.println("DEN FINDES ALLEREDE");
-        }
-        return file;
-    }
 
-    private void copyFile(String inputPath, String inputFile, String outputPath) {
-
-        InputStream in = null;
-        OutputStream out = null;
-        try {
-
-            //create output directory if it doesn't exist
-            File dir = new File (outputPath);
-            if (!dir.exists())
-            {
-                dir.mkdirs();
-            }
-
-
-            in = new FileInputStream(inputPath + inputFile);
-            out = new FileOutputStream(outputPath + inputFile);
-
-            byte[] buffer = new byte[1024];
-            int read;
-            while ((read = in.read(buffer)) != -1) {
-                out.write(buffer, 0, read);
-            }
-            in.close();
-            in = null;
-
-            // write the output file (You have now copied the file)
-            out.flush();
-            out.close();
-            out = null;
-
-        }  catch (FileNotFoundException fnfe1) {
-            Log.e("tag", fnfe1.getMessage());
-        }
-        catch (Exception e) {
-            Log.e("tag", e.getMessage());
-        }
-
-    }
-
-    private void moveFile(String inputPath, String inputFile, String outputPath) {
-
-        InputStream in = null;
-        OutputStream out = null;
-        try {
-
-            //create output directory if it doesn't exist
-            File dir = new File (outputPath);
-            if (!dir.exists())
-            {
-                dir.mkdirs();
-            }
-
-
-            in = new FileInputStream(inputPath + inputFile);
-            out = new FileOutputStream(outputPath + inputFile);
-
-            byte[] buffer = new byte[1024];
-            int read;
-            while ((read = in.read(buffer)) != -1) {
-                out.write(buffer, 0, read);
-            }
-            in.close();
-            in = null;
-
-            // write the output file
-            out.flush();
-            out.close();
-            out = null;
-
-            // delete the original file
-            new File(inputPath + inputFile).delete();
-
-
-        }
-
-        catch (FileNotFoundException fnfe1) {
-            Log.e("tag", fnfe1.getMessage());
-        }
-        catch (Exception e) {
-            Log.e("tag", e.getMessage());
-        }
-
-    }
 }
 
 
