@@ -69,21 +69,24 @@ public class SoundDB extends SQLiteOpenHelper {
 
                 db.execSQL("CREATE TABLE "+TABEL_Presets+ " ("+PRESET_NAME+" TEXT PRIMARY KEY)");
 
-                db.execSQL("CREATE TABLE "+TABEL_PresetCategories+ " (" + PRESET_NAME + " TEXT PRIMARY KEY, " +
-                        CATEGORY_NAME + " TEXT PRIMARY KEY, " + " FOREIGN KEY(" + CATEGORY_NAME + ") REFERENCES " +
+                db.execSQL("CREATE TABLE "+TABEL_PresetCategories+ " (" + PRESET_NAME + " TEXT, " +
+                        CATEGORY_NAME + " TEXT, PRIMARY KEY(" + PRESET_NAME + ", " + CATEGORY_NAME + "),"
+                        + " FOREIGN KEY(" + CATEGORY_NAME + ") REFERENCES " +
                                 TABEL_Category + "(" + CATEGORY_NAME + ")" + ", FOREIGN KEY(" + PRESET_NAME + ") REFERENCES " +
                         TABEL_Presets + "(" + PRESET_NAME + "))" );
 
                 // CREATE TABLE TABEL_PresetCategories (PRESET_NAME TEXT PRIMARY KEY, CATEGORY_NAME TEXT PRIMARY KEY, FOREIGN KEY(CATEGORY_NAME) REFERENCES TABEL_Category(CATEGORY_NAME),
                 // FOREIGN KEY(PRESET_NAME) REFERENCES TABEL_Presets(PRESET_NAME) );
-                db.execSQL("CREATE TABLE "+TABEL_SoundCategories+ " (" + SOUND_NAME + " TEXT PRIMARY KEY, " +
-                        CATEGORY_NAME + " TEXT PRIMARY KEY, " + " FOREIGN KEY(" + CATEGORY_NAME + ") REFERENCES " +
+                db.execSQL("CREATE TABLE "+TABEL_SoundCategories+ " (" + SOUND_NAME + " TEXT, " +
+                        CATEGORY_NAME + " TEXT, PRIMARY KEY(" + SOUND_NAME + ", " + CATEGORY_NAME + "),"
+                        + " FOREIGN KEY(" + CATEGORY_NAME + ") REFERENCES " +
                         TABEL_Category + "(" + CATEGORY_NAME + ")" + ", FOREIGN KEY(" + SOUND_NAME + ") REFERENCES " +
                         TABEL_Sounds + "(" + SOUND_NAME + "))" );
 
-                db.execSQL("CREATE TABLE "+TABEL_PresetElements+ " (" + PRESET_NAME + " TEXT PRIMARY KEY, " +
-                        SOUND_NAME + " TEXT PRIMARY KEY, " + CUSTOM_DURATION + " INTEGER, " + VOLUME + " INTEGER, " +
-                        DELAY_BEFORE_PLAYING + " INTEGER, " + LOOP + " INTEGER, " + " FOREIGN KEY(" + PRESET_NAME + ") REFERENCES " +
+                db.execSQL("CREATE TABLE "+TABEL_PresetElements+ " (" + PRESET_NAME + " TEXT, " +
+                        SOUND_NAME + " TEXT, " + CUSTOM_DURATION + " INTEGER, " + VOLUME + " INTEGER, " +
+                        DELAY_BEFORE_PLAYING + " INTEGER, " + LOOP + " INTEGER, PRIMARY KEY(" + PRESET_NAME + ", " + SOUND_NAME + "),"
+                        + " FOREIGN KEY(" + PRESET_NAME + ") REFERENCES " +
                         TABEL_Presets + "(" + PRESET_NAME + ")" + ", FOREIGN KEY(" + SOUND_NAME + ") REFERENCES " +
                         TABEL_Sounds + "(" + SOUND_NAME + "))" );
 
