@@ -58,28 +58,42 @@ public class SoundDB extends SQLiteOpenHelper {
                 //Pas nu forhelvede på her! det skal skrives ordenligt ellers bruger man
                 // fucking lang tid på at fejlsøge
                 // tjek alt fra stavefejl til mellemrum
-                db.execSQL("CREATE TABLE " + TABEL1 + " (" + ID + " INTEGER PRIMARY KEY, "
-                        + NAVN + " TEXT, " + POINT + " INTEGER)");
+
+                /*db.execSQL("CREATE TABLE " + TABEL1 + " (" + ID + " INTEGER PRIMARY KEY, "
+                        + NAVN + " TEXT, " + POINT + " INTEGER)");*/
 
                 db.execSQL("CREATE TABLE "+TABEL_Sounds+" ("+SOUND_NAME+" TEXT PRIMARY KEY, "+
-                        PATH+" TEXT, "+DURATION+" INTEGER");
+                        PATH+" TEXT, "+DURATION+" INTEGER)");
 
+                db.execSQL("CREATE TABLE "+TABEL_Category+ " ("+CATEGORY_NAME+" TEXT PRIMARY KEY)");
 
+                db.execSQL("CREATE TABLE "+TABEL_Presets+ " ("+PRESET_NAME+" TEXT PRIMARY KEY)");
 
-                db.execSQL("CREATE TABLE ");
-                db.execSQL("CREATE TABLE ");
-                db.execSQL("CREATE TABLE ");
-                db.execSQL("CREATE TABLE ");
-                db.execSQL("CREATE TABLE ");
-                db.execSQL("CREATE TABLE ");
-                db.execSQL("CREATE TABLE ");
+                db.execSQL("CREATE TABLE "+TABEL_PresetCategories+ " (" + PRESET_NAME + " TEXT PRIMARY KEY, " +
+                        CATEGORY_NAME + " TEXT PRIMARY KEY, " + " FOREIGN KEY(" + CATEGORY_NAME + ") REFERENCES " +
+                                TABEL_Category + "(" + CATEGORY_NAME + ")" + ", FOREIGN KEY(" + PRESET_NAME + ") REFERENCES " +
+                        TABEL_Presets + "(" + PRESET_NAME + "))" );
+
+                // CREATE TABLE TABEL_PresetCategories (PRESET_NAME TEXT PRIMARY KEY, CATEGORY_NAME TEXT PRIMARY KEY, FOREIGN KEY(CATEGORY_NAME) REFERENCES TABEL_Category(CATEGORY_NAME),
+                // FOREIGN KEY(PRESET_NAME) REFERENCES TABEL_Presets(PRESET_NAME) );
+                db.execSQL("CREATE TABLE "+TABEL_SoundCategories+ " (" + SOUND_NAME + " TEXT PRIMARY KEY, " +
+                        CATEGORY_NAME + " TEXT PRIMARY KEY, " + " FOREIGN KEY(" + CATEGORY_NAME + ") REFERENCES " +
+                        TABEL_Category + "(" + CATEGORY_NAME + ")" + ", FOREIGN KEY(" + SOUND_NAME + ") REFERENCES " +
+                        TABEL_Sounds + "(" + SOUND_NAME + "))" );
+
+                db.execSQL("CREATE TABLE "+TABEL_PresetElements+ " (" + PRESET_NAME + " TEXT PRIMARY KEY, " +
+                        SOUND_NAME + " TEXT PRIMARY KEY, " + CUSTOM_DURATION + " INTEGER, " + VOLUME + " INTEGER, " +
+                        DELAY_BEFORE_PLAYING + " INTEGER, " + LOOP + " INTEGER, " + " FOREIGN KEY(" + PRESET_NAME + ") REFERENCES " +
+                        TABEL_Presets + "(" + PRESET_NAME + ")" + ", FOREIGN KEY(" + SOUND_NAME + ") REFERENCES " +
+                        TABEL_Sounds + "(" + SOUND_NAME + "))" );
+
 
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-                db.execSQL("DROP TABLE " + TABEL1);
+                db.execSQL("DROP TABLE " + TABEL_Sounds);
                 this.onCreate(db);
         }
 }
