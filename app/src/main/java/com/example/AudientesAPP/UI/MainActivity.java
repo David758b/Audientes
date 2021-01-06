@@ -60,6 +60,16 @@ public class MainActivity extends AppCompatActivity implements
         lydAfspiller = new LydAfspiller(test, this);
 
 
+        //Creating the Audientes directory in the external storage system under "music"
+        File directory = makeDirectory();
+
+        //Saving a file in the audientes directory with a given file name
+        fileSaving(R.raw.cricket, directory, "Cricket");
+
+        //Test size for a specific file in bytes
+        System.out.println(getFile(directory,"Cricket").length());
+
+
 
         /*
         //test ----det virker sgu !!!
@@ -79,17 +89,27 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    public String makeDirectory(){
+    public File makeDirectory(){
         File directory = new File(this.getExternalFilesDir(Environment.DIRECTORY_MUSIC),"Audientes");
         directory.mkdir();
-        return directory.getAbsolutePath();
+        return directory;
     }
 
-
     //TODO change RID to new path where the files are
-    public void fileSaving(int RID, String directoryPath, String newFileName){
+    public void fileSaving(int RID, File directory, String newFileName){
 
-        File newFile = new File(directoryPath, newFileName);
+        String[] existingFiles = directory.list();
+
+        //returns if a file is allready existing
+        for (String fileName: existingFiles) {
+            System.out.println("Files in Audientes dir:   " + fileName);
+            if (fileName.equals(newFileName)){
+                return;
+            }
+        }
+
+        //Creates the new file
+        File newFile = new File(directory.getAbsolutePath(), newFileName);
 
         try {
             InputStream in = getResources().openRawResource(RID);
@@ -110,6 +130,16 @@ public class MainActivity extends AppCompatActivity implements
             e.printStackTrace();
         }
 
+    }
+
+    public File getFile(File directory, String fileName){
+        File[] files = directory.listFiles();
+        for (File file: files) {
+            if(file.getName().equals(fileName)){
+                return file;
+            }
+        }
+        return null;
     }
 
 
