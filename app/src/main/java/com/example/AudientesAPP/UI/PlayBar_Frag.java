@@ -62,7 +62,7 @@ public class PlayBar_Frag extends Fragment implements LydAfspiller.OnLydAfspille
                         handler.removeCallbacks(mUpdateTimeTask);
                     }
                 } else {
-                    //Resume song
+                    //Resume sound
                     if (lydAfspiller != null) {
                         lydAfspiller.playSound();
                     }
