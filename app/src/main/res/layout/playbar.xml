@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_play_circle_outline_24"
-        android:visibility="invisible"/>
+        android:visibility="visible"/>
     <ImageView
         android:id="@+id/playbar_pausebutton"
         android:layout_width="51dp"
@@ -33,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_pause_circle_outline_24"
-        android:visibility="visible"/>
+        android:visibility="invisible"/>
 
     <TextView
         android:id="@+id/playbar_soundTitle"

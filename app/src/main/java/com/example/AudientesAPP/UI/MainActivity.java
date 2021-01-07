@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
     private NavController navController;
-    MediaPlayer test;
+    MediaPlayer mediaPlayer;
     LydAfspiller lydAfspiller;
 
     @Override
@@ -46,8 +46,7 @@ public class MainActivity extends AppCompatActivity implements
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         getSupportFragmentManager().beginTransaction().add(R.id.playBar, new PlayBar_Frag()).addToBackStack(null).commit();
-
-        lydAfspiller = new LydAfspiller(test, this);
+        lydAfspiller = new LydAfspiller(mediaPlayer, this);
 
     }
 

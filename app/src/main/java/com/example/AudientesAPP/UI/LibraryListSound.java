@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class LibraryListSound extends Fragment implements SoundAdapter.OnItemClicked {
+public class LibraryListSound extends Fragment implements SoundAdapter.OnItemClicked,LydAfspiller.OnLydAfspillerListener {
     LydAfspiller lydAfspiller;
     ImageView imageView1;
     TextView title;
@@ -94,48 +94,58 @@ public class LibraryListSound extends Fragment implements SoundAdapter.OnItemCli
         switch (position){
             case 0:
                 onDestroy();
-                lydAfspiller.playNewSound(0,getActivity());
+                lydAfspiller.playNewSound(0);
 
                 break;
             case 1: {
                 onDestroy();
-                lydAfspiller.playNewSound(1,getActivity());
+                lydAfspiller.playNewSound(1);
             }
             break;
             case 2: {
                 onDestroy();
-                lydAfspiller.playNewSound(2,getActivity());
+                lydAfspiller.playNewSound(2);
 
             }
             break;
             case 3: {
                 onDestroy();
-                lydAfspiller.playNewSound(3,getActivity());
+                lydAfspiller.playNewSound(3);
             }
             break;
             case 4: {
                 onDestroy();
-                lydAfspiller.playNewSound(4,getActivity());
+                lydAfspiller.playNewSound(4);
             }
             break;
             case 5: {
                 onDestroy();
-                lydAfspiller.playNewSound(5,getActivity());
+                lydAfspiller.playNewSound(5);
             }
             break;
             case 6: {
                 onDestroy();
-                lydAfspiller.playNewSound(6,getActivity());
+                lydAfspiller.playNewSound(6);
             }
             break;
             case 7: {
                 onDestroy();
-                lydAfspiller.playNewSound(7,getActivity());
+                lydAfspiller.playNewSound(7);
             }
             break;
             default:
                 Log.d("lyden kunne ikke afspilles", "onItemClick: ");
         }
+    }
+
+    @Override
+    public void updateLydAfspiller(LydAfspiller lydAfspiller) {
+        //Skal implementeres
+    }
+
+    @Override
+    public void soundFinished(LydAfspiller lydAfspiller) {
+
     }
 }
 
