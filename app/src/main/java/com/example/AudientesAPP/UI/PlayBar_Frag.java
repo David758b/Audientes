@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class PlayBar_Frag extends Fragment implements LydAfspiller.OnLydAfspillerListener, SeekBar.OnSeekBarChangeListener {
 
-    private ImageView play, pause;
+    private ImageView play;
     private SeekBar seekBar;
     private TextView soundTitle, playerDuration, playerPosition;
     private LydAfspiller lydAfspiller;
@@ -37,15 +37,14 @@ public class PlayBar_Frag extends Fragment implements LydAfspiller.OnLydAfspille
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rod = inflater.inflate(R.layout.playbar, container, false);
-
+        //View ting
         soundTitle = rod.findViewById(R.id.playbar_soundTitle);
         playerPosition = rod.findViewById(R.id.playBar_playerPosition);
         playerDuration = rod.findViewById(R.id.playBar_playerDuration);
         seekBar = rod.findViewById(R.id.playbar_seekBar);
-
-        pause = rod.findViewById(R.id.playbar_pausebutton);
         play = rod.findViewById(R.id.playbar_playbutton);
 
+        //Vi får mediaplayeren fra mainactivity og tildeler den til objektet lydafspiller
         MainActivity main = (MainActivity) getActivity();
         lydAfspiller = main.getLydAfspiller();
 
@@ -74,7 +73,7 @@ public class PlayBar_Frag extends Fragment implements LydAfspiller.OnLydAfspille
         return rod;
     }
 
-
+    //Runnable, som står for alt hvad der skal ske imens lyden spilles.
     private Runnable mUpdateTimeTask = new Runnable() {
         @Override
         public void run() {
@@ -87,7 +86,7 @@ public class PlayBar_Frag extends Fragment implements LydAfspiller.OnLydAfspille
 
             //Viser den afspillede tid (nuværende)
             playerPosition.setText(utils.convertFormat(currentDuration));
-
+            //får procentendelen af den afspillede tid udfra den totale tid
             int progress = (int) (utils.getProgressPercentage(currentDuration, totalDuration));
             //sæt progress på seekbaren
             seekBar.setProgress(progress);
