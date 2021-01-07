@@ -117,7 +117,9 @@ public class PlayBar_Frag extends Fragment implements LydAfspiller.OnLydAfspille
         //Set media player to initial position
         lydAfspiller.seekTo(0);
         System.out.println("lyden er færdig");
-        //evt stop runnable her
+        //Pauser lydafspiller, så vi kan starte lyden forfra
+        lydAfspiller.pause();
+
     }
 
     @Override
