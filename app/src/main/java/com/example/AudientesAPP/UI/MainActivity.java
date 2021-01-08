@@ -171,7 +171,9 @@ public class MainActivity extends AppCompatActivity implements
         return lydAfspiller;
     }
 
-
+    public NavController getNavController(){
+        return navController;
+    }
 }
 
 

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation_graph"
     app:startDestination="@id/libraryMain">
 
+    <!-- Navigation fra library categories og library sounds -->
     <fragment
         android:id="@+id/libraryMain"
         android:name="com.example.AudientesAPP.UI.LibraryMain"
@@ -10,8 +11,18 @@
         <action
             android:id="@+id/action_libraryMain_to_presetMain2"
             app:destination="@id/presetMain" />
+        <action
+            android:id="@+id/action_libraryListCategory_to_CategoryListSounds"
+            app:destination="@+id/categoryListSounds"/>
     </fragment>
 
+    <fragment
+        android:id="@+id/categoryListSounds"
+        android:name="com.example.AudientesAPP.UI.CategoryListSounds"
+        android:label="categoryListSound"/>
+
+
+    <!-- Navigation for presets -->
     <fragment
         android:id="@+id/presetMain"
         android:name="com.example.AudientesAPP.UI.PresetMain"
@@ -30,6 +41,7 @@
         android:label="presetItemNew"
         />
 
+    <!-- Navigation fra hearingtest -->
     <fragment
         android:id="@+id/hearingtestMain"
         android:name="com.example.AudientesAPP.UI.HearingtestMain"

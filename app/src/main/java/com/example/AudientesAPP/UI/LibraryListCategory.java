@@ -1,10 +1,12 @@
 package com.example.AudientesAPP.UI;
 
+import android.Manifest;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +32,7 @@ import com.example.AudientesAPP.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibraryListCategory extends Fragment {
+public class LibraryListCategory extends Fragment{
     private ImageView categoryIcon;
     private TextView categoryName;
 
@@ -33,11 +41,17 @@ public class LibraryListCategory extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private NavController navController;
+
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.library_list_category_frag, container, false);
+        MainActivity mainActivity = (MainActivity) getActivity();
+
+        NavHostFragment navHostFragment = (NavHostFragment) getParentFragmentManager().findFragmentById(R.id.navHost);
+        //navController = navHostFragment.getNavController();
 
         categoryList = (RecyclerView) root.findViewById(R.id.Library_Category_Listview);
 
@@ -51,9 +65,8 @@ public class LibraryListCategory extends Fragment {
         currentlist.add("Ocean");
         currentlist.add("Music");
 
-
         try{
-            mAdapter = new CategoryAdapter(currentlist,getContext());
+            mAdapter = new CategoryAdapter(currentlist,this.getActivity(), mainActivity.getNavController());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -64,13 +77,19 @@ public class LibraryListCategory extends Fragment {
 }
 
 class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
-    private final Context context;
+    //private final Context context;
+    private FragmentActivity fragmentActivity;
     private List<String> mDataset;
     //private List<CategoryDTO> mDataset;
+    private Fragment mFragment;
+    private Bundle mBundle;
+    private NavController navController;
 
-   public CategoryAdapter(List<String> mDataset, Context context) {
-        this.context = context;
+
+   public CategoryAdapter(List<String> mDataset, FragmentActivity fragmentActivity, NavController navController) {
+        this.fragmentActivity = fragmentActivity;
         this.mDataset = mDataset;
+        this.navController = navController;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -95,10 +114,10 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         String categoryDTO = mDataset.get(position);
         //CategoryDTO categoryDTO = mDataset.get(position);
-        Typeface typeface = ResourcesCompat.getFont(context, R.font.audientes_font);
+        Typeface typeface = ResourcesCompat.getFont(fragmentActivity, R.font.audientes_font);
         holder.categoryName.setTypeface(typeface);
         holder.categoryName.setText(categoryDTO);
         //holder.categoryName.setText(categoryDTO.getCategoryName());
@@ -138,6 +157,9 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
             @Override
             public void onClick(View v) {
                 //Navigering til fragment med category sounds eller presets
+                fragmentJump();
+
+
             }
         });
     }
@@ -147,4 +169,24 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
     public int getItemCount() {
         return mDataset.size();
     }
+
+    private void fragmentJump() {
+        /*mFragment = new Fragment2();
+        mBundle = new Bundle();
+        mBundle.putParcelable("item_selected_key", Parcelable);
+        mFragment.setArguments(mBundle);
+        switchContent(R.id.frag1, mFragment);*/
+        //Navigation.findNavController(v).navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
+        navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
+        /*CategoryListSounds fragment = new CategoryListSounds();
+        FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.libraryMain, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();*/
+//        Navigation.findNavController(v).navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
+
+    }
+
+
 }
