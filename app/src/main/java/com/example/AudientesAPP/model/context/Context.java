@@ -16,7 +16,7 @@ public class Context {
 
         //TESTING
         //categoryDAO.add("te");
-        categoryDAO.delete("test");
+       /*
         Cursor cursor = main.getDB().query(SoundDB.TABEL_Category,null,null,null,null,null,null);
         while(cursor.moveToNext()){
             String navn = cursor.getString(0);
@@ -25,6 +25,8 @@ public class Context {
 
         }
         cursor.close();
+
+        */
 
 
     }

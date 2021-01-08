@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.AudientesAPP.DTO.CategoryDTO;
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.Data.CategoryDAO;
 import com.example.AudientesAPP.model.Data.SoundDB;
@@ -30,6 +31,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -97,6 +100,18 @@ public class MainActivity extends AppCompatActivity implements
             }
         }
         c.close();
+
+
+        CategoryDAO categoryDAO = new CategoryDAO(context);
+        List ar;
+        ar = categoryDAO.getList();
+        CategoryDTO  categoryDTO;
+        for (Object a: ar) {
+            categoryDTO = (CategoryDTO)a;
+            System.out.println("CATEGORY DTO OUTPUT --------------");
+            System.out.println(categoryDTO.getCategoryName());
+
+        }
 
 
 
