@@ -1,15 +1,17 @@
-package com.example.AudientesAPP.model.Data;
+package com.example.AudientesAPP.model.Data.DAO;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.example.AudientesAPP.DTO.SoundDTO;
+import com.example.AudientesAPP.model.Data.InterfaceDAO.ISoundDAO;
+import com.example.AudientesAPP.model.Data.SoundDB;
 import com.example.AudientesAPP.model.context.Context;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SoundDAO implements ISoundDAO{
+public class SoundDAO implements ISoundDAO {
 
     private Context context;
     private ContentValues row;

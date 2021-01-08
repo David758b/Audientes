@@ -1,10 +1,7 @@
 package com.example.AudientesAPP.model.context;
 
-import android.database.Cursor;
-
 import com.example.AudientesAPP.UI.MainActivity;
-import com.example.AudientesAPP.model.Data.CategoryDAO;
-import com.example.AudientesAPP.model.Data.SoundDB;
+import com.example.AudientesAPP.model.Data.DAO.CategoryDAO;
 
 public class Context {
     private MainActivity main;

@@ -5,37 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.AudientesAPP.DTO.CategoryDTO;
-import com.example.AudientesAPP.DTO.PresetDTO;
 import com.example.AudientesAPP.DTO.SoundDTO;
 import com.example.AudientesAPP.R;
-import com.example.AudientesAPP.model.Data.CategoryDAO;
-import com.example.AudientesAPP.model.Data.PresetDAO;
-import com.example.AudientesAPP.model.Data.SoundDAO;
+import com.example.AudientesAPP.model.Data.DAO.SoundDAO;
 import com.example.AudientesAPP.model.Data.SoundDB;
 import com.example.AudientesAPP.model.context.Context;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 

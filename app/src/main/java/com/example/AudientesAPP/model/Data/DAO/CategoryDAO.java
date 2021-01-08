@@ -1,17 +1,18 @@
-package com.example.AudientesAPP.model.Data;
+package com.example.AudientesAPP.model.Data.DAO;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.AudientesAPP.DTO.CategoryDTO;
-import com.example.AudientesAPP.UI.MainActivity;
+import com.example.AudientesAPP.model.Data.InterfaceDAO.ICategoryDAO;
+import com.example.AudientesAPP.model.Data.SoundDB;
 import com.example.AudientesAPP.model.context.Context;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDAO implements ICategoryDAO{
+public class CategoryDAO implements ICategoryDAO {
     private Context context;
     private ContentValues row;
     private SQLiteDatabase db;
