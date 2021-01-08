@@ -53,7 +53,7 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
         presetItemAdapter = new PresetAdapter(presetNames);
         recyclerView.setAdapter(presetItemAdapter);
 
-        recyclerView.setPadding(0,75,0,20);
+        //recyclerView.setPadding(0,75,0,20);
 
 
         return v;
