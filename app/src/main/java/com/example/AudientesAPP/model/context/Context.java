@@ -1,7 +1,7 @@
 package com.example.AudientesAPP.model.context;
 
 import com.example.AudientesAPP.UI.MainActivity;
-import com.example.AudientesAPP.model.Data.DAO.CategoryDAO;
+import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
 
 public class Context {
     private MainActivity main;
