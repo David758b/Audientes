@@ -20,9 +20,11 @@ import android.widget.Toast;
 
 import com.example.AudientesAPP.DTO.CategoryDTO;
 import com.example.AudientesAPP.DTO.PresetDTO;
+import com.example.AudientesAPP.DTO.SoundDTO;
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.Data.CategoryDAO;
 import com.example.AudientesAPP.model.Data.PresetDAO;
+import com.example.AudientesAPP.model.Data.SoundDAO;
 import com.example.AudientesAPP.model.Data.SoundDB;
 import com.example.AudientesAPP.model.context.Context;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
@@ -104,22 +106,23 @@ public class MainActivity extends AppCompatActivity implements
         c.close();
 
 
-        /* Test of the Preset dao and dto
-        PresetDAO presetDAO = new PresetDAO(context);
-        PresetDTO newpreset = new PresetDTO("Sleep");
-        presetDAO.add(newpreset);
 
+        SoundDAO soundDAO = new SoundDAO(context);
+        SoundDTO newSound = new SoundDTO("Sleep","c-test-test",100);
+        soundDAO.add(newSound);
         List ar;
-        ar = presetDAO.getList();
-        PresetDTO presetDTO;
+        ar = soundDAO.getList();
+        SoundDTO soundDTO;
         for (Object a: ar) {
-            presetDTO = (PresetDTO) a;
+            soundDTO = (SoundDTO) a;
             System.out.println("CATEGORY DTO OUTPUT --------------");
-            System.out.println(presetDTO.getPresetName());
+            System.out.println(soundDTO.getSoundName());
+            System.out.println(soundDTO.getSoundSrc());
+            System.out.println(soundDTO.getSoundDuration());
 
         }
 
-         */
+
 
 
 

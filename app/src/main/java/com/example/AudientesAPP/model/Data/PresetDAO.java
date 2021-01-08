@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.AudientesAPP.DTO.CategoryDTO;
 import com.example.AudientesAPP.DTO.PresetDTO;
 import com.example.AudientesAPP.model.context.Context;
 
