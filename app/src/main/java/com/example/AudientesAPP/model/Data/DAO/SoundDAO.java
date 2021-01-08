@@ -54,7 +54,7 @@ public class SoundDAO implements ISoundDAO {
     }
 
     /**
-     * Deletes a row containing a name in the database
+     * Deletes a row containing the object in the database
      * @param object which you want to delete
      */
     @Override
@@ -85,7 +85,7 @@ public class SoundDAO implements ISoundDAO {
             String path = cursor.getString(1);
             int duration = cursor.getInt(2);
 
-            SoundDTO soundDTO = new SoundDTO(name,path,duration);
+            soundDTO = new SoundDTO(name,path,duration);
             soundDTOList.add(soundDTO);
 
         }

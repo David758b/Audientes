@@ -51,7 +51,7 @@ public class CategoryDAO implements ICategoryDAO {
 
 
     /**
-     * Deletes a row containing a category name in the database
+     * Deletes a row containing the object in the database
      * @param object which you want to delete
      */
     @Override

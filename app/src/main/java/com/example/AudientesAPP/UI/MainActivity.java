@@ -13,8 +13,14 @@ import android.os.Environment;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.AudientesAPP.DTO.CategoryDTO;
+import com.example.AudientesAPP.DTO.PresetCategoriesDTO;
+import com.example.AudientesAPP.DTO.PresetDTO;
 import com.example.AudientesAPP.DTO.SoundDTO;
 import com.example.AudientesAPP.R;
+import com.example.AudientesAPP.model.Data.DAO.CategoryDAO;
+import com.example.AudientesAPP.model.Data.DAO.PresetCategoriesDAO;
+import com.example.AudientesAPP.model.Data.DAO.PresetDAO;
 import com.example.AudientesAPP.model.Data.DAO.SoundDAO;
 import com.example.AudientesAPP.model.Data.SoundDB;
 import com.example.AudientesAPP.model.context.Context;
@@ -93,22 +99,16 @@ public class MainActivity extends AppCompatActivity implements
         c.close();
 
 
+        //"Kirsten" <- category
+        //"Sleep" <- Preset
 
-        SoundDAO soundDAO = new SoundDAO(context);
-        SoundDTO newSound = new SoundDTO("Sleep","c-test-test",100);
-        soundDAO.add(newSound);
-        List ar;
-        ar = soundDAO.getList();
-        SoundDTO soundDTO;
-        for (Object a: ar) {
-            soundDTO = (SoundDTO) a;
-            System.out.println("CATEGORY DTO OUTPUT --------------");
-            System.out.println(soundDTO.getSoundName());
-            System.out.println(soundDTO.getSoundSrc());
-            System.out.println(soundDTO.getSoundDuration());
 
-        }
 
+        PresetCategoriesDAO presetCategoriesDAO = new PresetCategoriesDAO(context);
+        PresetCategoriesDTO newPresetCategory = new PresetCategoriesDTO("Sleep","Kirsten");
+        presetCategoriesDAO.delete(newPresetCategory);
+
+        databaseTest(presetCategoriesDAO.getList());
 
 
 
@@ -127,6 +127,22 @@ public class MainActivity extends AppCompatActivity implements
             e.printStackTrace();
         }
         */
+
+
+    }
+
+    //Testing of the database may delete later
+    public void databaseTest(List list){
+
+        PresetCategoriesDTO DTO;
+        for (Object a: list) {
+            DTO = (PresetCategoriesDTO) a;
+            System.out.println("CATEGORY DTO OUTPUT --------------");
+            System.out.println(DTO.getCategoryName());
+            System.out.println(DTO.getPresetName());
+
+
+        }
 
 
     }

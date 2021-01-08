@@ -48,7 +48,7 @@ public class PresetDAO implements IPresetDAO {
     }
 
     /**
-     * Deletes a row containing a name in the database
+     * Deletes a row containing the object in the database
      * @param object which you want to delete
      */
 
@@ -77,7 +77,7 @@ public class PresetDAO implements IPresetDAO {
 
         while(cursor.moveToNext()){
             String name = cursor.getString(0);
-            PresetDTO presetDTO = new PresetDTO(name);
+            presetDTO = new PresetDTO(name);
             presetDTOList.add(presetDTO);
         }
 
