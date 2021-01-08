@@ -5,14 +5,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.AudientesAPP.DTO.CategoryDTO;
-import com.example.AudientesAPP.model.Data.InterfaceDAO.ICategoryDAO;
+import com.example.AudientesAPP.model.Data.InterfaceDAO.IDAO;
 import com.example.AudientesAPP.model.Data.SoundDB;
 import com.example.AudientesAPP.model.context.Context;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDAO implements ICategoryDAO {
+public class CategoryDAO implements IDAO {
     private Context context;
     private ContentValues row;
     private SQLiteDatabase db;
