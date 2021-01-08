@@ -16,11 +16,15 @@ import android.view.View;
 import com.example.AudientesAPP.DTO.CategoryDTO;
 import com.example.AudientesAPP.DTO.PresetCategoriesDTO;
 import com.example.AudientesAPP.DTO.PresetDTO;
+import com.example.AudientesAPP.DTO.PresetElementDTO;
+import com.example.AudientesAPP.DTO.SoundCategoriesDTO;
 import com.example.AudientesAPP.DTO.SoundDTO;
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.Data.DAO.CategoryDAO;
 import com.example.AudientesAPP.model.Data.DAO.PresetCategoriesDAO;
 import com.example.AudientesAPP.model.Data.DAO.PresetDAO;
+import com.example.AudientesAPP.model.Data.DAO.PresetElementDAO;
+import com.example.AudientesAPP.model.Data.DAO.SoundCategoriesDAO;
 import com.example.AudientesAPP.model.Data.DAO.SoundDAO;
 import com.example.AudientesAPP.model.Data.SoundDB;
 import com.example.AudientesAPP.model.context.Context;
@@ -99,20 +103,6 @@ public class MainActivity extends AppCompatActivity implements
         c.close();
 
 
-        //"Kirsten" <- category
-        //"Sleep" <- Preset
-
-
-
-        PresetCategoriesDAO presetCategoriesDAO = new PresetCategoriesDAO(context);
-        PresetCategoriesDTO newPresetCategory = new PresetCategoriesDTO("Sleep","Kirsten");
-        presetCategoriesDAO.delete(newPresetCategory);
-
-        databaseTest(presetCategoriesDAO.getList());
-
-
-
-
         /*
         //test ----det virker sgu !!!
         try {
@@ -129,17 +119,53 @@ public class MainActivity extends AppCompatActivity implements
         */
 
 
+        /* This can be run to initialize the database with random test data, and output something
+        fillDBUp();
+        databaseTest();
+         */
+
+    }
+
+    //Fill db with test data
+    public void fillDBUp(){
+        CategoryDAO categoryDAO = new CategoryDAO(context);
+        CategoryDTO newCategory = new CategoryDTO("I Like to move it");
+        categoryDAO.add(newCategory);
+
+        PresetDAO presetDAO = new PresetDAO(context);
+        PresetDTO presetDTO = new PresetDTO("Sove tid");
+        presetDAO.add(presetDTO);
+
+        SoundDAO soundDAO = new SoundDAO(context);
+        SoundDTO soundDTO = new SoundDTO("city noise", "sauce", 420);
+        soundDAO.add(soundDTO);
+
+        SoundCategoriesDAO soundCategoriesDAO = new SoundCategoriesDAO(context);
+        SoundCategoriesDTO soundCategoriesDTO = new SoundCategoriesDTO("city noise","I Like to move it");
+        soundCategoriesDAO.add(soundCategoriesDTO);
+
+        PresetCategoriesDAO presetCategoriesDAO = new PresetCategoriesDAO(context);
+        PresetCategoriesDTO presetCategoriesDTO = new PresetCategoriesDTO("Sove tid","I Like to move it");
+        presetCategoriesDAO.add(presetCategoriesDTO);
+
+        PresetElementDAO presetElementDAO = new PresetElementDAO(context);
+        PresetElementDTO newPresetElement = new PresetElementDTO("Sove tid","city noise",15);
+        presetElementDAO.add(newPresetElement);
+
     }
 
     //Testing of the database may delete later
-    public void databaseTest(List list){
-
-        PresetCategoriesDTO DTO;
+    public void databaseTest(){
+        List list;
+        PresetElementDAO presetElementDAO = new PresetElementDAO(context);
+        list = presetElementDAO.getList();
+        PresetElementDTO DTO;
         for (Object a: list) {
-            DTO = (PresetCategoriesDTO) a;
+            DTO = (PresetElementDTO) a;
             System.out.println("CATEGORY DTO OUTPUT --------------");
-            System.out.println(DTO.getCategoryName());
             System.out.println(DTO.getPresetName());
+            System.out.println(DTO.getSoundName());
+            System.out.println(DTO.getSoundVolume());
 
 
         }
