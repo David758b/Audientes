@@ -6,7 +6,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
@@ -20,7 +19,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.AudientesAPP.R;
+import com.example.AudientesAPP.model.Data.CategoryDAO;
 import com.example.AudientesAPP.model.Data.SoundDB;
+import com.example.AudientesAPP.model.context.Context;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.io.File;
@@ -38,14 +39,20 @@ public class MainActivity extends AppCompatActivity implements
     private NavController navController;
     MediaPlayer test;
     LydAfspiller lydAfspiller;
+    private SQLiteDatabase db;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         SoundDB SoundDatabase = new SoundDB(this);
-        SQLiteDatabase db = SoundDatabase.getWritableDatabase();
+        db = SoundDatabase.getWritableDatabase();
+
+        //Creates a context and gives this for later use in the database
+        context = new Context(this);
 
         //Navigations komponenten indeholder en default implementation af Navhost (NavHostFragment)
         //der viser destinationer af typen fragmenter
@@ -78,6 +85,18 @@ public class MainActivity extends AppCompatActivity implements
 
         //Test size for a specific file in bytes
         System.out.println(getFile(directory,"Cricket").length());
+
+
+        //outputs the table names in the cmd promt
+        Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
+        if (c.moveToFirst()) {
+            while ( !c.isAfterLast() ) {
+                System.out.println("Table Name=> "+c.getString(0));
+                //Toast.makeText(this, "Table Name=> "+c.getString(0), Toast.LENGTH_LONG).show();
+                c.moveToNext();
+            }
+        }
+        c.close();
 
 
 
@@ -180,6 +199,11 @@ public class MainActivity extends AppCompatActivity implements
 
     public LydAfspiller getLydAfspiller() {
         return lydAfspiller;
+    }
+
+    //We use this to get the database in the DAO's
+    public SQLiteDatabase getDB(){
+        return db;
     }
 
 
