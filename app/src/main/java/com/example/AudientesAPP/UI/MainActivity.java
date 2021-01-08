@@ -19,8 +19,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.AudientesAPP.DTO.CategoryDTO;
+import com.example.AudientesAPP.DTO.PresetDTO;
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.Data.CategoryDAO;
+import com.example.AudientesAPP.model.Data.PresetDAO;
 import com.example.AudientesAPP.model.Data.SoundDB;
 import com.example.AudientesAPP.model.context.Context;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
@@ -102,16 +104,22 @@ public class MainActivity extends AppCompatActivity implements
         c.close();
 
 
-        CategoryDAO categoryDAO = new CategoryDAO(context);
+        /* Test of the Preset dao and dto
+        PresetDAO presetDAO = new PresetDAO(context);
+        PresetDTO newpreset = new PresetDTO("Sleep");
+        presetDAO.add(newpreset);
+
         List ar;
-        ar = categoryDAO.getList();
-        CategoryDTO  categoryDTO;
+        ar = presetDAO.getList();
+        PresetDTO presetDTO;
         for (Object a: ar) {
-            categoryDTO = (CategoryDTO)a;
+            presetDTO = (PresetDTO) a;
             System.out.println("CATEGORY DTO OUTPUT --------------");
-            System.out.println(categoryDTO.getCategoryName());
+            System.out.println(presetDTO.getPresetName());
 
         }
+
+         */
 
 
 

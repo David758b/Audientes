@@ -6,7 +6,7 @@ public class PresetDTO {
     private String presetName;
 
 
-    public PresetDTO(String presetName, List<SoundDTO> presetSounds, int presetDuration) {
+    public PresetDTO(String presetName) {
         this.presetName = presetName;
     }
 

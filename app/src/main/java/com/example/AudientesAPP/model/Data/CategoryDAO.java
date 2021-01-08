@@ -17,6 +17,7 @@ public class CategoryDAO implements ICategoryDAO{
     private SQLiteDatabase db;
     private String categoryName;
     private CategoryDTO categoryDTO;
+    private List<Object> categoryDTOList;
 
     /**
      * Constructor of the CategoryDAO which initialize the relevant attributes of the class.
@@ -69,7 +70,7 @@ public class CategoryDAO implements ICategoryDAO{
     @Override
     public List<Object> getList() {
 
-        List<Object> categoryDTOList = new ArrayList<>();
+        categoryDTOList = new ArrayList<>();
 
         String[] column = {SoundDB.CATEGORY_NAME};
 
