@@ -50,7 +50,7 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
 
 
 
-        presetItemAdapter = new MyAdapter(presetNames);
+        presetItemAdapter = new PresetAdapter(presetNames);
         recyclerView.setAdapter(presetItemAdapter);
 
         recyclerView.setPadding(0,75,0,20);
@@ -63,7 +63,7 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
     private void initialize(View v){
         presetListTV = v.findViewById(R.id.presetList_TV);
         addPreset = v.findViewById(R.id.add_preset);
-        presetName = v.findViewById(R.id.textViewCategoryELement);
+        //presetName = v.findViewById(R.id.textViewCategoryELement);
 
         presetItems = new HashMap<>();
 
@@ -87,11 +87,12 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
     }
 }
 
-class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
+class PresetAdapter extends RecyclerView.Adapter<PresetAdapter.MyViewHolder>{
 
     private List<String> mPresetSet;
+    //private List<PresetDTO> mPresetSet;
 
-    public MyAdapter(List<String> myPresetSet){
+    public PresetAdapter(List<String> myPresetSet){
         mPresetSet = myPresetSet;
     }
 
@@ -107,17 +108,27 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     @NonNull
     @Override
-    public MyAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PresetAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.preset_item, parent, false);
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PresetAdapter.MyViewHolder holder, int position) {
             //Her hentes data objekterne i fremtiden ...
-
+            //PresetDTO presetDTO = mPresetSet.get(position)
             holder.presetTextView.setText(mPresetSet.get(position));
+            //holder.presetTextView.setText(presetDTO.getPresetName());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                //Naviger til preset fragment med alt info omkring preset.
+
+            }
+        });
     }
 
     @Override

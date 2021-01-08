@@ -1,4 +1,4 @@
-package com.example.AudientesAPP.model.Data;
+package com.example.AudientesAPP.model.data;
 
 import java.util.List;
 

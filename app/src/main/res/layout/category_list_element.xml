@@ -5,7 +5,7 @@
     android:background="@drawable/round_outline">
 
     <ImageView
-        android:id="@+id/imageViewCategoryElement"
+        android:id="@+id/categoryIcon_IV"
         android:layout_width="91dp"
         android:layout_height="49dp"
         android:layout_alignParentStart="true"
@@ -16,7 +16,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/textViewCategoryELement"
+        android:id="@+id/categoryName_TV"
         android:layout_width="299dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -25,8 +25,8 @@
         android:layout_marginLeft="0dp"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="12dp"
-        android:layout_toRightOf="@id/imageViewCategoryElement"
-        android:text="hallo"
+        android:layout_toRightOf="@id/categoryIcon_IV"
+        android:text="Category Name"
         android:textSize="24dp" />
 
 
