@@ -66,7 +66,7 @@ public class LibraryListSound extends Fragment implements SoundAdapter.OnItemCli
 
 
         soundItemAdapter.setOnClick(LibraryListSound.this);
-        recyclerView.setPadding(0,75,0,20);
+        //recyclerView.setPadding(0,75,0,20);
 
         return v;
     }
