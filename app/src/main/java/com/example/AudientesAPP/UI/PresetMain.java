@@ -63,7 +63,7 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
     private void initialize(View v){
         presetListTV = v.findViewById(R.id.presetList_TV);
         addPreset = v.findViewById(R.id.add_preset);
-        presetName = v.findViewById(R.id.textViewCategoryELement);
+        //presetName = v.findViewById(R.id.textViewCategoryELement);
 
         presetItems = new HashMap<>();
 
@@ -90,6 +90,7 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
 class PresetAdapter extends RecyclerView.Adapter<PresetAdapter.MyViewHolder>{
 
     private List<String> mPresetSet;
+    //private List<PresetDTO> mPresetSet;
 
     public PresetAdapter(List<String> myPresetSet){
         mPresetSet = myPresetSet;
@@ -116,8 +117,18 @@ class PresetAdapter extends RecyclerView.Adapter<PresetAdapter.MyViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull PresetAdapter.MyViewHolder holder, int position) {
             //Her hentes data objekterne i fremtiden ...
-
+            //PresetDTO presetDTO = mPresetSet.get(position)
             holder.presetTextView.setText(mPresetSet.get(position));
+            //holder.presetTextView.setText(presetDTO.getPresetName());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                //Naviger til preset fragment med alt info omkring preset.
+
+            }
+        });
     }
 
     @Override

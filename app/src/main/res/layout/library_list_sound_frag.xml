@@ -3,18 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
-    
-    <RelativeLayout
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sounds_RV"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="0dp">
-        
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/sounds_RV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-    </RelativeLayout>
+        android:layout_height="wrap_content" />
 </LinearLayout>

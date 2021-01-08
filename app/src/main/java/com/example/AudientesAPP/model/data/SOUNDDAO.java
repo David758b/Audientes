@@ -1,9 +1,7 @@
-package com.example.AudientesAPP.model.Data;
+package com.example.AudientesAPP.model.data;
 
 
 import com.example.AudientesAPP.DTO.PresetItemDTO;
-
-import java.util.List;
 
 public class SOUNDDAO{
 
