@@ -5,7 +5,6 @@ import java.util.List;
 public class PresetElementDTO {
     private String presetName;
     private String soundName;
-
     private int soundVolume;
 
 

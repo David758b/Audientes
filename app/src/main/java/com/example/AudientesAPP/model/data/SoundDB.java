@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SoundDB extends SQLiteOpenHelper {
 
 
-        public static final int VERSION = 1;
+        public static final int VERSION = 2;
         public static final String DATABASE = "sound.db";
         public static final String TABEL_Sounds = "Sounds";
         public static final String TABEL_Category = "Category";
@@ -56,13 +56,6 @@ public class SoundDB extends SQLiteOpenHelper {
         @Override
         public void onCreate(SQLiteDatabase db) {
 
-                //Pas nu forhelvede på her! det skal skrives ordenligt ellers bruger man
-                // fucking lang tid på at fejlsøge
-                // tjek alt fra stavefejl til mellemrum
-
-                /*db.execSQL("CREATE TABLE " + TABEL1 + " (" + ID + " INTEGER PRIMARY KEY, "
-                        + NAVN + " TEXT, " + POINT + " INTEGER)");*/
-
                 db.execSQL("CREATE TABLE "+TABEL_Sounds+" ("+SOUND_NAME+" TEXT PRIMARY KEY, "+
                         PATH+" TEXT, "+DURATION+" INTEGER)");
 
@@ -70,34 +63,43 @@ public class SoundDB extends SQLiteOpenHelper {
 
                 db.execSQL("CREATE TABLE "+TABEL_Presets+ " ("+PRESET_NAME+" TEXT PRIMARY KEY)");
 
-                db.execSQL("CREATE TABLE "+TABEL_PresetCategories+ " (" + PRESET_NAME + " TEXT, " +
+                db.execSQL("CREATE TABLE "+TABEL_PresetCategories+ " (" +
+                        PRESET_NAME + " TEXT, " +
                         CATEGORY_NAME + " TEXT, PRIMARY KEY(" + PRESET_NAME + ", " + CATEGORY_NAME + "),"
-                        + " FOREIGN KEY(" + CATEGORY_NAME + ") REFERENCES " +
-                                TABEL_Category + "(" + CATEGORY_NAME + ")" + ", FOREIGN KEY(" + PRESET_NAME + ") REFERENCES " +
-                        TABEL_Presets + "(" + PRESET_NAME + "))" );
+                        + " FOREIGN KEY(" + CATEGORY_NAME + ") REFERENCES " + TABEL_Category + "(" + CATEGORY_NAME + ") ON DELETE CASCADE"
+                        + ", FOREIGN KEY(" + PRESET_NAME + ") REFERENCES " + TABEL_Presets + "(" + PRESET_NAME + ") ON DELETE CASCADE)" );
 
                 // CREATE TABLE TABEL_PresetCategories (PRESET_NAME TEXT PRIMARY KEY, CATEGORY_NAME TEXT PRIMARY KEY, FOREIGN KEY(CATEGORY_NAME) REFERENCES TABEL_Category(CATEGORY_NAME),
                 // FOREIGN KEY(PRESET_NAME) REFERENCES TABEL_Presets(PRESET_NAME) );
-                db.execSQL("CREATE TABLE "+TABEL_SoundCategories+ " (" + SOUND_NAME + " TEXT, " +
+                db.execSQL("CREATE TABLE "+TABEL_SoundCategories+ " (" +
+                        SOUND_NAME + " TEXT, " +
                         CATEGORY_NAME + " TEXT, PRIMARY KEY(" + SOUND_NAME + ", " + CATEGORY_NAME + "),"
-                        + " FOREIGN KEY(" + CATEGORY_NAME + ") REFERENCES " +
-                        TABEL_Category + "(" + CATEGORY_NAME + ")" + ", FOREIGN KEY(" + SOUND_NAME + ") REFERENCES " +
-                        TABEL_Sounds + "(" + SOUND_NAME + "))" );
+                        + " FOREIGN KEY(" + CATEGORY_NAME + ") REFERENCES " + TABEL_Category + "(" + CATEGORY_NAME + ") ON DELETE CASCADE" +
+                        ", FOREIGN KEY(" + SOUND_NAME + ") REFERENCES " + TABEL_Sounds + "(" + SOUND_NAME + ") ON DELETE CASCADE)" );
 
-                db.execSQL("CREATE TABLE "+TABEL_PresetElements+ " (" + PRESET_NAME + " TEXT, " +
-                        SOUND_NAME + " TEXT, " + CUSTOM_DURATION + " INTEGER, " + VOLUME + " INTEGER, " +
-                        DELAY_BEFORE_PLAYING + " INTEGER, " + LOOP + " INTEGER, PRIMARY KEY(" + PRESET_NAME + ", " + SOUND_NAME + "),"
-                        + " FOREIGN KEY(" + PRESET_NAME + ") REFERENCES " +
-                        TABEL_Presets + "(" + PRESET_NAME + ")" + ", FOREIGN KEY(" + SOUND_NAME + ") REFERENCES " +
-                        TABEL_Sounds + "(" + SOUND_NAME + "))" );
+                db.execSQL("CREATE TABLE "+TABEL_PresetElements+ " (" +
+                        PRESET_NAME + " TEXT, " +
+                        SOUND_NAME + " TEXT, " +
+                        CUSTOM_DURATION + " INTEGER, " +
+                        VOLUME + " INTEGER, " +
+                        DELAY_BEFORE_PLAYING + " INTEGER, " +
+                        LOOP + " INTEGER, PRIMARY KEY(" + PRESET_NAME + ", " + SOUND_NAME + ")," +
+                        " FOREIGN KEY(" + PRESET_NAME + ") REFERENCES " + TABEL_Presets + "(" + PRESET_NAME + ") ON DELETE CASCADE" +
+                        ", FOREIGN KEY(" + SOUND_NAME + ") REFERENCES " + TABEL_Sounds + "(" + SOUND_NAME + ") ON DELETE CASCADE)" );
 
 
         }
 
+
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-                db.execSQL("DROP TABLE " + TABEL_Sounds);
+                db.execSQL("DROP TABLE IF EXISTS " + TABEL_PresetElements);
+                db.execSQL("DROP TABLE IF EXISTS " + TABEL_SoundCategories);
+                db.execSQL("DROP TABLE IF EXISTS " + TABEL_PresetCategories);
+                db.execSQL("DROP TABLE IF EXISTS " + TABEL_Presets);
+                db.execSQL("DROP TABLE IF EXISTS " + TABEL_Category);
+                db.execSQL("DROP TABLE IF EXISTS " + TABEL_Sounds);
                 this.onCreate(db);
         }
 }

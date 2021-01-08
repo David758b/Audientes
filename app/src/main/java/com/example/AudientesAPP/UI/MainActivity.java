@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -12,13 +13,28 @@ import android.os.Environment;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.AudientesAPP.DTO.CategoryDTO;
+import com.example.AudientesAPP.DTO.PresetCategoriesDTO;
+import com.example.AudientesAPP.DTO.PresetDTO;
+import com.example.AudientesAPP.DTO.PresetElementDTO;
+import com.example.AudientesAPP.DTO.SoundCategoriesDTO;
+import com.example.AudientesAPP.DTO.SoundDTO;
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.data.SoundDB;
+import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
+import com.example.AudientesAPP.model.data.DAO.PresetCategoriesDAO;
+import com.example.AudientesAPP.model.data.DAO.PresetDAO;
+import com.example.AudientesAPP.model.data.DAO.PresetElementDAO;
+import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
+import com.example.AudientesAPP.model.data.DAO.SoundDAO;
+import com.example.AudientesAPP.model.data.SoundDB;
+import com.example.AudientesAPP.model.context.Context;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -28,14 +44,20 @@ public class MainActivity extends AppCompatActivity implements
     private NavController navController;
     MediaPlayer mediaPlayer;
     LydAfspiller lydAfspiller;
+    private SQLiteDatabase db;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         SoundDB SoundDatabase = new SoundDB(this);
-        SQLiteDatabase db = SoundDatabase.getWritableDatabase();
+        db = SoundDatabase.getWritableDatabase();
+
+        //Creates a context and gives this for later use in the database
+        context = new Context(this);
 
         //Navigations komponenten indeholder en default implementation af Navhost (NavHostFragment)
         //der viser destinationer af typen fragmenter
@@ -69,6 +91,17 @@ public class MainActivity extends AppCompatActivity implements
         System.out.println(getFile(directory,"Cricket").length());
 
 
+        //outputs the table names in the cmd promt
+        Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
+        if (c.moveToFirst()) {
+            while ( !c.isAfterLast() ) {
+                System.out.println("Table Name=> "+c.getString(0));
+                //Toast.makeText(this, "Table Name=> "+c.getString(0), Toast.LENGTH_LONG).show();
+                c.moveToNext();
+            }
+        }
+        c.close();
+
 
         /*
         //test ----det virker sgu !!!
@@ -84,6 +117,59 @@ public class MainActivity extends AppCompatActivity implements
             e.printStackTrace();
         }
         */
+
+
+        /* This can be run to initialize the database with random test data, and output something
+        fillDBUp();
+        databaseTest();
+         */
+
+
+    }
+
+    //Fill db with test data
+    public void fillDBUp(){
+        CategoryDAO categoryDAO = new CategoryDAO(context);
+        CategoryDTO newCategory = new CategoryDTO("I Like to move it");
+        categoryDAO.add(newCategory);
+
+        PresetDAO presetDAO = new PresetDAO(context);
+        PresetDTO presetDTO = new PresetDTO("Sove tid");
+        presetDAO.add(presetDTO);
+
+        SoundDAO soundDAO = new SoundDAO(context);
+        SoundDTO soundDTO = new SoundDTO("city noise", "sauce", 420);
+        soundDAO.add(soundDTO);
+
+        SoundCategoriesDAO soundCategoriesDAO = new SoundCategoriesDAO(context);
+        SoundCategoriesDTO soundCategoriesDTO = new SoundCategoriesDTO("city noise","I Like to move it");
+        soundCategoriesDAO.add(soundCategoriesDTO);
+
+        PresetCategoriesDAO presetCategoriesDAO = new PresetCategoriesDAO(context);
+        PresetCategoriesDTO presetCategoriesDTO = new PresetCategoriesDTO("Sove tid","I Like to move it");
+        presetCategoriesDAO.add(presetCategoriesDTO);
+
+        PresetElementDAO presetElementDAO = new PresetElementDAO(context);
+        PresetElementDTO newPresetElement = new PresetElementDTO("Sove tid","city noise",15);
+        presetElementDAO.add(newPresetElement);
+
+    }
+
+    //Testing of the database may delete later
+    public void databaseTest(){
+        List list;
+        PresetElementDAO presetElementDAO = new PresetElementDAO(context);
+        list = presetElementDAO.getList();
+        PresetElementDTO DTO;
+        for (Object a: list) {
+            DTO = (PresetElementDTO) a;
+            System.out.println("CATEGORY DTO OUTPUT --------------");
+            System.out.println(DTO.getPresetName());
+            System.out.println(DTO.getSoundName());
+            System.out.println(DTO.getSoundVolume());
+
+
+        }
 
 
     }
@@ -174,6 +260,12 @@ public class MainActivity extends AppCompatActivity implements
     public NavController getNavController(){
         return navController;
     }
+    //We use this to get the database in the DAO's
+    public SQLiteDatabase getDB(){
+        return db;
+    }
+
+
 }
 
 
