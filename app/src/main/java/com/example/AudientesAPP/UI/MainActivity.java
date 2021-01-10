@@ -1,5 +1,6 @@
 package com.example.AudientesAPP.UI;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -12,7 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.MenuItem;
 import android.view.View;
-
+import com.example.AudientesAPP.model.context.Context;
 import com.example.AudientesAPP.DTO.CategoryDTO;
 import com.example.AudientesAPP.DTO.PresetCategoriesDTO;
 import com.example.AudientesAPP.DTO.PresetDTO;
@@ -27,8 +28,6 @@ import com.example.AudientesAPP.model.data.DAO.PresetDAO;
 import com.example.AudientesAPP.model.data.DAO.PresetElementDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundDAO;
-import com.example.AudientesAPP.model.data.SoundDB;
-import com.example.AudientesAPP.model.context.Context;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.io.File;
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements
     MediaPlayer mediaPlayer;
     LydAfspiller lydAfspiller;
     private SQLiteDatabase db;
-    Context context;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,8 +166,6 @@ public class MainActivity extends AppCompatActivity implements
             System.out.println(DTO.getPresetName());
             System.out.println(DTO.getSoundName());
             System.out.println(DTO.getSoundVolume());
-
-
         }
 
 
@@ -264,6 +261,11 @@ public class MainActivity extends AppCompatActivity implements
     public SQLiteDatabase getDB(){
         return db;
     }
+
+    public Context getContext() {
+        return context;
+    }
+
 
 
 }

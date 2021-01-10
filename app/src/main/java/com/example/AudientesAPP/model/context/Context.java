@@ -5,11 +5,11 @@ import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
 
 public class Context {
     private MainActivity main;
-    private CategoryDAO categoryDAO;
+    //private CategoryDAO categoryDAO;
 
     public Context(MainActivity main) {
         this.main = main;
-        categoryDAO = new CategoryDAO(this);
+//        categoryDAO = new CategoryDAO(this);
 
         //TESTING
         //categoryDAO.add("te");

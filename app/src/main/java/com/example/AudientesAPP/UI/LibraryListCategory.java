@@ -1,12 +1,9 @@
 package com.example.AudientesAPP.UI;
 
-import android.Manifest;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,16 +15,17 @@ import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.AudientesAPP.DTO.CategoryDTO;
+import com.example.AudientesAPP.DTO.PresetElementDTO;
+import com.example.AudientesAPP.model.context.Context;
 import com.example.AudientesAPP.R;
+import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
+import com.example.AudientesAPP.model.data.DAO.PresetElementDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +40,8 @@ public class LibraryListCategory extends Fragment{
     private RecyclerView.LayoutManager layoutManager;
 
     private NavController navController;
+    private CategoryDAO categoryDAO;
+    private Context context;
 
 
 
@@ -49,6 +49,7 @@ public class LibraryListCategory extends Fragment{
 
         View root = inflater.inflate(R.layout.library_list_category_frag, container, false);
         MainActivity mainActivity = (MainActivity) getActivity();
+        context = mainActivity.getContext();
 
         NavHostFragment navHostFragment = (NavHostFragment) getParentFragmentManager().findFragmentById(R.id.navHost);
         //navController = navHostFragment.getNavController();
@@ -58,15 +59,23 @@ public class LibraryListCategory extends Fragment{
         layoutManager = new LinearLayoutManager(this.getContext());
         categoryList.setLayoutManager(layoutManager);
 
-        List<String> currentlist = new ArrayList<>();
-        currentlist.add("Preset");
-        currentlist.add("Sleep");
-        currentlist.add("Nature");
-        currentlist.add("Ocean");
-        currentlist.add("Music");
+
+
+        // TEST - Test af logik, som nok skal være i funktionalitetsmappen
+        categoryDAO = new CategoryDAO(context);
+
+        List list;
+        list = categoryDAO.getList();
+        List<String> categoryNames = new ArrayList<>();
+        CategoryDTO categoryDTO;
+        for (Object a: list) {
+            categoryDTO = (CategoryDTO) a;
+            categoryNames.add(categoryDTO.getCategoryName());
+        }
+
 
         try{
-            mAdapter = new CategoryAdapter(currentlist,this.getActivity(), mainActivity.getNavController());
+            mAdapter = new CategoryAdapter(categoryNames,this.getActivity(), mainActivity.getNavController());
         }catch (Exception e){
             e.printStackTrace();
         }
