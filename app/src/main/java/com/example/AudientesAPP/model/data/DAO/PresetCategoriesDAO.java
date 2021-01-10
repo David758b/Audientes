@@ -6,20 +6,21 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.AudientesAPP.DTO.PresetCategoriesDTO;
 import com.example.AudientesAPP.model.data.InterfaceDAO.IDAO;
+import com.example.AudientesAPP.model.data.InterfaceDAO.IPresetCategoriesDAO;
 import com.example.AudientesAPP.model.data.SoundDB;
 import com.example.AudientesAPP.model.context.Context;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PresetCategoriesDAO implements IDAO {
+public class PresetCategoriesDAO implements IPresetCategoriesDAO {
     private Context context;
     private ContentValues row;
     private SQLiteDatabase db;
     private String presetName;
     private String categoryName;
     private PresetCategoriesDTO presetCategoriesDTO;
-    private List<Object> presetCategoriesDTOList;
+    private List<PresetCategoriesDTO> presetCategoriesDTOList;
 
 
     /**
@@ -33,12 +34,11 @@ public class PresetCategoriesDAO implements IDAO {
 
 
     /**
-     * Adds a specific object to the database
-     * @param object you wish to save in the database
+     * Adds a specific presetCategoriesDTO to the database
+     * @param presetCategoriesDTO you wish to save in the database
      */
     @Override
-    public void add(Object object) {
-        presetCategoriesDTO = (PresetCategoriesDTO) object;
+    public void add(PresetCategoriesDTO presetCategoriesDTO) {
         presetName = presetCategoriesDTO.getPresetName();
         categoryName = presetCategoriesDTO.getCategoryName();
 
@@ -52,12 +52,11 @@ public class PresetCategoriesDAO implements IDAO {
     }
 
     /**
-     * Deletes a row containing the object in the database
-     * @param object which you want to delete
+     * Deletes a row containing the presetCategoriesDTO in the database
+     * @param presetCategoriesDTO which you want to delete
      */
     @Override
-    public void delete(Object object) {
-        presetCategoriesDTO = (PresetCategoriesDTO) object;
+    public void delete(PresetCategoriesDTO presetCategoriesDTO) {
         presetName = presetCategoriesDTO.getPresetName();
         categoryName = presetCategoriesDTO.getCategoryName();
 
@@ -66,15 +65,14 @@ public class PresetCategoriesDAO implements IDAO {
                         + SoundDB.CATEGORY_NAME + " = '"+ categoryName + "'",
                 null);
 
-
     }
 
     /**
      * This method is for retrieving a list of all the presetCategories
-     * @return a list of presetCategoriesDTO objects
+     * @return a list of presetCategoriesDTO presetCategoriesDTOs
      */
     @Override
-    public List<Object> getList() {
+    public List<PresetCategoriesDTO> getList() {
 
         presetCategoriesDTOList = new ArrayList<>();
 

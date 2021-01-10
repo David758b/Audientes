@@ -21,13 +21,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.AudientesAPP.DTO.CategoryDTO;
-import com.example.AudientesAPP.DTO.PresetElementDTO;
 import com.example.AudientesAPP.model.context.Context;
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
-import com.example.AudientesAPP.model.data.DAO.PresetElementDAO;
 import com.example.AudientesAPP.model.funktionalitet.LibraryListCategoryLogic;
 
 import java.util.ArrayList;
@@ -73,7 +69,7 @@ public class LibraryListCategory extends Fragment{
 
 
         try{
-            mAdapter = new CategoryAdapter(categoryNames,this.getActivity(), mainActivity.getNavController());
+            mAdapter = new CategoryAdapter(categoryNames,context, mainActivity.getNavController());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -85,7 +81,7 @@ public class LibraryListCategory extends Fragment{
 
 class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
     //private final Context context;
-    private FragmentActivity fragmentActivity;
+    private Context context;
     private List<String> mDataset;
     //private List<CategoryDTO> mDataset;
     private Fragment mFragment;
@@ -93,8 +89,8 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
     private NavController navController;
 
 
-   public CategoryAdapter(List<String> mDataset, FragmentActivity fragmentActivity, NavController navController) {
-        this.fragmentActivity = fragmentActivity;
+   public CategoryAdapter(List<String> mDataset, Context context, NavController navController) {
+        this.context = context;
         this.mDataset = mDataset;
         this.navController = navController;
     }
@@ -124,7 +120,7 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         String categoryDTO = mDataset.get(position);
         //CategoryDTO categoryDTO = mDataset.get(position);
-        Typeface typeface = ResourcesCompat.getFont(fragmentActivity, R.font.audientes_font);
+        Typeface typeface = ResourcesCompat.getFont(context.getActivity(), R.font.audientes_font);
         holder.categoryName.setTypeface(typeface);
         holder.categoryName.setText(categoryDTO);
         //holder.categoryName.setText(categoryDTO.getCategoryName());
@@ -177,13 +173,10 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
                     // Hop til create category siden
                 } else {
                     // Hop til den rigtige kategori
-                    Bundle bundle = new Bundle();
-                    bundle.putString("CategoryName", mDataset.get(position));
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(fragmentActivity);
-                    prefs.edit().putString("Category", mDataset.get(position)).apply();
-                    navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds, bundle);
+                    context.getPrefs().edit().putString("Category", mDataset.get(position)).apply();
+                    navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
                 }
-                //fragmentJump();
+
 
 
             }

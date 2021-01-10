@@ -6,19 +6,20 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.AudientesAPP.DTO.PresetDTO;
 import com.example.AudientesAPP.model.data.InterfaceDAO.IDAO;
+import com.example.AudientesAPP.model.data.InterfaceDAO.IPresetDAO;
 import com.example.AudientesAPP.model.data.SoundDB;
 import com.example.AudientesAPP.model.context.Context;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PresetDAO implements IDAO {
+public class PresetDAO implements IPresetDAO {
     private Context context;
     private ContentValues row;
     private SQLiteDatabase db;
     private String presetName;
     private PresetDTO presetDTO;
-    private List<Object> presetDTOList;
+    private List<PresetDTO> presetDTOList;
 
     /**
      * Constructor of the presetDAO which initialize the relevant attributes of the class.
@@ -30,13 +31,12 @@ public class PresetDAO implements IDAO {
     }
 
     /**
-     * Adds a specific object to the database
-     * @param object you wish to save in the database
+     * Adds a specific presetDTO to the database
+     * @param presetDTO you wish to save in the database
      */
     @Override
-    public void add(Object object) {
+    public void add(PresetDTO presetDTO) {
 
-        presetDTO = (PresetDTO) object;
         presetName = presetDTO.getPresetName();
 
         row = new ContentValues();
@@ -48,14 +48,13 @@ public class PresetDAO implements IDAO {
     }
 
     /**
-     * Deletes a row containing the object in the database
-     * @param object which you want to delete
+     * Deletes a row containing the presetDTO in the database
+     * @param presetDTO which you want to delete
      */
 
     @Override
-    public void delete(Object object) {
+    public void delete(PresetDTO presetDTO) {
 
-        presetDTO = (PresetDTO) object;
         presetName = presetDTO.getPresetName();
 
         db.delete(SoundDB.TABEL_Presets,SoundDB.PRESET_NAME + " = '" + presetName + "'",null);
@@ -64,10 +63,10 @@ public class PresetDAO implements IDAO {
 
     /**
      * This method is for retrieving a list of all the presets
-     * @return a list of presetDTO objects
+     * @return a list of presetDTO presetDTOs
      */
     @Override
-    public List<Object> getList() {
+    public List<PresetDTO> getList() {
 
         presetDTOList = new ArrayList<>();
 

@@ -6,20 +6,21 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.AudientesAPP.DTO.SoundCategoriesDTO;
 import com.example.AudientesAPP.model.data.InterfaceDAO.IDAO;
+import com.example.AudientesAPP.model.data.InterfaceDAO.ISoundCategoriesDAO;
 import com.example.AudientesAPP.model.data.SoundDB;
 import com.example.AudientesAPP.model.context.Context;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SoundCategoriesDAO implements IDAO {
+public class SoundCategoriesDAO implements ISoundCategoriesDAO {
     private Context context;
     private ContentValues row;
     private SQLiteDatabase db;
     private String soundName;
     private String categoryName;
     private SoundCategoriesDTO soundCategoriesDTO;
-    private List<Object> soundCategoriesDTOList;
+    private List<SoundCategoriesDTO> soundCategoriesDTOList;
 
 
     public SoundCategoriesDAO(Context context) {
@@ -28,8 +29,7 @@ public class SoundCategoriesDAO implements IDAO {
     }
 
     @Override
-    public void add(Object object) {
-        soundCategoriesDTO = (SoundCategoriesDTO) object;
+    public void add(SoundCategoriesDTO soundCategoriesDTO) {
         soundName = soundCategoriesDTO.getSoundName();
         categoryName = soundCategoriesDTO.getCategoryName();
 
@@ -41,8 +41,7 @@ public class SoundCategoriesDAO implements IDAO {
     }
 
     @Override
-    public void delete(Object object) {
-        soundCategoriesDTO = (SoundCategoriesDTO) object;
+    public void delete(SoundCategoriesDTO soundCategoriesDTO) {
         soundName = soundCategoriesDTO.getSoundName();
         categoryName = soundCategoriesDTO.getCategoryName();
 
@@ -56,7 +55,7 @@ public class SoundCategoriesDAO implements IDAO {
     }
 
     @Override
-    public List<Object> getList() {
+    public List<SoundCategoriesDTO> getList() {
 
         soundCategoriesDTOList = new ArrayList<>();
 

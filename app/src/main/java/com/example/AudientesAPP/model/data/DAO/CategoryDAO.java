@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.AudientesAPP.DTO.CategoryDTO;
+import com.example.AudientesAPP.model.data.InterfaceDAO.ICategoryDAO;
 import com.example.AudientesAPP.model.data.InterfaceDAO.IDAO;
 import com.example.AudientesAPP.model.data.SoundDB;
 import com.example.AudientesAPP.model.context.Context;
@@ -12,13 +13,13 @@ import com.example.AudientesAPP.model.context.Context;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDAO implements IDAO {
+public class CategoryDAO implements ICategoryDAO {
     private Context context;
     private ContentValues row;
     private SQLiteDatabase db;
     private String categoryName;
     private CategoryDTO categoryDTO;
-    private List<Object> categoryDTOList;
+    private List<CategoryDTO> categoryDTOList;
 
     /**
      * Constructor of the CategoryDAO which initialize the relevant attributes of the class.
@@ -35,9 +36,7 @@ public class CategoryDAO implements IDAO {
      * @param object you wish to save in the database
      */
     @Override
-    public void add(Object object) {
-
-        categoryDTO = (CategoryDTO) object;
+    public void add(CategoryDTO categoryDTO) {
         categoryName = categoryDTO.getCategoryName();
 
         row = new ContentValues();
@@ -55,9 +54,8 @@ public class CategoryDAO implements IDAO {
      * @param object which you want to delete
      */
     @Override
-    public void delete(Object object) {
+    public void delete(CategoryDTO categoryDTO) {
 
-        categoryDTO = (CategoryDTO) object;
         categoryName = categoryDTO.getCategoryName();
 
         db.delete(SoundDB.TABEL_Category,SoundDB.CATEGORY_NAME + " = '" + categoryName + "'",null);
@@ -69,7 +67,7 @@ public class CategoryDAO implements IDAO {
      * @return a list of CategoryDTO objects
      */
     @Override
-    public List<Object> getList() {
+    public List<CategoryDTO> getList() {
 
         categoryDTOList = new ArrayList<>();
 

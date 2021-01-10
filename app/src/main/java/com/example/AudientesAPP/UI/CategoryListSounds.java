@@ -32,8 +32,6 @@ public class CategoryListSounds extends Fragment implements CategoryListSoundAda
     private RecyclerView recyclerView;
     private CategoryListSoundAdapter soundItemAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private Bundle bundle;
-    private TextView textView;
     private Context context;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,7 +46,6 @@ public class CategoryListSounds extends Fragment implements CategoryListSoundAda
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        //bundle = this.getArguments();
         String category = context.getPrefs().getString("Category", "Fejl");
         categoryTitle.setText(category);
 

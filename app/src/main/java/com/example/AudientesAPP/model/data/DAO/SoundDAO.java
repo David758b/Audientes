@@ -5,13 +5,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.example.AudientesAPP.DTO.SoundDTO;
 import com.example.AudientesAPP.model.data.InterfaceDAO.IDAO;
+import com.example.AudientesAPP.model.data.InterfaceDAO.ISoundDAO;
 import com.example.AudientesAPP.model.data.SoundDB;
 import com.example.AudientesAPP.model.context.Context;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SoundDAO implements IDAO {
+public class SoundDAO implements ISoundDAO {
 
     private Context context;
     private ContentValues row;
@@ -20,7 +21,7 @@ public class SoundDAO implements IDAO {
     private String soundSrc;
     private int soundDuration;
     private SoundDTO soundDTO;
-    private List<Object> soundDTOList;
+    private List<SoundDTO> soundDTOList;
 
     /**
      * Constructor of the soundDAO which initialize the relevant attributes of the class.
@@ -32,12 +33,11 @@ public class SoundDAO implements IDAO {
     }
 
     /**
-     * Adds a specific object to the database
-     * @param object you wish to save in the database
+     * Adds a specific soundDTO to the database
+     * @param soundDTO you wish to save in the database
      */
     @Override
-    public void add(Object object) {
-        soundDTO = (SoundDTO) object;
+    public void add(SoundDTO soundDTO) {
         soundName = soundDTO.getSoundName();
         soundSrc = soundDTO.getSoundSrc();
         soundDuration = soundDTO.getSoundDuration();
@@ -54,13 +54,12 @@ public class SoundDAO implements IDAO {
     }
 
     /**
-     * Deletes a row containing the object in the database
-     * @param object which you want to delete
+     * Deletes a row containing the soundDTO in the database
+     * @param soundDTO which you want to delete
      */
     @Override
-    public void delete(Object object) {
+    public void delete(SoundDTO soundDTO) {
 
-        soundDTO = (SoundDTO) object;
         soundName = soundDTO.getSoundName();
 
         db.delete(SoundDB.TABEL_Sounds,SoundDB.SOUND_NAME + " = '" + soundName + "'",null);
@@ -69,10 +68,10 @@ public class SoundDAO implements IDAO {
 
     /**
      * This method is for retrieving a list of all the presets
-     * @return a list of soundDTO objects
+     * @return a list of soundDTO soundDTOs
      */
     @Override
-    public List<Object> getList() {
+    public List<SoundDTO> getList() {
 
         soundDTOList = new ArrayList<>();
 

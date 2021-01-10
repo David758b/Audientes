@@ -20,15 +20,12 @@ public class LibraryListCategoryLogic {
 
 
     public List<String> getCategoryNames () {
-        List list = categoryDAO.getList();
+        List<CategoryDTO> categoryDTOS = categoryDAO.getList();
         List<String> categoryNames = new ArrayList<>();
 
-        CategoryDTO categoryDTO;
-
         categoryNames.add("Create category");
-        for (Object a: list) {
-            categoryDTO = (CategoryDTO) a;
-            categoryNames.add(categoryDTO.getCategoryName());
+        for (CategoryDTO a: categoryDTOS) {
+            categoryNames.add(a.getCategoryName());
         }
         return categoryNames;
     }

@@ -6,13 +6,14 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.AudientesAPP.DTO.PresetElementDTO;
 import com.example.AudientesAPP.model.data.InterfaceDAO.IDAO;
+import com.example.AudientesAPP.model.data.InterfaceDAO.IPresetElementDAO;
 import com.example.AudientesAPP.model.data.SoundDB;
 import com.example.AudientesAPP.model.context.Context;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PresetElementDAO implements IDAO {
+public class PresetElementDAO implements IPresetElementDAO {
     private Context context;
     private ContentValues row;
     private SQLiteDatabase db;
@@ -20,7 +21,7 @@ public class PresetElementDAO implements IDAO {
     private String soundName;
     private int soundVolume;
     private PresetElementDTO presetElementDTO;
-    private List<Object> presetElementDTOList;
+    private List<PresetElementDTO> presetElementDTOList;
 
     public PresetElementDAO(Context context) {
         this.context = context;
@@ -28,8 +29,7 @@ public class PresetElementDAO implements IDAO {
     }
 
     @Override
-    public void add(Object object) {
-        presetElementDTO = (PresetElementDTO) object;
+    public void add(PresetElementDTO presetElementDTO) {
 
         presetName = presetElementDTO.getPresetName();
         soundName = presetElementDTO.getSoundName();
@@ -44,8 +44,7 @@ public class PresetElementDAO implements IDAO {
     }
 
     @Override
-    public void delete(Object object) {
-        presetElementDTO = (PresetElementDTO) object;
+    public void delete(PresetElementDTO presetElementDTO) {
         presetName = presetElementDTO.getPresetName();
         soundName = presetElementDTO.getSoundName();
 
@@ -56,7 +55,7 @@ public class PresetElementDAO implements IDAO {
     }
 
     @Override
-    public List<Object> getList() {
+    public List<PresetElementDTO> getList() {
 
         presetElementDTOList = new ArrayList<>();
 
