@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.context.Context;
+import com.example.AudientesAPP.model.funktionalitet.CategoryListSoundsLogic;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 
 import java.util.ArrayList;
@@ -27,12 +28,12 @@ public class CategoryListSounds extends Fragment implements CategoryListSoundAda
     ImageView imageViewOptions;
     TextView categoryTitle;
     TextView soundTitle;
-    TextView tag;
     TextView soundLength;
     private RecyclerView recyclerView;
     private CategoryListSoundAdapter soundItemAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private Context context;
+    private CategoryListSoundsLogic categoryListSoundsLogic;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.category_list_sounds_frag, container, false);
@@ -50,13 +51,11 @@ public class CategoryListSounds extends Fragment implements CategoryListSoundAda
         categoryTitle.setText(category);
 
         // todo --> igen mega hardcoding og skal laves et andet sted.
-        String[] soundNames = {"Pink noise", "Brown noise", "Train", "Rain", "Cricket", "Chihuahua",
-                "Angelo", "JESUS"};
+        categoryListSoundsLogic = new CategoryListSoundsLogic(context);
+        List<String> soundNames = categoryListSoundsLogic.getSoundsList(category);
+        List<String> duration = categoryListSoundsLogic.getDuration(soundNames);
 
-
-        List<String> sounds = new ArrayList<>(Arrays.asList(soundNames));
-
-        soundItemAdapter = new CategoryListSoundAdapter(sounds);
+        soundItemAdapter = new CategoryListSoundAdapter(soundNames, duration);
         recyclerView.setAdapter(soundItemAdapter);
 
 
@@ -85,7 +84,6 @@ public class CategoryListSounds extends Fragment implements CategoryListSoundAda
         categoryTitle = v.findViewById(R.id.category_TV);
         imageViewOptions = v.findViewById(R.id.sound_list_element_options);
         soundTitle = v.findViewById(R.id.sound_title);
-        tag = v.findViewById(R.id.tag_title);
         soundLength = v.findViewById(R.id.sound_duration);
     }
 
@@ -162,14 +160,15 @@ public class CategoryListSounds extends Fragment implements CategoryListSoundAda
 class CategoryListSoundAdapter extends RecyclerView.Adapter<CategoryListSoundAdapter.SoundViewHolder> {
 
     private List<String> mSoundSet;
+    private List<String> nDuration;
 
-    public CategoryListSoundAdapter(List<String> mySoundSet){
-        mSoundSet = mySoundSet;
+    public CategoryListSoundAdapter(List<String> mySoundSet, List<String> nDuration){
+        this.mSoundSet = mySoundSet;
+        this.nDuration = nDuration;
     }
 
     public static class SoundViewHolder extends RecyclerView.ViewHolder{
         public TextView soundTextView;
-        public TextView tagTitle;
         public TextView soundDuration;
         public ImageView soundOption;
 
@@ -178,7 +177,6 @@ class CategoryListSoundAdapter extends RecyclerView.Adapter<CategoryListSoundAda
             super(itemView);
             //Måske tilføje de resterende ting for et sound item
             soundTextView = itemView.findViewById(R.id.sound_title);
-            tagTitle = itemView.findViewById(R.id.tag_title);
             soundDuration = itemView.findViewById(R.id.sound_duration);
             soundOption = itemView.findViewById(R.id.sound_list_element_options);
             // ...
@@ -204,6 +202,7 @@ class CategoryListSoundAdapter extends RecyclerView.Adapter<CategoryListSoundAda
     @Override
     public void onBindViewHolder(@NonNull SoundViewHolder holder, final int position) {
         holder.soundTextView.setText(mSoundSet.get(position));
+        holder.soundDuration.setText(nDuration.get(position));
         holder.soundTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
