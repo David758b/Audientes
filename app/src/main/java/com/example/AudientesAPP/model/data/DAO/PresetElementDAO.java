@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.AudientesAPP.DTO.PresetElementDTO;
-import com.example.AudientesAPP.model.data.InterfaceDAO.IDAO;
 import com.example.AudientesAPP.model.data.InterfaceDAO.IPresetElementDAO;
 import com.example.AudientesAPP.model.data.SoundDB;
 import com.example.AudientesAPP.model.context.Context;

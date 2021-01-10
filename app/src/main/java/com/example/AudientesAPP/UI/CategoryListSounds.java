@@ -52,6 +52,8 @@ public class CategoryListSounds extends Fragment implements CategoryListSoundAda
         // todo --> igen mega hardcoding og skal laves et andet sted.
         String[] soundNames = {"Pink noise", "Brown noise", "Train", "Rain", "Cricket", "Chihuahua",
                 "Angelo", "JESUS"};
+
+
         List<String> sounds = new ArrayList<>(Arrays.asList(soundNames));
 
         soundItemAdapter = new CategoryListSoundAdapter(sounds);
