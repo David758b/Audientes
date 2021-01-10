@@ -14,6 +14,10 @@
         <action
             android:id="@+id/action_libraryListCategory_to_CategoryListSounds"
             app:destination="@+id/categoryListSounds"/>
+        <!-- Test -->
+        <action
+            android:id="@+id/action_LibraryMain_to_HearingTest"
+            app:destination="@id/hearingtestMain" />
     </fragment>
 
     <fragment

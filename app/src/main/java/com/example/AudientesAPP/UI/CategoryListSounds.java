@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.AudientesAPP.R;
+import com.example.AudientesAPP.model.context.Context;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 
 import java.util.ArrayList;
@@ -31,15 +32,25 @@ public class CategoryListSounds extends Fragment implements CategoryListSoundAda
     private RecyclerView recyclerView;
     private CategoryListSoundAdapter soundItemAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private Bundle bundle;
+    private TextView textView;
+    private Context context;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.category_list_sounds_frag, container, false);
         initialize(v);
 
+        MainActivity mainActivity = (MainActivity) getActivity();
+        context = new Context(mainActivity);
+
         recyclerView = (RecyclerView) v.findViewById(R.id.category_sounds_RV);
 
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
+
+        //bundle = this.getArguments();
+        String category = context.getPrefs().getString("Category", "Fejl");
+        categoryTitle.setText(category);
 
         // todo --> igen mega hardcoding og skal laves et andet sted.
         String[] soundNames = {"Pink noise", "Brown noise", "Train", "Rain", "Cricket", "Chihuahua",

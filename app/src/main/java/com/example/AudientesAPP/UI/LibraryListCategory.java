@@ -1,9 +1,11 @@
 package com.example.AudientesAPP.UI;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,11 +28,14 @@ import com.example.AudientesAPP.model.context.Context;
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
 import com.example.AudientesAPP.model.data.DAO.PresetElementDAO;
+import com.example.AudientesAPP.model.funktionalitet.LibraryListCategoryLogic;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryListCategory extends Fragment{
+    // Test
+    private LibraryListCategoryLogic logic;
     private ImageView categoryIcon;
     private TextView categoryName;
 
@@ -42,7 +47,6 @@ public class LibraryListCategory extends Fragment{
     private NavController navController;
     private CategoryDAO categoryDAO;
     private Context context;
-
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,16 +66,10 @@ public class LibraryListCategory extends Fragment{
 
 
         // TEST - Test af logik, som nok skal være i funktionalitetsmappen
-        categoryDAO = new CategoryDAO(context);
+        logic = new LibraryListCategoryLogic(context);
+        List<String> categoryNames = logic.getCategoryNames();
 
-        List list;
-        list = categoryDAO.getList();
-        List<String> categoryNames = new ArrayList<>();
-        CategoryDTO categoryDTO;
-        for (Object a: list) {
-            categoryDTO = (CategoryDTO) a;
-            categoryNames.add(categoryDTO.getCategoryName());
-        }
+
 
 
         try{
@@ -166,7 +164,26 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
             @Override
             public void onClick(View v) {
                 //Navigering til fragment med category sounds eller presets
-                fragmentJump();
+                /*switch (position) {
+                    case 0:
+                        navController.navigate(R.id.action_LibraryMain_to_HearingTest);
+                        break;
+                    case 1:
+                        navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
+                        break;
+
+                }*/
+                if (position == 0) {
+                    // Hop til create category siden
+                } else {
+                    // Hop til den rigtige kategori
+                    Bundle bundle = new Bundle();
+                    bundle.putString("CategoryName", mDataset.get(position));
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(fragmentActivity);
+                    prefs.edit().putString("Category", mDataset.get(position)).apply();
+                    navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds, bundle);
+                }
+                //fragmentJump();
 
 
             }

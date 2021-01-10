@@ -9,7 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="@color/AudientesOrange"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/category_sounds_RV"
