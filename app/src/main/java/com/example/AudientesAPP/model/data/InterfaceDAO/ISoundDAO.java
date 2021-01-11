@@ -4,7 +4,7 @@ import com.example.AudientesAPP.DTO.SoundDTO;
 
 import java.util.List;
 
-public interface ISoundDAO {
+public interface ISoundDAO{
 
     void add(SoundDTO soundDTO);
 

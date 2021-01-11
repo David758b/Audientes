@@ -164,18 +164,19 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
+
     //Testing of the database may delete later
     public void databaseTest(){
-        List list;
-        PresetElementDAO presetElementDAO = new PresetElementDAO(context);
-        list = presetElementDAO.getList();
-        PresetElementDTO DTO;
+        List<SoundDTO> list;
+        SoundDAO soundDAO = new SoundDAO(context);
+        list = soundDAO.getList();
+        SoundDTO DTO;
         for (Object a: list) {
-            DTO = (PresetElementDTO) a;
+            DTO = (SoundDTO) a;
             System.out.println("CATEGORY DTO OUTPUT --------------");
-            System.out.println(DTO.getPresetName());
             System.out.println(DTO.getSoundName());
-            System.out.println(DTO.getSoundVolume());
+            System.out.println(DTO.getSoundSrc());
+            System.out.println(DTO.getSoundDuration());
         }
     }
 

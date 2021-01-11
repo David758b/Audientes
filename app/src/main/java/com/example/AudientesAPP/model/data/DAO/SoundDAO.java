@@ -2,7 +2,10 @@ package com.example.AudientesAPP.model.data.DAO;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+
 import com.example.AudientesAPP.DTO.SoundDTO;
 import com.example.AudientesAPP.model.data.InterfaceDAO.IDAO;
 import com.example.AudientesAPP.model.data.InterfaceDAO.ISoundDAO;
@@ -49,7 +52,12 @@ public class SoundDAO implements ISoundDAO {
         row.put(SoundDB.PATH,soundSrc);
         row.put(SoundDB.DURATION,soundDuration);
 
-        db.insert(SoundDB.TABEL_Sounds,null,row);
+        try{
+            db.insert(SoundDB.TABEL_Sounds,null,row);
+        }catch (Exception e){
+            System.out.println("The file already exists");
+        }
+
 
     }
 
