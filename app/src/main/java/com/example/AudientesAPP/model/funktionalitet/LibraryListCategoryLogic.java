@@ -11,15 +11,18 @@ import java.util.List;
 public class LibraryListCategoryLogic {
     private Context context;
     private CategoryDAO categoryDAO;
+    List<OnLibraryLCLogicListener> listeners;
 
     public LibraryListCategoryLogic (Context context) {
         this.context = context;
         this.categoryDAO = new CategoryDAO(context);
+        this.listeners = new ArrayList<>();
     }
 
     public void addCategory(String categoryName) {
         CategoryDTO categoryDTO = new CategoryDTO(categoryName);
         categoryDAO.add(categoryDTO);
+        notifyListeners();
     }
 
     public List<String> getCategoryNames () {
@@ -32,4 +35,20 @@ public class LibraryListCategoryLogic {
         }
         return categoryNames;
     }
+
+    public void addLibraryLCLogicListener(OnLibraryLCLogicListener listener){
+        listeners.add(listener);
+    }
+
+    private void notifyListeners(){
+        for (OnLibraryLCLogicListener listener: listeners) {
+            System.out.println("----------------NOTIFY LISTENERS----------------");
+            listener.updateLibraryListCategory(this);
+        }
+    }
+
+    public interface OnLibraryLCLogicListener{
+        void updateLibraryListCategory(LibraryListCategoryLogic libraryListCategoryLogic);
+    }
+
 }

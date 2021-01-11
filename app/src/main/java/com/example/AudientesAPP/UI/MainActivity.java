@@ -28,6 +28,7 @@ import com.example.AudientesAPP.model.data.DAO.PresetDAO;
 import com.example.AudientesAPP.model.data.DAO.PresetElementDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundDAO;
+import com.example.AudientesAPP.model.funktionalitet.LibraryListCategoryLogic;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.io.File;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements
     private NavController navController;
     MediaPlayer mediaPlayer;
     LydAfspiller lydAfspiller;
+    LibraryListCategoryLogic libraryLCLogic;
     private SQLiteDatabase db;
     private Context context;
 
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements
         getSupportFragmentManager().beginTransaction().add(R.id.playBar, new PlayBar_Frag()).addToBackStack(null).commit();
         lydAfspiller = new LydAfspiller(mediaPlayer, this);
 
+        libraryLCLogic = new LibraryListCategoryLogic(context);
 
         //Creating the Audientes directory in the external storage system under "music"
         File directory = makeDirectory();
@@ -252,6 +255,10 @@ public class MainActivity extends AppCompatActivity implements
 
     public LydAfspiller getLydAfspiller() {
         return lydAfspiller;
+    }
+
+    public LibraryListCategoryLogic getLibraryLCLogic(){
+        return libraryLCLogic;
     }
 
     public NavController getNavController(){
