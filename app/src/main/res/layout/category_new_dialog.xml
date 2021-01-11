@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp">
+
+    <EditText
+        android:id="@+id/category_new_name_ET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter category name"/>
+
+    <TextView
+        android:id="@+id/category_new_color_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose color (optional)"
+        android:layout_gravity="center"/>
+
+    <GridLayout
+        android:id="@+id/category_new_colorpicker_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+
+    <Button
+        android:id="@+id/category_new_create"
+        android:layout_height="40dp"
+        android:layout_width="325dp"
+        android:background="@drawable/round_outline"
+        android:backgroundTint="@color/AudientesOrange"
+        android:text="Create"
+        android:fontFamily="@font/audientes_font"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_gravity="center"/>
+
+
+
+</LinearLayout>
