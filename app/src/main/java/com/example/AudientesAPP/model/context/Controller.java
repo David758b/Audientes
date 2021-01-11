@@ -6,12 +6,12 @@ import android.preference.PreferenceManager;
 import com.example.AudientesAPP.UI.MainActivity;
 import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
 
-public class Context {
+public class Controller {
     private MainActivity main;
     private SharedPreferences prefs;
     //private CategoryDAO categoryDAO;
 
-    public Context(MainActivity main) {
+    public Controller(MainActivity main) {
         this.main = main;
         prefs = PreferenceManager.getDefaultSharedPreferences(main);
 //        categoryDAO = new CategoryDAO(this);

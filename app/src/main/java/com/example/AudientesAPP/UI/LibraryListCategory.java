@@ -22,12 +22,11 @@ import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.AudientesAPP.DTO.CategoryDTO;
-import com.example.AudientesAPP.model.context.Context;
+import com.example.AudientesAPP.model.context.Controller;
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
 import com.example.AudientesAPP.model.funktionalitet.LibraryListCategoryLogic;
@@ -48,7 +47,7 @@ public class LibraryListCategory extends Fragment implements LibraryListCategory
     //Objects
     private NavController navController;
     private CategoryDAO categoryDAO;
-    private Context context;
+    private Controller controller;
     private android.content.Context contextUI;
     MainActivity mainActivity;
 
@@ -59,7 +58,7 @@ public class LibraryListCategory extends Fragment implements LibraryListCategory
         View root = inflater.inflate(R.layout.library_list_category_frag, container, false);
         //Tildeler context, mainactivity's context
         mainActivity = (MainActivity) getActivity();
-        context = mainActivity.getContext();
+        controller = mainActivity.getController();
         //View
         categoryList = (RecyclerView) root.findViewById(R.id.Library_Category_Listview);
         //LayoutManager
@@ -68,12 +67,13 @@ public class LibraryListCategory extends Fragment implements LibraryListCategory
         //Listeners
         logic = mainActivity.getLibraryLCLogic();
         logic.addLibraryLCLogicListener(this);
+        System.out.println();
         // TEST - Test af logik, som nok skal være i funktionalitetsmappen
-        logic = new LibraryListCategoryLogic(context);
+        logic = new LibraryListCategoryLogic(controller, this.getContext());
         categoryNames = logic.getCategoryNames();
 
         try{
-            mAdapter = new CategoryAdapter(categoryNames, getContext(), mainActivity.getNavController(), context);
+            mAdapter = new CategoryAdapter(categoryNames, getContext(), mainActivity.getNavController(), controller);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -83,7 +83,7 @@ public class LibraryListCategory extends Fragment implements LibraryListCategory
 
     public void criteriaChanged()
     {
-        context.getActivity().getSupportFragmentManager().beginTransaction()
+        controller.getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, new LibraryListCategory())
                 .commit();
     }
@@ -94,14 +94,14 @@ public class LibraryListCategory extends Fragment implements LibraryListCategory
         System.out.println("Update LibraryListCategory");
         //categoryNames er en List<String>
         categoryNames = logic.getCategoryNames();
-        mAdapter = new CategoryAdapter(categoryNames, getContext(), mainActivity.getNavController(), context);
+        mAdapter = new CategoryAdapter(categoryNames, getContext(), mainActivity.getNavController(), controller);
         mAdapter.notifyDataSetChanged();
         categoryList.setAdapter(mAdapter);
     }
 }
 
 class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
-    private Context context;
+    private Controller controller;
     private final android.content.Context contextUI;
     private List<String> mDataset;
     //private List<CategoryDTO> mDataset;
@@ -109,9 +109,9 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
     private Bundle mBundle;
     private NavController navController;
 
-   public CategoryAdapter(List<String> mDataset, android.content.Context contextUI, NavController navController, Context context) {
+   public CategoryAdapter(List<String> mDataset, android.content.Context contextUI, NavController navController, Controller controller) {
         this.contextUI = contextUI;
-        this.context = context;
+        this.controller = controller;
         this.mDataset = mDataset;
         this.navController = navController;
     }
@@ -139,7 +139,7 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         String categoryDTO = mDataset.get(position);
         //CategoryDTO categoryDTO = mDataset.get(position);
-        Typeface typeface = ResourcesCompat.getFont(context.getActivity(), R.font.audientes_font);
+        Typeface typeface = ResourcesCompat.getFont(controller.getActivity(), R.font.audientes_font);
         holder.categoryName.setTypeface(typeface);
         holder.categoryName.setText(categoryDTO);
         //holder.categoryName.setText(categoryDTO.getCategoryName());
@@ -187,12 +187,12 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
                 }*/
                 if (position == 0) {
                     // Hop til create category siden
-                    CreateCategoryDialog createCategoryDialog = new CreateCategoryDialog(contextUI, context);
+                    CreateCategoryDialog createCategoryDialog = new CreateCategoryDialog(contextUI, controller);
                     createCategoryDialog.show();
 
                 } else {
                     // Hop til den rigtige kategori
-                    context.getPrefs().edit().putString("Category", mDataset.get(position)).apply();
+                    controller.getPrefs().edit().putString("Category", mDataset.get(position)).apply();
                     navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
                 }
             }
@@ -232,15 +232,15 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
     // Objects
     private CategoryDTO categoryDTO;
     private LibraryListCategoryLogic libraryListCategoryLogic;
-    private Context context;
+    private Controller controller;
     // Listener
     private DialogInterface.OnDismissListener onDismissListener;
 
-    public CreateCategoryDialog(@NonNull android.content.Context contextUI, Context context) {
+    public CreateCategoryDialog(@NonNull android.content.Context contextUI, Controller controller) {
         super(contextUI);
         setContentView(R.layout.category_new_dialog);
-        this.context = context;
-        libraryListCategoryLogic = new LibraryListCategoryLogic(context);
+        this.controller = controller;
+        libraryListCategoryLogic = new LibraryListCategoryLogic(controller, this.getContext());
         editText = findViewById(R.id.category_new_name_ET);
         textView = findViewById(R.id.category_new_color_TV);
         gridLayout = findViewById(R.id.category_new_colorpicker_grid);

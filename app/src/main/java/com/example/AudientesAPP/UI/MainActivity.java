@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.MenuItem;
 import android.view.View;
-import com.example.AudientesAPP.model.context.Context;
+import com.example.AudientesAPP.model.context.Controller;
 import com.example.AudientesAPP.DTO.CategoryDTO;
 import com.example.AudientesAPP.DTO.PresetCategoriesDTO;
 import com.example.AudientesAPP.DTO.PresetDTO;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements
     LydAfspiller lydAfspiller;
     LibraryListCategoryLogic libraryLCLogic;
     private SQLiteDatabase db;
-    private Context context;
+    private Controller controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements
         db = SoundDatabase.getWritableDatabase();
 
         //Creates a context and gives this for later use in the database
-        context = new Context(this);
+        controller = new Controller(this);
 
         //Navigations komponenten indeholder en default implementation af Navhost (NavHostFragment)
         //der viser destinationer af typen fragmenter
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements
         getSupportFragmentManager().beginTransaction().add(R.id.playBar, new PlayBar_Frag()).addToBackStack(null).commit();
         lydAfspiller = new LydAfspiller(mediaPlayer, this);
 
-        libraryLCLogic = new LibraryListCategoryLogic(context);
+        libraryLCLogic = new LibraryListCategoryLogic(controller, this);
 
         //Creating the Audientes directory in the external storage system under "music"
         File directory = makeDirectory();
@@ -131,27 +131,27 @@ public class MainActivity extends AppCompatActivity implements
 
     //Fill db with test data
     public void fillDBUp(){
-        CategoryDAO categoryDAO = new CategoryDAO(context);
+        CategoryDAO categoryDAO = new CategoryDAO(controller);
         CategoryDTO newCategory = new CategoryDTO("I Like to move it");
         categoryDAO.add(newCategory);
 
-        PresetDAO presetDAO = new PresetDAO(context);
+        PresetDAO presetDAO = new PresetDAO(controller);
         PresetDTO presetDTO = new PresetDTO("Sove tid");
         presetDAO.add(presetDTO);
 
-        SoundDAO soundDAO = new SoundDAO(context);
+        SoundDAO soundDAO = new SoundDAO(controller);
         SoundDTO soundDTO = new SoundDTO("city noise", "sauce", 420);
         soundDAO.add(soundDTO);
 
-        SoundCategoriesDAO soundCategoriesDAO = new SoundCategoriesDAO(context);
+        SoundCategoriesDAO soundCategoriesDAO = new SoundCategoriesDAO(controller);
         SoundCategoriesDTO soundCategoriesDTO = new SoundCategoriesDTO("city noise","I Like to move it");
         soundCategoriesDAO.add(soundCategoriesDTO);
 
-        PresetCategoriesDAO presetCategoriesDAO = new PresetCategoriesDAO(context);
+        PresetCategoriesDAO presetCategoriesDAO = new PresetCategoriesDAO(controller);
         PresetCategoriesDTO presetCategoriesDTO = new PresetCategoriesDTO("Sove tid","I Like to move it");
         presetCategoriesDAO.add(presetCategoriesDTO);
 
-        PresetElementDAO presetElementDAO = new PresetElementDAO(context);
+        PresetElementDAO presetElementDAO = new PresetElementDAO(controller);
         PresetElementDTO newPresetElement = new PresetElementDTO("Sove tid","city noise",15);
         presetElementDAO.add(newPresetElement);
 
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements
     //Testing of the database may delete later
     public void databaseTest(){
         List list;
-        PresetElementDAO presetElementDAO = new PresetElementDAO(context);
+        PresetElementDAO presetElementDAO = new PresetElementDAO(controller);
         list = presetElementDAO.getList();
         PresetElementDTO DTO;
         for (Object a: list) {
@@ -269,8 +269,8 @@ public class MainActivity extends AppCompatActivity implements
         return db;
     }
 
-    public Context getContext() {
-        return context;
+    public Controller getController() {
+        return controller;
     }
 
 

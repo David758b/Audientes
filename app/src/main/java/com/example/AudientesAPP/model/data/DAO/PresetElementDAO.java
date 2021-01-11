@@ -5,15 +5,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.AudientesAPP.DTO.PresetElementDTO;
+import com.example.AudientesAPP.model.context.Controller;
 import com.example.AudientesAPP.model.data.InterfaceDAO.IPresetElementDAO;
 import com.example.AudientesAPP.model.data.SoundDB;
-import com.example.AudientesAPP.model.context.Context;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PresetElementDAO implements IPresetElementDAO {
-    private Context context;
+    private Controller controller;
     private ContentValues row;
     private SQLiteDatabase db;
     private String presetName;
@@ -22,9 +22,9 @@ public class PresetElementDAO implements IPresetElementDAO {
     private PresetElementDTO presetElementDTO;
     private List<PresetElementDTO> presetElementDTOList;
 
-    public PresetElementDAO(Context context) {
-        this.context = context;
-        db = context.getActivity().getDB();
+    public PresetElementDAO(Controller controller) {
+        this.controller = controller;
+        db = controller.getActivity().getDB();
     }
 
     @Override

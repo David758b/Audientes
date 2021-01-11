@@ -2,8 +2,7 @@ package com.example.AudientesAPP.model.funktionalitet;
 
 import com.example.AudientesAPP.DTO.SoundCategoriesDTO;
 import com.example.AudientesAPP.DTO.SoundDTO;
-import com.example.AudientesAPP.UI.CategoryListSounds;
-import com.example.AudientesAPP.model.context.Context;
+import com.example.AudientesAPP.model.context.Controller;
 import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundDAO;
 
@@ -11,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryListSoundsLogic {
-    private Context context;
+    private Controller controller;
     private SoundCategoriesDAO soundCategoriesDAO;
     private SoundDAO soundDAO;
 
-    public CategoryListSoundsLogic (Context context) {
-        this.context = context;
-        this.soundCategoriesDAO = new SoundCategoriesDAO(context);
-        this.soundDAO = new SoundDAO(context);
+    public CategoryListSoundsLogic (Controller controller) {
+        this.controller = controller;
+        this.soundCategoriesDAO = new SoundCategoriesDAO(controller);
+        this.soundDAO = new SoundDAO(controller);
     }
 
     public List<String> getSoundsList (String category) {
