@@ -7,12 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.AudientesAPP.DTO.CategoryDTO;
 import com.example.AudientesAPP.model.context.Controller;
 import com.example.AudientesAPP.model.data.InterfaceDAO.ICategoryDAO;
+import com.example.AudientesAPP.model.data.InterfaceDAO.IDAO;
 import com.example.AudientesAPP.model.data.SoundDB;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDAO implements ICategoryDAO {
+public class CategoryDAO implements IDAO<CategoryDTO> {
     private Controller controller;
     private ContentValues row;
     private SQLiteDatabase db;
