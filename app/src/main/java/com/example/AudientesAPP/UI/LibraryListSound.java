@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.AudientesAPP.model.context.Context;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.example.AudientesAPP.R;
 
@@ -30,11 +31,15 @@ public class LibraryListSound extends Fragment implements SoundAdapter.OnItemCli
     private RecyclerView recyclerView;
     private SoundAdapter soundItemAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private Context context;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.library_list_sound_frag, container, false);
         initialize(v);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        context = mainActivity.getContext();
 
         recyclerView = (RecyclerView) v.findViewById(R.id.sounds_RV);
 
@@ -42,11 +47,13 @@ public class LibraryListSound extends Fragment implements SoundAdapter.OnItemCli
         recyclerView.setLayoutManager(layoutManager);
 
         // todo --> igen mega hardcoding og skal laves et andet sted.
-        String[] soundNames = {"Pink noise", "Brown noise", "Train", "Rain", "Cricket", "Chihuahua",
-                            "Angelo", "JESUS"};
-        List<String> sounds = new ArrayList<>(Arrays.asList(soundNames));
 
-        soundItemAdapter = new SoundAdapter(sounds);
+        List<String> sounds = context.getSoundListLogic().getSoundsList();
+        List<String> duration = context.getSoundListLogic().getDuration(sounds);
+        List<String> categories = context.getSoundListLogic().getCategories(sounds);
+
+
+        soundItemAdapter = new SoundAdapter(sounds,duration, categories);
         recyclerView.setAdapter(soundItemAdapter);
 
 
@@ -152,9 +159,14 @@ public class LibraryListSound extends Fragment implements SoundAdapter.OnItemCli
 class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHolder> {
 
     private List<String> mSoundSet;
+    private List<String> mDuration;
+    private List<String> mCategories;
 
-    public SoundAdapter(List<String> mySoundSet){
-        mSoundSet = mySoundSet;
+    public SoundAdapter(List<String> mySoundSet, List<String> mDuration, List<String> mCategories ){
+        this.mSoundSet = mySoundSet;
+        this.mDuration = mDuration;
+        this.mCategories = mCategories;
+
     }
 
     public static class SoundViewHolder extends RecyclerView.ViewHolder{
@@ -194,6 +206,8 @@ class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull SoundViewHolder holder, final int position) {
         holder.soundTextView.setText(mSoundSet.get(position));
+        holder.soundDuration.setText(mDuration.get(position));
+        holder.tagTitle.setText(mCategories.get(position));
         holder.soundTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

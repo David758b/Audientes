@@ -2,7 +2,6 @@ package com.example.AudientesAPP.model.funktionalitet;
 
 import com.example.AudientesAPP.DTO.SoundCategoriesDTO;
 import com.example.AudientesAPP.DTO.SoundDTO;
-import com.example.AudientesAPP.UI.CategoryListSounds;
 import com.example.AudientesAPP.model.context.Context;
 import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundDAO;
@@ -10,27 +9,26 @@ import com.example.AudientesAPP.model.data.DAO.SoundDAO;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryListSoundsLogic {
+public class SoundListLogic {
     private Context context;
     private SoundCategoriesDAO soundCategoriesDAO;
     private SoundDAO soundDAO;
 
-    public CategoryListSoundsLogic (Context context) {
+    public SoundListLogic (Context context) {
         this.context = context;
         this.soundCategoriesDAO = new SoundCategoriesDAO(context);
         this.soundDAO = new SoundDAO(context);
     }
 
-    public List<String> getSoundsList (String category) {
-        List<SoundCategoriesDTO> soundCategoriesDTOS = soundCategoriesDAO.getList();
+    public List<String> getSoundsList () {
+        List<SoundDTO> soundDTOS = soundDAO.getList();
         List<String> sounds = new ArrayList<>();
-        for (SoundCategoriesDTO DTO: soundCategoriesDTOS) {
-            if (DTO.getCategoryName().equals(category)) {
-                sounds.add(DTO.getSoundName());
-            }
+        for (SoundDTO DTO: soundDTOS) {
+            sounds.add(DTO.getSoundName());
         }
         return sounds;
     }
+
 
     public List<String> getDuration (List<String> sounds) {
         List<String> durations = new ArrayList<>();
@@ -44,6 +42,25 @@ public class CategoryListSoundsLogic {
         }
 
         return durations;
+    }
+
+    public List<String> getCategories (List<String> sounds){
+        List<String> categories = new ArrayList<>();
+        List<SoundCategoriesDTO> DTOS = soundCategoriesDAO.getList();
+        String finalString = "";
+
+        for (String sound: sounds) {
+            for (SoundCategoriesDTO dtos: DTOS) {
+                if(sound.equals(dtos.getSoundName())){
+                    finalString = finalString + "#" + dtos.getCategoryName() + " ";
+                }
+            }
+            categories.add(finalString);
+            finalString = "";
+        }
+
+        return categories;
+
     }
 
 }

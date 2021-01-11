@@ -5,15 +5,20 @@ import android.preference.PreferenceManager;
 
 import com.example.AudientesAPP.UI.MainActivity;
 import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
+import com.example.AudientesAPP.model.funktionalitet.SoundListLogic;
 
 public class Context {
     private MainActivity main;
     private SharedPreferences prefs;
+    private SoundListLogic soundListLogic;
     //private CategoryDAO categoryDAO;
+
+
 
     public Context(MainActivity main) {
         this.main = main;
         prefs = PreferenceManager.getDefaultSharedPreferences(main);
+        soundListLogic = new SoundListLogic(this);
 //        categoryDAO = new CategoryDAO(this);
 
         //TESTING
@@ -35,6 +40,9 @@ public class Context {
         return prefs;
     }
 
+    public SoundListLogic getSoundListLogic() {
+        return soundListLogic;
+    }
 
     public MainActivity getActivity(){
         return main;
