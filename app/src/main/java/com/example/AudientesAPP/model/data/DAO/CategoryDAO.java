@@ -33,7 +33,7 @@ public class CategoryDAO implements ICategoryDAO {
 
     /**
      * Adds a specific object to the database
-     * @param object you wish to save in the database
+     * @param categoryDTO you wish to save in the database
      */
     @Override
     public void add(CategoryDTO categoryDTO) {
@@ -51,7 +51,7 @@ public class CategoryDAO implements ICategoryDAO {
 
     /**
      * Deletes a row containing the object in the database
-     * @param object which you want to delete
+     * @param categoryDTO which you want to delete
      */
     @Override
     public void delete(CategoryDTO categoryDTO) {

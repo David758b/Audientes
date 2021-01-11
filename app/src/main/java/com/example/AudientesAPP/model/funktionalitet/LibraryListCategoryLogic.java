@@ -17,7 +17,10 @@ public class LibraryListCategoryLogic {
         this.categoryDAO = new CategoryDAO(context);
     }
 
-
+    public void addCategory(String categoryName) {
+        CategoryDTO categoryDTO = new CategoryDTO(categoryName);
+        categoryDAO.add(categoryDTO);
+    }
 
     public List<String> getCategoryNames () {
         List<CategoryDTO> categoryDTOS = categoryDAO.getList();

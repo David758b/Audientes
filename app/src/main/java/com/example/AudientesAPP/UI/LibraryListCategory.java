@@ -1,32 +1,37 @@
 package com.example.AudientesAPP.UI;
 
-import android.content.SharedPreferences;
+import android.app.Dialog;
+
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.AudientesAPP.DTO.CategoryDTO;
 import com.example.AudientesAPP.model.context.Context;
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
 import com.example.AudientesAPP.model.funktionalitet.LibraryListCategoryLogic;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryListCategory extends Fragment{
@@ -43,6 +48,7 @@ public class LibraryListCategory extends Fragment{
     private NavController navController;
     private CategoryDAO categoryDAO;
     private Context context;
+    private android.content.Context contextUI;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,9 +56,6 @@ public class LibraryListCategory extends Fragment{
         View root = inflater.inflate(R.layout.library_list_category_frag, container, false);
         MainActivity mainActivity = (MainActivity) getActivity();
         context = mainActivity.getContext();
-
-        NavHostFragment navHostFragment = (NavHostFragment) getParentFragmentManager().findFragmentById(R.id.navHost);
-        //navController = navHostFragment.getNavController();
 
         categoryList = (RecyclerView) root.findViewById(R.id.Library_Category_Listview);
 
@@ -69,7 +72,7 @@ public class LibraryListCategory extends Fragment{
 
 
         try{
-            mAdapter = new CategoryAdapter(categoryNames,context, mainActivity.getNavController());
+            mAdapter = new CategoryAdapter(categoryNames, getContext(), mainActivity.getNavController(), context);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -77,11 +80,18 @@ public class LibraryListCategory extends Fragment{
 
         return root;
     }
+
+    public void criteriaChanged()
+    {
+        context.getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, new LibraryListCategory())
+                .commit();
+    }
 }
 
 class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
-    //private final Context context;
     private Context context;
+    private final android.content.Context contextUI;
     private List<String> mDataset;
     //private List<CategoryDTO> mDataset;
     private Fragment mFragment;
@@ -89,7 +99,8 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
     private NavController navController;
 
 
-   public CategoryAdapter(List<String> mDataset, Context context, NavController navController) {
+   public CategoryAdapter(List<String> mDataset, android.content.Context contextUI, NavController navController, Context context) {
+        this.contextUI = contextUI;
         this.context = context;
         this.mDataset = mDataset;
         this.navController = navController;
@@ -171,6 +182,10 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
                 }*/
                 if (position == 0) {
                     // Hop til create category siden
+
+                    CreateCategoryDialog createCategoryDialog = new CreateCategoryDialog(contextUI, context);
+                    createCategoryDialog.show();
+
                 } else {
                     // Hop til den rigtige kategori
                     context.getPrefs().edit().putString("Category", mDataset.get(position)).apply();
@@ -207,5 +222,50 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
 
     }
 
+
+}
+
+class CreateCategoryDialog extends Dialog implements View.OnClickListener {
+    // Views
+    private EditText editText;
+    private TextView textView;
+    private GridLayout gridLayout;
+    private Button button;
+    // Objects
+    private CategoryDTO categoryDTO;
+    private LibraryListCategoryLogic libraryListCategoryLogic;
+    private Context context;
+    // Listener
+    private DialogInterface.OnDismissListener onDismissListener;
+
+
+    public CreateCategoryDialog(@NonNull android.content.Context contextUI, Context context) {
+        super(contextUI);
+        setContentView(R.layout.category_new_dialog);
+        this.context = context;
+        libraryListCategoryLogic = new LibraryListCategoryLogic(context);
+        editText = findViewById(R.id.category_new_name_ET);
+        textView = findViewById(R.id.category_new_color_TV);
+        gridLayout = findViewById(R.id.category_new_colorpicker_grid);
+        button = findViewById(R.id.category_new_create);
+        button.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        String categoryName = editText.getText().toString();
+        if(categoryName.length() < 1) {
+            String text = "Please enter a category name";
+            int time = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(v.getContext(), text, time);
+            toast.show();
+        } else {
+            System.out.println(categoryName);
+            System.out.println("----------------------------------");
+            libraryListCategoryLogic.addCategory(categoryName);
+            Toast.makeText(v.getContext(), "Category " + categoryName + " created", Toast.LENGTH_SHORT).show();
+
+        }
+    }
 
 }
