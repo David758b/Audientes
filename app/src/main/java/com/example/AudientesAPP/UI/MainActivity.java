@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ import com.example.AudientesAPP.DTO.PresetElementDTO;
 import com.example.AudientesAPP.DTO.SoundCategoriesDTO;
 import com.example.AudientesAPP.DTO.SoundDTO;
 import com.example.AudientesAPP.R;
+import com.example.AudientesAPP.model.data.ExternalStorage;
 import com.example.AudientesAPP.model.data.SoundDB;
 import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
 import com.example.AudientesAPP.model.data.DAO.PresetCategoriesDAO;
@@ -33,6 +35,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.net.URI;
 import java.util.List;
 
 
@@ -102,11 +105,11 @@ public class MainActivity extends AppCompatActivity implements
         c.close();
 
 
-        /*
+        saveSound();
         //test ----det virker sgu !!!
         try {
             MediaPlayer mPlayer = new MediaPlayer();
-            Uri myUri = Uri.parse(chihua.getAbsolutePath());
+            Uri myUri =
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mPlayer.setDataSource(getApplicationContext(), myUri);
             mPlayer.prepare();
@@ -115,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements
         }catch (Exception e){
             e.printStackTrace();
         }
-        */
+
 
 
         /* This can be run to initialize the database with random test data, and output something
@@ -248,6 +251,18 @@ public class MainActivity extends AppCompatActivity implements
 
 
         return true;
+    }
+
+    public void saveSound(){
+        SoundDTO soundDTO = new SoundDTO("brown_noise", "", 22);
+        SoundDAO soundDAO = new SoundDAO(context);
+        ExternalStorage externalStorage = new ExternalStorage(context);
+        File dir = externalStorage.makeDirectory();
+        externalStorage.fileSaving(R.raw.brown_noise, dir, soundDTO.getSoundName());
+        File soundSrc = externalStorage.getFile(dir, soundDTO.getSoundName());
+        Uri uriSoundSrc = Uri.parse(soundSrc.getAbsolutePath());
+        soundDTO.setSoundSrc(uriSoundSrc.toString());
+        soundDAO.add(soundDTO);
     }
 
     public LydAfspiller getLydAfspiller() {
