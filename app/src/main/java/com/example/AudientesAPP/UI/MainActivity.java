@@ -37,6 +37,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URI;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 
@@ -82,16 +84,6 @@ public class MainActivity extends AppCompatActivity implements
 
         getSupportFragmentManager().beginTransaction().add(R.id.playBar, new PlayBar_Frag()).addToBackStack(null).commit();
         lydAfspiller = new LydAfspiller(mediaPlayer, this);
-
-
-        //Creating the Audientes directory in the external storage system under "music"
-        File directory = makeDirectory();
-
-        //Saving a file in the audientes directory with a given file name
-        fileSaving(R.raw.cricket, directory, "Cricket");
-
-        //Test size for a specific file in bytes
-        System.out.println(getFile(directory,"Cricket").length());
 
 
         //outputs the table names in the cmd promt
@@ -185,65 +177,7 @@ public class MainActivity extends AppCompatActivity implements
             System.out.println(DTO.getSoundName());
             System.out.println(DTO.getSoundVolume());
         }
-
-
     }
-
-
-
-    public File makeDirectory(){
-        File directory = new File(this.getExternalFilesDir(Environment.DIRECTORY_MUSIC),"Audientes");
-        directory.mkdir();
-        return directory;
-    }
-
-    //TODO change RID to new path where the files are
-    public void fileSaving(int RID, File directory, String newFileName){
-
-        String[] existingFiles = directory.list();
-
-        //returns if a file is allready existing
-        for (String fileName: existingFiles) {
-            System.out.println("Files in Audientes dir:   " + fileName);
-            if (fileName.equals(newFileName)){
-                return;
-            }
-        }
-
-        //Creates the new file
-        File newFile = new File(directory.getAbsolutePath(), newFileName);
-
-        try {
-            InputStream in = getResources().openRawResource(RID);
-            FileOutputStream out = new FileOutputStream(newFile.getAbsolutePath());
-            byte[] buff = new byte[1024];
-            int read = 0;
-
-            try {
-                while ((read = in.read(buff)) > 0) {
-                    out.write(buff, 0, read);
-                }
-            } finally {
-                in.close();
-                out.close();
-                System.out.println("DET VIRKER!!!!");
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-    }
-
-    public File getFile(File directory, String fileName){
-        File[] files = directory.listFiles();
-        for (File file: files) {
-            if(file.getName().equals(fileName)){
-                return file;
-            }
-        }
-        return null;
-    }
-
 
 
     //Her implementeres listeneren, hvor vi skal definerer hvad der sker når der trkker på
