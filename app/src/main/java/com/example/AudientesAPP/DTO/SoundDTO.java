@@ -3,10 +3,10 @@ package com.example.AudientesAPP.DTO;
 public class SoundDTO {
     private String soundName;
     private String soundSrc;
-    private int soundDuration;
+    private String soundDuration;
 
 
-    public SoundDTO(String soundName, String soundSrc, int soundDuration) {
+    public SoundDTO(String soundName, String soundSrc, String soundDuration) {
         this.soundName = soundName;
         this.soundSrc = soundSrc;
         this.soundDuration = soundDuration;
@@ -20,7 +20,7 @@ public class SoundDTO {
         return soundSrc;
     }
 
-    public int getSoundDuration() {
+    public String getSoundDuration() {
         return soundDuration;
     }
 

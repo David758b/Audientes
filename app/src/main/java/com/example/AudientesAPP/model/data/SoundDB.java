@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SoundDB extends SQLiteOpenHelper {
 
 
-        public static final int VERSION = 2;
+        public static final int VERSION = 3;
         public static final String DATABASE = "sound.db";
         public static final String TABEL_Sounds = "Sounds";
         public static final String TABEL_Category = "Category";
@@ -57,7 +57,7 @@ public class SoundDB extends SQLiteOpenHelper {
         public void onCreate(SQLiteDatabase db) {
 
                 db.execSQL("CREATE TABLE "+TABEL_Sounds+" ("+SOUND_NAME+" TEXT PRIMARY KEY, "+
-                        PATH+" TEXT, "+DURATION+" INTEGER)");
+                        PATH+" TEXT, "+DURATION+" TEXT)");
 
                 db.execSQL("CREATE TABLE "+TABEL_Category+ " ("+CATEGORY_NAME+" TEXT PRIMARY KEY)");
 

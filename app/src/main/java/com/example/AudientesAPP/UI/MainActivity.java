@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements
         presetDAO.add(presetDTO);
 
         SoundDAO soundDAO = new SoundDAO(context);
-        SoundDTO soundDTO = new SoundDTO("city noise", "sauce", 420);
+        SoundDTO soundDTO = new SoundDTO("city noise", "sauce", "420");
         soundDAO.add(soundDTO);
 
         SoundCategoriesDAO soundCategoriesDAO = new SoundCategoriesDAO(context);
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements
     }
     //test-method (not done) for saving a file in external storage and database
     public void saveSound(int Rid, String soundName){
-        SoundDTO soundDTO = new SoundDTO(soundName, "", 22);
+        SoundDTO soundDTO = new SoundDTO(soundName, "", "22");
         SoundDAO soundDAO = new SoundDAO(context);
         ExternalStorage externalStorage = new ExternalStorage(context);
         File dir = externalStorage.makeDirectory();

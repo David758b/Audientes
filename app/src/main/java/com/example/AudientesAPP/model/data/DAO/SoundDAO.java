@@ -18,7 +18,7 @@ public class SoundDAO implements ISoundDAO {
     private SQLiteDatabase db;
     private String soundName;
     private String soundSrc;
-    private int soundDuration;
+    private String soundDuration;
     private SoundDTO soundDTO;
     private List<SoundDTO> soundDTOList;
 
@@ -87,7 +87,7 @@ public class SoundDAO implements ISoundDAO {
         while(cursor.moveToNext()){
             String name = cursor.getString(0);
             String path = cursor.getString(1);
-            int duration = cursor.getInt(2);
+            String duration = cursor.getString(2);
 
             soundDTO = new SoundDTO(name,path,duration);
             soundDTOList.add(soundDTO);
