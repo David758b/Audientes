@@ -8,6 +8,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -104,22 +105,36 @@ public class MainActivity extends AppCompatActivity implements
         }
         c.close();
 
+        //Gemmer alle lyde i raw mappen i external storage
+        saveSound(R.raw.andreangelo, "andreangelo");
+        saveSound(R.raw.brown_noise, "brown_noise");
+        saveSound(R.raw.chihuahua, "chihuahua");
+        saveSound(R.raw.cricket, "cricket");
+        saveSound(R.raw.melarancida__monks_praying, "melarancida__monks_praying");
+        saveSound(R.raw.rain_street, "rain_street");
+        saveSound(R.raw.testlyd, "testlyd");
+        saveSound(R.raw.train_nature, "train_nature");
 
-        saveSound();
         //test ----det virker sgu !!!
-        try {
+        /*try {
             MediaPlayer mPlayer = new MediaPlayer();
-            Uri myUri =
+            SoundDAO soundDAO = new SoundDAO(context);
+            List<SoundDTO> list = soundDAO.getList();
+            Uri myUri = null;
+
+            for (SoundDTO dto: list) {
+                if(dto.getSoundName().equals("andreangelo")){
+                    myUri = Uri.parse(dto.getSoundSrc());
+                }
+            }
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mPlayer.setDataSource(getApplicationContext(), myUri);
             mPlayer.prepare();
             mPlayer.start();
-
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
+         */
 
         /* This can be run to initialize the database with random test data, and output something
         fillDBUp();
@@ -253,12 +268,12 @@ public class MainActivity extends AppCompatActivity implements
         return true;
     }
 
-    public void saveSound(){
-        SoundDTO soundDTO = new SoundDTO("brown_noise", "", 22);
+    public void saveSound(int Rid, String soundName){
+        SoundDTO soundDTO = new SoundDTO(soundName, "", 22);
         SoundDAO soundDAO = new SoundDAO(context);
         ExternalStorage externalStorage = new ExternalStorage(context);
         File dir = externalStorage.makeDirectory();
-        externalStorage.fileSaving(R.raw.brown_noise, dir, soundDTO.getSoundName());
+        externalStorage.fileSaving(Rid, dir, soundDTO.getSoundName());
         File soundSrc = externalStorage.getFile(dir, soundDTO.getSoundName());
         Uri uriSoundSrc = Uri.parse(soundSrc.getAbsolutePath());
         soundDTO.setSoundSrc(uriSoundSrc.toString());
