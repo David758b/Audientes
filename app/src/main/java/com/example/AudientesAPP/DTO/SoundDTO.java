@@ -32,6 +32,10 @@ public class SoundDTO {
         this.soundSrc = soundSrc;
     }
 
+    public void setSoundDuration(String soundDuration) {
+        this.soundDuration = soundDuration;
+    }
+
     @Override
     public String toString() {
         return "SoundDTO{" +

@@ -128,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements
         databaseTest();
          */
 
-
     }
 
     //----------------------test-------------------------------------------------------
@@ -190,10 +189,10 @@ public class MainActivity extends AppCompatActivity implements
         MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
         mediaMetadataRetriever.setDataSource(soundSrc.getAbsolutePath());
         String durationStr = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        //can be made into a method
         String finalString = "";
         String secondString = "";
         long durationMilliSec = Long.parseLong(durationStr);
-        System.out.println(durationStr);
         int hours = (int) (durationMilliSec / (1000 * 60 * 60));
         int minutes = (int) (durationMilliSec % (1000 * 60 * 60)) / (1000*60);
         int seconds = (int) ((durationMilliSec % (1000 * 60 * 60)) % (1000*60)) / 1000;
@@ -206,10 +205,9 @@ public class MainActivity extends AppCompatActivity implements
             secondString = "" + seconds;
         }
         finalString = finalString + minutes + ":" + secondString;
-        System.out.println(finalString);
+        //---------------
 
-
-
+        soundDTO.setSoundDuration(finalString);
 
         soundDAO.add(soundDTO);
     }
