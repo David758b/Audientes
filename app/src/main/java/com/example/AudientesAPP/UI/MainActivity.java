@@ -7,6 +7,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -174,7 +175,9 @@ public class MainActivity extends AppCompatActivity implements
     }
     //test-method (not done) for saving a file in external storage and database
     public void saveSound(int Rid, String soundName){
-        SoundDTO soundDTO = new SoundDTO(soundName, "", "22");
+
+        //to get the soundSrc
+        SoundDTO soundDTO = new SoundDTO(soundName, "", "");
         SoundDAO soundDAO = new SoundDAO(context);
         ExternalStorage externalStorage = new ExternalStorage(context);
         File dir = externalStorage.makeDirectory();
@@ -182,6 +185,32 @@ public class MainActivity extends AppCompatActivity implements
         File soundSrc = externalStorage.getFile(dir, soundDTO.getSoundName());
         Uri uriSoundSrc = Uri.parse(soundSrc.getAbsolutePath());
         soundDTO.setSoundSrc(uriSoundSrc.toString());
+
+        //to get sound duration
+        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+        mediaMetadataRetriever.setDataSource(soundSrc.getAbsolutePath());
+        String durationStr = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        String finalString = "";
+        String secondString = "";
+        long durationMilliSec = Long.parseLong(durationStr);
+        System.out.println(durationStr);
+        int hours = (int) (durationMilliSec / (1000 * 60 * 60));
+        int minutes = (int) (durationMilliSec % (1000 * 60 * 60)) / (1000*60);
+        int seconds = (int) ((durationMilliSec % (1000 * 60 * 60)) % (1000*60)) / 1000;
+        if (hours > 0){
+            finalString = hours + ":";
+        }
+        if(seconds < 10){
+            secondString = "0" + seconds;
+        } else {
+            secondString = "" + seconds;
+        }
+        finalString = finalString + minutes + ":" + secondString;
+        System.out.println(finalString);
+
+
+
+
         soundDAO.add(soundDTO);
     }
 
