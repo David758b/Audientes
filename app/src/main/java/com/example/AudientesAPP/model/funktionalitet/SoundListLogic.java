@@ -14,12 +14,17 @@ public class SoundListLogic {
     private SoundCategoriesDAO soundCategoriesDAO;
     private SoundDAO soundDAO;
 
+
     public SoundListLogic (Context context) {
         this.context = context;
         this.soundCategoriesDAO = new SoundCategoriesDAO(context);
         this.soundDAO = new SoundDAO(context);
     }
 
+    /**
+     * Returns a list of all the sounds in the database
+     * @return list of strings
+     */
     public List<String> getSoundsList () {
         List<SoundDTO> soundDTOS = soundDAO.getList();
         List<String> sounds = new ArrayList<>();
@@ -30,6 +35,11 @@ public class SoundListLogic {
     }
 
 
+    /**
+     * takes a list of sounds and returns the duration of each sound
+     * @param sounds
+     * @return
+     */
     public List<String> getDuration (List<String> sounds) {
         List<String> durations = new ArrayList<>();
         List<SoundDTO> soundDTOS = soundDAO.getList();
@@ -43,6 +53,12 @@ public class SoundListLogic {
 
         return durations;
     }
+
+    /**
+     * returns the categories for each sound
+     * @param sounds
+     * @return
+     */
 
     public List<String> getCategories (List<String> sounds){
         List<String> categories = new ArrayList<>();
