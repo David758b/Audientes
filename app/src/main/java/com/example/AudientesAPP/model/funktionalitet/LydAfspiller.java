@@ -24,7 +24,6 @@ public class LydAfspiller implements MediaPlayer.OnCompletionListener{
         this.context = context;
         this.mediaPlayer = MediaPlayer.create(context, R.raw.testlyd);
         this.listeners = new ArrayList<>();
-
     }
 
     public void playNewSound(int position){
