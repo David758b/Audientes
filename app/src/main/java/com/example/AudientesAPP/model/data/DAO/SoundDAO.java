@@ -52,9 +52,10 @@ public class SoundDAO implements ISoundDAO {
         row.put(SoundDB.PATH,soundSrc);
         row.put(SoundDB.DURATION,soundDuration);
 
+        //Catches an exeption if you try to insert some file that already exists in the database
         try{
-            db.insert(SoundDB.TABEL_Sounds,null,row);
-        }catch (Exception e){
+            db.insertOrThrow(SoundDB.TABEL_Sounds,null,row);
+        }catch (SQLException e){
             System.out.println("The file already exists");
         }
 
