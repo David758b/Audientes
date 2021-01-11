@@ -1,9 +1,7 @@
 package com.example.AudientesAPP.model.data;
 
 import android.os.Environment;
-
 import com.example.AudientesAPP.model.context.Context;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -17,7 +15,6 @@ public class ExternalStorage {
     }
 
 
-    //todo vi skal lige tjekke om den stadig kan kører hvis mappen allerede existerer
     /**
      * Creates the Audientes directory
      * @return the directory path
@@ -30,6 +27,13 @@ public class ExternalStorage {
 
 
     //TODO change RID to new path where the files are
+
+    /**
+     * Saves a file from the raw directory in external storage
+     * @param RID the R-id of the raw ressource
+     * @param directory which the file should be saved in
+     * @param newFileName the desired name of the file
+     */
     public void fileSaving(int RID, File directory, String newFileName){
 
         String[] existingFiles = directory.list();
@@ -66,6 +70,12 @@ public class ExternalStorage {
 
     }
 
+    /**
+     * Returns the file with the corresponding name (if it exists)
+     * @param directory of the file
+     * @param fileName of the file you want from the given directory
+     * @return the file (if it exist)
+     */
     public File getFile(File directory, String fileName){
         File[] files = directory.listFiles();
         for (File file: files) {
