@@ -5,14 +5,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.MenuItem;
 import android.view.View;
 import com.example.AudientesAPP.model.context.Context;
@@ -34,11 +31,6 @@ import com.example.AudientesAPP.model.data.DAO.SoundDAO;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.URI;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 
@@ -85,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements
         getSupportFragmentManager().beginTransaction().add(R.id.playBar, new PlayBar_Frag()).addToBackStack(null).commit();
         lydAfspiller = new LydAfspiller(mediaPlayer, this);
 
+
+        //-------------------------------Resten er test---------------------------------------------
 
         //outputs the table names in the cmd promt
         Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
@@ -136,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
+    //----------------------test-------------------------------------------------------
     //Fill db with test data
     public void fillDBUp(){
         CategoryDAO categoryDAO = new CategoryDAO(context);
@@ -163,8 +158,6 @@ public class MainActivity extends AppCompatActivity implements
         presetElementDAO.add(newPresetElement);
 
     }
-
-
     //Testing of the database may delete later
     public void databaseTest(){
         List<SoundDTO> list;
@@ -179,7 +172,20 @@ public class MainActivity extends AppCompatActivity implements
             System.out.println(DTO.getSoundDuration());
         }
     }
+    //test-method (not done) for saving a file in external storage and database
+    public void saveSound(int Rid, String soundName){
+        SoundDTO soundDTO = new SoundDTO(soundName, "", 22);
+        SoundDAO soundDAO = new SoundDAO(context);
+        ExternalStorage externalStorage = new ExternalStorage(context);
+        File dir = externalStorage.makeDirectory();
+        externalStorage.fileSaving(Rid, dir, soundDTO.getSoundName());
+        File soundSrc = externalStorage.getFile(dir, soundDTO.getSoundName());
+        Uri uriSoundSrc = Uri.parse(soundSrc.getAbsolutePath());
+        soundDTO.setSoundSrc(uriSoundSrc.toString());
+        soundDAO.add(soundDTO);
+    }
 
+    //--------------------end test ----------------------------------------------------
 
     //Her implementeres listeneren, hvor vi skal definerer hvad der sker når der trkker på
     // et menu item
@@ -201,18 +207,6 @@ public class MainActivity extends AppCompatActivity implements
 
 
         return true;
-    }
-
-    public void saveSound(int Rid, String soundName){
-        SoundDTO soundDTO = new SoundDTO(soundName, "", 22);
-        SoundDAO soundDAO = new SoundDAO(context);
-        ExternalStorage externalStorage = new ExternalStorage(context);
-        File dir = externalStorage.makeDirectory();
-        externalStorage.fileSaving(Rid, dir, soundDTO.getSoundName());
-        File soundSrc = externalStorage.getFile(dir, soundDTO.getSoundName());
-        Uri uriSoundSrc = Uri.parse(soundSrc.getAbsolutePath());
-        soundDTO.setSoundSrc(uriSoundSrc.toString());
-        soundDAO.add(soundDTO);
     }
 
     public LydAfspiller getLydAfspiller() {
