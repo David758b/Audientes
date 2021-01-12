@@ -17,6 +17,8 @@ public class CategoryDAO implements IDAO<CategoryDTO> {
     private ContentValues row;
     private SQLiteDatabase db;
     private String categoryName;
+    private String picture;
+    private String color;
     private CategoryDTO categoryDTO;
     private List<CategoryDTO> categoryDTOList;
 
@@ -37,10 +39,14 @@ public class CategoryDAO implements IDAO<CategoryDTO> {
     @Override
     public void add(CategoryDTO categoryDTO) {
         categoryName = categoryDTO.getCategoryName();
+        picture = categoryDTO.getPicture();
+        color = categoryDTO.getColor();
 
         row = new ContentValues();
 
         row.put(SoundDB.CATEGORY_NAME,categoryName);
+        row.put(SoundDB.CATEGORY_Pic,picture);
+        row.put(SoundDB.CATEGORY_Color,color);
 
         db.insert(SoundDB.TABEL_Category,null,row);
 
@@ -70,13 +76,15 @@ public class CategoryDAO implements IDAO<CategoryDTO> {
 
         categoryDTOList = new ArrayList<>();
 
-        String[] column = {SoundDB.CATEGORY_NAME};
+        String[] column = {SoundDB.CATEGORY_NAME, SoundDB.CATEGORY_Pic, SoundDB.CATEGORY_Color};
 
         Cursor cursor = db.query(SoundDB.TABEL_Category,column,null,null,null,null,null);
 
         while(cursor.moveToNext()){
             String name = cursor.getString(0);
-            CategoryDTO categoryDTO = new CategoryDTO(name);
+            String pic = cursor.getString(1);
+            String color = cursor.getString(2);
+            CategoryDTO categoryDTO = new CategoryDTO(name, pic, color);
             categoryDTOList.add(categoryDTO);
         }
 

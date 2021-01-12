@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SoundDB extends SQLiteOpenHelper {
 
 
-        public static final int VERSION = 3;
+        public static final int VERSION = 4;
         public static final String DATABASE = "sound.db";
         public static final String TABEL_Sounds = "Sounds";
         public static final String TABEL_Category = "Category";
@@ -24,6 +24,8 @@ public class SoundDB extends SQLiteOpenHelper {
 
         //---------------Category-----------------------
         public static final String CATEGORY_NAME = "categoryName";
+        public static final String CATEGORY_Pic = "categoryPic";
+        public static final String CATEGORY_Color = "categoryColor";
         //----------------------------------------------
 
         //---------------PRESETS-----------------------
@@ -59,7 +61,8 @@ public class SoundDB extends SQLiteOpenHelper {
                 db.execSQL("CREATE TABLE "+TABEL_Sounds+" ("+SOUND_NAME+" TEXT PRIMARY KEY, "+
                         PATH+" TEXT, "+DURATION+" TEXT)");
 
-                db.execSQL("CREATE TABLE "+TABEL_Category+ " ("+CATEGORY_NAME+" TEXT PRIMARY KEY)");
+                db.execSQL("CREATE TABLE "+TABEL_Category+ " ("+CATEGORY_NAME+" TEXT PRIMARY KEY, "+
+                        CATEGORY_Pic +" TEXT, "+ CATEGORY_Color + " TEXT)");
 
                 db.execSQL("CREATE TABLE "+TABEL_Presets+ " ("+PRESET_NAME+" TEXT PRIMARY KEY)");
 

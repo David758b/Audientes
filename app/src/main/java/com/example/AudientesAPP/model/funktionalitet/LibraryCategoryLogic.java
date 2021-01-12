@@ -23,8 +23,8 @@ public class LibraryCategoryLogic {
         initCategoryNames();
     }
 
-    public void addCategory(String categoryName) {
-        CategoryDTO categoryDTO = new CategoryDTO(categoryName);
+    public void addCategory(String categoryName, String picture, String color) {
+        CategoryDTO categoryDTO = new CategoryDTO(categoryName, picture, color);
         categoryDAO.add(categoryDTO);
         //Måske få listen fra DAO og kald initCategoryNames istedet for linje 30
         categoryNames.add(categoryDTO.getCategoryName());

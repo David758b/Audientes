@@ -88,10 +88,11 @@ public class MainActivity extends AppCompatActivity implements
         // mediaPlayerTest(controller);
 
         /* This can be run to initialize the database with random test data, and output something
-        fillDBUp();
+
         databaseTest();
          */
 
+        fillDBUp();
 
     }
 
@@ -150,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements
     //Fill db with test data
     public void fillDBUp(){
         CategoryDAO categoryDAO = new CategoryDAO(modelViewController);
-        CategoryDTO newCategory = new CategoryDTO("I Like to move it");
+        CategoryDTO newCategory = new CategoryDTO("I Like to move it", "pictureSrc", "Blue");
         categoryDAO.add(newCategory);
 
         PresetDAO presetDAO = new PresetDAO(modelViewController);
