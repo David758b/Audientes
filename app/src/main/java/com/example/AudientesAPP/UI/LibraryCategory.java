@@ -5,10 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +33,7 @@ import java.util.List;
 
 import petrov.kristiyan.colorpicker.ColorPicker;
 
-public class LibraryCategory extends Fragment implements LibraryCategoryLogic.OnLibraryLCLogicListener{
+public class LibraryCategory extends Fragment implements LibraryCategoryLogic.OnLibraryLCLogicListener {
     // Test
     private LibraryCategoryLogic logic;
     private ImageView categoryIcon;
@@ -61,7 +59,7 @@ public class LibraryCategory extends Fragment implements LibraryCategoryLogic.On
         mainActivity = (MainActivity) getActivity();
         modelViewController = mainActivity.getModelViewController();
         //View
-        categoryList = (RecyclerView) root.findViewById(R.id.Library_Category_Listview);
+        categoryList = root.findViewById(R.id.Library_Category_Listview);
         //LayoutManager
         layoutManager = new LinearLayoutManager(this.getContext());
         categoryList.setLayoutManager(layoutManager);
@@ -70,12 +68,11 @@ public class LibraryCategory extends Fragment implements LibraryCategoryLogic.On
         logic.addLibraryLCLogicListener(this);
         System.out.println();
         // TEST - Test af logik, som nok skal være i funktionalitetsmappen
-        //logic = new LibraryListCategoryLogic(controller, this.getContext());
         //logic.initCategoryNames();
 
-        try{
-            mAdapter = new CategoryAdapter(logic.getCategoryNames(), getContext(), mainActivity.getNavController(), modelViewController, logic);
-        }catch (Exception e){
+        try {
+            mAdapter = new CategoryAdapter(logic.getCategories(), getContext(), mainActivity.getNavController(), modelViewController, logic);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         categoryList.setAdapter(mAdapter);
@@ -94,28 +91,29 @@ public class LibraryCategory extends Fragment implements LibraryCategoryLogic.On
 class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
     private ModelViewController modelViewController;
     private final android.content.Context contextUI;
-    private List<String> mDataset;
-    //private List<CategoryDTO> mDataset;
     private Fragment mFragment;
     private Bundle mBundle;
     private NavController navController;
     private LibraryCategoryLogic logic;
 
-   public CategoryAdapter(List<String> mDataset, Context contextUI, NavController navController, ModelViewController modelViewController, LibraryCategoryLogic logic) {
+    //
+    private List<CategoryDTO> data;
+
+    public CategoryAdapter(List<CategoryDTO> data, Context contextUI, NavController navController, ModelViewController modelViewController, LibraryCategoryLogic logic) {
         this.contextUI = contextUI;
         this.modelViewController = modelViewController;
-        this.mDataset = mDataset;
+        this.data = data;
         this.navController = navController;
         this.logic = logic;
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView categoryName;
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView categoryNameTV;
         public ImageView categoryIcon;
 
         public MyViewHolder(View v) {
             super(v);
-            categoryName = v.findViewById(R.id.categoryName_TV);
+            categoryNameTV = v.findViewById(R.id.categoryName_TV);
             categoryIcon = v.findViewById(R.id.categoryIcon_IV);
         }
     }
@@ -123,47 +121,19 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
     @NonNull
     @Override
     public CategoryAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_list_element,parent,false);
-       MyViewHolder vh = new MyViewHolder(v);
-       return vh;
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_list_element, parent, false);
+        return new MyViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        String categoryDTO = mDataset.get(position);
-        //CategoryDTO categoryDTO = mDataset.get(position);
+        final CategoryDTO categoryDTO = data.get(position);
         Typeface typeface = ResourcesCompat.getFont(modelViewController.getActivity(), R.font.audientes_font);
-        holder.categoryName.setTypeface(typeface);
-        holder.categoryName.setText(categoryDTO);
-        //holder.categoryName.setText(categoryDTO.getCategoryName());
+        holder.categoryNameTV.setTypeface(typeface);
+        holder.categoryNameTV.setText(categoryDTO.getCategoryName());
+        holder.itemView.getBackground().setTint(Color.parseColor(categoryDTO.getColor()));
+        System.out.println(categoryDTO.getCategoryName() + "'s FARVE---------------------" + categoryDTO.getColor());
 
-        //hardcoding for at skifte billeder og tekst for hvert liste element
-        switch(position){
-            //preset category
-            case 0: {holder.categoryIcon.setImageResource(R.drawable.ic_baseline_tune_24);
-                //sætter en nu farve uden at ændre formen på objektet
-                holder.itemView.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.LIGHTEN);}
-            break;
-            //sleep category
-            case 1: {holder.categoryIcon.setImageResource(R.drawable.ic_sleep_category);
-                holder.itemView.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.LIGHTEN);}
-            break;
-            //nature category
-            case 2: {holder.categoryIcon.setImageResource(R.drawable.ic_nature2_category);
-                holder.itemView.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.LIGHTEN);}
-            break;
-            //waves category
-            case 3: {holder.categoryIcon.setImageResource(R.drawable.ic_waves_category);
-                holder.itemView.getBackground().setColorFilter(Color.BLUE, PorterDuff.Mode.LIGHTEN);}
-            break;
-            //music category
-            case 4: {holder.categoryIcon.setImageResource(R.drawable.ic_music_category);
-                holder.itemView.getBackground().setColorFilter(Color.YELLOW, PorterDuff.Mode.LIGHTEN);}
-            break;
-            default: Log.d("List error",
-                    "Error in applying image to list element");
-                break;
-        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,7 +145,7 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
 
                 } else {
                     // Hop til den rigtige kategori
-                    modelViewController.getPrefs().edit().putString("Category", mDataset.get(position)).apply();
+                    modelViewController.getPrefs().edit().putString("Category", categoryDTO.getCategoryName()).apply();
                     navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
                 }
             }
@@ -185,7 +155,7 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
 
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return data.size();
     }
 
     private void fragmentJump() {
@@ -209,7 +179,7 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
 class CreateCategoryDialog extends Dialog implements View.OnClickListener {
     // Views
     private EditText categoryNameET;
-    private TextView colorText;
+    private TextView colorPickerTV;
     private Button colorBtn;
     private Button createBtn;
     // Objects
@@ -230,7 +200,7 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
         this.modelViewController = modelViewController;
         this.libraryCategoryLogic = libraryCategoryLogic;
         categoryNameET = findViewById(R.id.category_new_name_ET);
-        colorText = findViewById(R.id.category_new_color_TV);
+        colorPickerTV = findViewById(R.id.category_new_color_TV);
         colorBtn = findViewById(R.id.colorPicker);
         createBtn = findViewById(R.id.category_new_create);
         createBtn.setOnClickListener(this);
@@ -242,11 +212,12 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
         });
 
     }
+
     @Override
     public void onClick(View v) {
         categoryName = categoryNameET.getText().toString();
 
-        if(categoryName.length() < 1) {
+        if (categoryName.length() < 1) {
             String text = "Please enter a category name";
             int time = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(v.getContext(), text, time);
@@ -254,18 +225,20 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
         } else {
             System.out.println(categoryName);
             System.out.println("----------------------------------");
-            libraryCategoryLogic.addCategory(categoryName,"",categoryColor);
+            libraryCategoryLogic.addCategory(categoryName, "", categoryColor);
             Toast.makeText(v.getContext(), "Category " + categoryName + " created", Toast.LENGTH_SHORT).show();
             dismiss();
         }
     }
 
-    public void initColorPicker(final View v){
+    public void initColorPicker(final View v) {
         //Henter farver fra vores color resources
         int[] colorNumberarray = v.getResources().getIntArray(R.array.colorNumberList);
         colorPicker = new ColorPicker(modelViewController.getActivity());
         //sætter farver på colorpickeren
         colorPicker.setColors(colorNumberarray);
+        colorPicker.setRoundColorButton(true);
+
         colorPicker.show();
         colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
             @Override
@@ -273,7 +246,6 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
                 colorBtn.setBackgroundColor(color);
                 //confirmColor(color,v);
                 categoryColor = String.format("#%06X", (0xFFFFFF & color));
-
             }
 
             @Override

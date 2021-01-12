@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements
         db = SoundDatabase.getWritableDatabase();
 
         //Creates a context and gives this for later use in the database
+        //Denne skal kun bruge context
         modelViewController = new ModelViewController(this);
 
         //Navigations komponenten indeholder en default implementation af Navhost (NavHostFragment)
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements
         databaseTest();
          */
 
-        fillDBUp();
+        //fillDBUp();
 
     }
 

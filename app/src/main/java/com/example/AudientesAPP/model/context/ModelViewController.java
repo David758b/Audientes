@@ -1,5 +1,6 @@
 package com.example.AudientesAPP.model.context;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -16,8 +17,10 @@ public class ModelViewController {
     private SoundSaver soundSaver;
     //private CategoryDAO categoryDAO;
 
+    //Burde ikke få en instans af main, men kun context som er overklassen og ikke subklasse
     public ModelViewController(MainActivity main) {
         this.main = main;
+
         prefs = PreferenceManager.getDefaultSharedPreferences(main);
         librarySoundLogic = new LibrarySoundLogic(this);
         utils = new Utilities();
@@ -58,4 +61,5 @@ public class ModelViewController {
     public MainActivity getActivity(){
         return main;
     }
+
 }
