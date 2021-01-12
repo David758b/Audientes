@@ -254,7 +254,7 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
         } else {
             System.out.println(categoryName);
             System.out.println("----------------------------------");
-            libraryCategoryLogic.addCategory(categoryName,"","");
+            libraryCategoryLogic.addCategory(categoryName,"",categoryColor);
             Toast.makeText(v.getContext(), "Category " + categoryName + " created", Toast.LENGTH_SHORT).show();
             dismiss();
         }
