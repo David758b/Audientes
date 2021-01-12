@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.funktionalitet.Utilities;
@@ -29,11 +30,12 @@ public class PlayBar_Frag extends Fragment implements LydAfspiller.OnLydAfspille
     private ImageView play;
     private SeekBar seekBar;
     private TextView soundTitle, playerDuration, playerPosition;
+
     private LydAfspiller lydAfspiller;
+    private ModelViewController modelViewController;
 
     private Runnable runnable;
     private Handler handler = new Handler();
-    private Utilities utils = new Utilities();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rod = inflater.inflate(R.layout.playbar, container, false);
@@ -46,7 +48,9 @@ public class PlayBar_Frag extends Fragment implements LydAfspiller.OnLydAfspille
 
         //Vi får mediaplayeren fra mainactivity og tildeler den til objektet lydafspiller
         MainActivity main = (MainActivity) getActivity();
-        lydAfspiller = main.getLydAfspiller();
+        modelViewController = main.getModelViewController();
+        lydAfspiller = modelViewController.getLydAfspiller();
+
 
         //Listeners
         lydAfspiller.addOnLydAfspillerListener(this);
@@ -81,13 +85,13 @@ public class PlayBar_Frag extends Fragment implements LydAfspiller.OnLydAfspille
             long currentDuration = lydAfspiller.getCurrentPosition();
             //Viser afspillerens længde
             if (!playerPosition.getText().equals(totalDuration)) {
-                playerDuration.setText(utils.convertFormat(totalDuration));
+                playerDuration.setText(Utilities.convertFormat(totalDuration));
             }
 
             //Viser den afspillede tid (nuværende)
-            playerPosition.setText(utils.convertFormat(currentDuration));
+            playerPosition.setText(Utilities.convertFormat(currentDuration));
             //får procentendelen af den afspillede tid udfra den totale tid
-            int progress = (int) (utils.getProgressPercentage(currentDuration, totalDuration));
+            int progress = Utilities.getProgressPercentage(currentDuration, totalDuration);
             //sæt progress på seekbaren
             seekBar.setProgress(progress);
             Log.d("Progress ", "" + progress);
@@ -136,7 +140,7 @@ public class PlayBar_Frag extends Fragment implements LydAfspiller.OnLydAfspille
     public void onStopTrackingTouch(SeekBar seekBar) {
         handler.removeCallbacks(mUpdateTimeTask);
         int totalDuration = lydAfspiller.getDuration();
-        int currentPosition = utils.progressToTimer(seekBar.getProgress(), totalDuration);
+        int currentPosition = Utilities.progressToTimer(seekBar.getProgress(), totalDuration);
 
         lydAfspiller.seekTo(currentPosition);
 

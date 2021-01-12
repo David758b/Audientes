@@ -20,15 +20,17 @@ public class LydAfspiller implements MediaPlayer.OnCompletionListener{
     boolean isPlaying;
     List<OnLydAfspillerListener> listeners;
 
-    public LydAfspiller(MediaPlayer mediaPlayer, Context context){
+    public LydAfspiller(Context context){
         this.context = context;
-        this.mediaPlayer = MediaPlayer.create(context, R.raw.testlyd);
+        //this.mediaPlayer = MediaPlayer.create(context, R.raw.testlyd);
         this.listeners = new ArrayList<>();
     }
 
     public void playNewSound(int position){
         isPlaying = true;
-        mediaPlayer.setOnCompletionListener(null);
+        if(mediaPlayer != null) {
+            mediaPlayer.setOnCompletionListener(null);
+        }
         switch (position){
             case 0:
 
@@ -85,12 +87,14 @@ public class LydAfspiller implements MediaPlayer.OnCompletionListener{
     }
 
     public void playSound(){
+        if (mediaPlayer == null) return;
         mediaPlayer.start();
         isPlaying = true;
         notifyListeners();
     }
 
     public void pause(){
+        if (mediaPlayer == null) return;
         mediaPlayer.pause();
         System.out.println("pause");
         isPlaying = false;
@@ -98,6 +102,7 @@ public class LydAfspiller implements MediaPlayer.OnCompletionListener{
     }
 
     public void stop(){
+        if(mediaPlayer == null) return;
         mediaPlayer.stop();
         mediaPlayer.release();
         isPlaying = false;

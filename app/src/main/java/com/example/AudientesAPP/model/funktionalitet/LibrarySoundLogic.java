@@ -10,15 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LibrarySoundLogic {
-    private ModelViewController modelViewController;
+
     private SoundCategoriesDAO soundCategoriesDAO;
     private SoundDAO soundDAO;
 
-
-    public LibrarySoundLogic(ModelViewController modelViewController) {
-        this.modelViewController = modelViewController;
-        this.soundCategoriesDAO = new SoundCategoriesDAO(modelViewController);
-        this.soundDAO = new SoundDAO(modelViewController);
+    public LibrarySoundLogic(SoundCategoriesDAO soundCategoriesDAO, SoundDAO soundDAO) {
+        this.soundCategoriesDAO = soundCategoriesDAO;
+        this.soundDAO = soundDAO;
     }
 
     /**
@@ -63,16 +61,16 @@ public class LibrarySoundLogic {
     public List<String> getCategories (List<String> sounds){
         List<String> categories = new ArrayList<>();
         List<SoundCategoriesDTO> DTOS = soundCategoriesDAO.getList();
-        String finalString = "";
+        StringBuilder finalString = new StringBuilder();
 
         for (String sound: sounds) {
             for (SoundCategoriesDTO dtos: DTOS) {
                 if(sound.equals(dtos.getSoundName())){
-                    finalString = finalString + "#" + dtos.getCategoryName() + " ";
+                    finalString.append("#").append(dtos.getCategoryName()).append(" ");
                 }
             }
-            categories.add(finalString);
-            finalString = "";
+            categories.add(finalString.toString());
+            finalString = new StringBuilder();
         }
 
         return categories;

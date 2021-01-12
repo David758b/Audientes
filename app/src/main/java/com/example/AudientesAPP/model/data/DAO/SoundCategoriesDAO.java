@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SoundCategoriesDAO implements IDAO<SoundCategoriesDTO> {
-    private ModelViewController modelViewController;
+
     private ContentValues row;
     private SQLiteDatabase db;
     private String soundName;
@@ -22,9 +22,8 @@ public class SoundCategoriesDAO implements IDAO<SoundCategoriesDTO> {
     private List<SoundCategoriesDTO> soundCategoriesDTOList;
 
 
-    public SoundCategoriesDAO(ModelViewController modelViewController) {
-        this.modelViewController = modelViewController;
-        db = modelViewController.getActivity().getDB();
+    public SoundCategoriesDAO(SQLiteDatabase db) {
+        this.db = db;
     }
 
     @Override

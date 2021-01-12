@@ -10,14 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategorySoundsLogic {
-    private ModelViewController modelViewController;
     private SoundCategoriesDAO soundCategoriesDAO;
     private SoundDAO soundDAO;
 
-    public CategorySoundsLogic(ModelViewController modelViewController) {
-        this.modelViewController = modelViewController;
-        this.soundCategoriesDAO = new SoundCategoriesDAO(modelViewController);
-        this.soundDAO = new SoundDAO(modelViewController);
+    public CategorySoundsLogic(SoundCategoriesDAO soundCategoriesDAO, SoundDAO soundDAO) {
+        this.soundCategoriesDAO = soundCategoriesDAO;
+        this.soundDAO = soundDAO;
     }
 
     public List<String> getSoundsList (String category) {
@@ -31,6 +29,7 @@ public class CategorySoundsLogic {
         return sounds;
     }
 
+    //TODO: alt for mange database kald herinde, dette skal laves om
     public List<String> getDuration (List<String> sounds) {
         List<String> durations = new ArrayList<>();
         List<SoundDTO> soundDTOS = soundDAO.getList();

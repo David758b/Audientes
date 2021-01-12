@@ -11,33 +11,40 @@ import com.example.AudientesAPP.model.data.ExternalStorage;
 import java.io.File;
 
 public class SoundSaver {
-    private ModelViewController modelViewController;
+    private ExternalStorage externalStorage;
+    private SoundDAO soundDAO;
 
-    public SoundSaver(ModelViewController modelViewController) {
-        this.modelViewController = modelViewController;
+    //denne klasse skal bruge ExternalStorage og ikke lave den
+    public SoundSaver(ExternalStorage externalStorage, SoundDAO soundDAO) {
+        this.externalStorage = externalStorage;
+        this.soundDAO = soundDAO;
     }
 
     public void saveSound(int Rid, String soundName){
 
         //to get the soundSrc
-        SoundDTO soundDTO = new SoundDTO(soundName, "", "");
-        SoundDAO soundDAO = new SoundDAO(modelViewController);
-        ExternalStorage externalStorage = new ExternalStorage(modelViewController);
+
+        //SoundSaver skal ikke stå for at lave en DAO! Den skal have en DAO :)
+        //SoundDAO soundDAO = new SoundDAO(modelViewController);
+        //Denne laver en externalstorage, det er bedre vi får den gennem konstruktøren!
+        //ExternalStorage externalStorage = new ExternalStorage(modelViewController);
+
         File dir = externalStorage.makeDirectory();
-        externalStorage.fileSaving(Rid, dir, soundDTO.getSoundName());
-        File soundSrc = externalStorage.getFile(dir, soundDTO.getSoundName());
+        externalStorage.fileSaving(Rid, dir, soundName);
+        File soundSrc = externalStorage.getFile(dir, soundName);
         Uri uriSoundSrc = Uri.parse(soundSrc.getAbsolutePath());
-        soundDTO.setSoundSrc(uriSoundSrc.toString());
+        //soundDTO.setSoundSrc(uriSoundSrc.toString());
 
         //to get sound duration
         MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
         mediaMetadataRetriever.setDataSource(soundSrc.getAbsolutePath());
         String durationStr = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
         long durationMilliSec = Long.parseLong(durationStr);
-        String finalString = modelViewController.getUtils().convertFormat(durationMilliSec);
+        String finalString = Utilities.convertFormat(durationMilliSec);
 
-        soundDTO.setSoundDuration(finalString);
-
+        //soundDTO.setSoundDuration(finalString);
+        //Istedet for settere så laver vi bare objektet hernede efter alt er fundet og beregnet
+        SoundDTO soundDTO = new SoundDTO(soundName, uriSoundSrc.toString(), finalString);
         soundDAO.add(soundDTO);
     }
 }

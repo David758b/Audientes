@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PresetDAO implements IDAO<PresetDTO> {
-    private ModelViewController modelViewController;
     private ContentValues row;
     private SQLiteDatabase db;
     private String presetName;
@@ -22,11 +21,10 @@ public class PresetDAO implements IDAO<PresetDTO> {
 
     /**
      * Constructor of the presetDAO which initialize the relevant attributes of the class.
-     * @param modelViewController
+     * @param db- den skal sørme også bare have en db
      */
-    public PresetDAO(ModelViewController modelViewController) {
-        this.modelViewController = modelViewController;
-        db = modelViewController.getActivity().getDB();
+    public PresetDAO(SQLiteDatabase db) {
+        this.db = db;
     }
 
     /**

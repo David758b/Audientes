@@ -12,7 +12,7 @@ public class Utilities {
      * @param totalDuration
      * @return percentage som en int value
      */
-    public int getProgressPercentage(long currentDuration, long totalDuration){
+    public static int getProgressPercentage(long currentDuration, long totalDuration){
         double percentage;
 
         long currentSec = (int) (currentDuration / 1000);
@@ -30,7 +30,7 @@ public class Utilities {
      * @param totalDuration
      * @return nuværende duration i milisec
      */
-    public int progressToTimer(int progress, int totalDuration){
+    public static int progressToTimer(int progress, int totalDuration){
         int currentDuration;
         totalDuration = (int) (totalDuration/1000);
         currentDuration = (int) ((((double)progress)/100)* totalDuration);
@@ -41,7 +41,7 @@ public class Utilities {
 
 
     @SuppressLint("DefaultLocale")
-    public String convertFormat(long durationMilliSec){
+    public static String convertFormat(long durationMilliSec){
 //        return String.format("%02d:%02d"
 //                , TimeUnit.MILLISECONDS.toMinutes(duration)
 //                , TimeUnit.MILLISECONDS.toSeconds(duration) -

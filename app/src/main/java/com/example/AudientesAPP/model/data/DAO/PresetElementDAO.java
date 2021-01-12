@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PresetElementDAO implements IDAO<PresetElementDTO> {
-    private ModelViewController modelViewController;
     private ContentValues row;
     private SQLiteDatabase db;
     private String presetName;
@@ -22,9 +21,8 @@ public class PresetElementDAO implements IDAO<PresetElementDTO> {
     private PresetElementDTO presetElementDTO;
     private List<PresetElementDTO> presetElementDTOList;
 
-    public PresetElementDAO(ModelViewController modelViewController) {
-        this.modelViewController = modelViewController;
-        db = modelViewController.getActivity().getDB();
+    public PresetElementDAO(SQLiteDatabase db) {
+        this.db = db;
     }
 
     @Override

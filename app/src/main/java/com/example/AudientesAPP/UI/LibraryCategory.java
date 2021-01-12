@@ -36,8 +36,6 @@ import petrov.kristiyan.colorpicker.ColorPicker;
 public class LibraryCategory extends Fragment implements LibraryCategoryLogic.OnLibraryLCLogicListener {
     // Test
     private LibraryCategoryLogic logic;
-    private ImageView categoryIcon;
-    private TextView categoryName;
 
     //Recyclerview
     private RecyclerView categoryList;
@@ -45,18 +43,14 @@ public class LibraryCategory extends Fragment implements LibraryCategoryLogic.On
     private RecyclerView.LayoutManager layoutManager;
 
     //Objects
-    private NavController navController;
-    private CategoryDAO categoryDAO;
     private ModelViewController modelViewController;
-    private android.content.Context contextUI;
-    MainActivity mainActivity;
 
     //Variables
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.library_list_category_frag, container, false);
         //Tildeler context, mainactivity's context
-        mainActivity = (MainActivity) getActivity();
+        MainActivity mainActivity = (MainActivity) getActivity();
         modelViewController = mainActivity.getModelViewController();
         //View
         categoryList = root.findViewById(R.id.Library_Category_Listview);
@@ -64,14 +58,14 @@ public class LibraryCategory extends Fragment implements LibraryCategoryLogic.On
         layoutManager = new LinearLayoutManager(this.getContext());
         categoryList.setLayoutManager(layoutManager);
         //Listeners
-        logic = mainActivity.getLibraryLCLogic();
+        logic = modelViewController.getLibraryCategoryLogic();
         logic.addLibraryLCLogicListener(this);
         System.out.println();
         // TEST - Test af logik, som nok skal være i funktionalitetsmappen
         //logic.initCategoryNames();
 
         try {
-            mAdapter = new CategoryAdapter(logic.getCategories(), getContext(), mainActivity.getNavController(), modelViewController, logic);
+            mAdapter = new CategoryAdapter(logic.getCategories(), getContext(), modelViewController.getNavController(), logic);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,7 +83,6 @@ public class LibraryCategory extends Fragment implements LibraryCategoryLogic.On
 }
 
 class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
-    private ModelViewController modelViewController;
     private final android.content.Context contextUI;
     private Fragment mFragment;
     private Bundle mBundle;
@@ -99,9 +92,8 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
     //
     private List<CategoryDTO> data;
 
-    public CategoryAdapter(List<CategoryDTO> data, Context contextUI, NavController navController, ModelViewController modelViewController, LibraryCategoryLogic logic) {
+    public CategoryAdapter(List<CategoryDTO> data, Context contextUI, NavController navController, LibraryCategoryLogic logic) {
         this.contextUI = contextUI;
-        this.modelViewController = modelViewController;
         this.data = data;
         this.navController = navController;
         this.logic = logic;
@@ -128,7 +120,7 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         final CategoryDTO categoryDTO = data.get(position);
-        Typeface typeface = ResourcesCompat.getFont(modelViewController.getActivity(), R.font.audientes_font);
+        Typeface typeface = ResourcesCompat.getFont(contextUI, R.font.audientes_font);
         holder.categoryNameTV.setTypeface(typeface);
         holder.categoryNameTV.setText(categoryDTO.getCategoryName());
         holder.itemView.getBackground().setTint(Color.parseColor(categoryDTO.getColor()));
@@ -140,13 +132,14 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
             public void onClick(View v) {
                 if (position == 0) {
                     // Hop til create category siden
-                    CreateCategoryDialog categoryDialog = new CreateCategoryDialog(contextUI, modelViewController, logic);
+                    CreateCategoryDialog categoryDialog = new CreateCategoryDialog(contextUI, logic);
                     categoryDialog.show();
 
                 } else {
                     // Hop til den rigtige kategori
-                    modelViewController.getPrefs().edit().putString("Category", categoryDTO.getCategoryName()).apply();
-                    navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
+                    // Dette skal overvejes lidt nærmere... smæk det i logik klassen
+                    //contextUI.getPrefs().edit().putString("Category", categoryDTO.getCategoryName()).apply();
+                    //navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
                 }
             }
         });
@@ -185,7 +178,6 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
     // Objects
     private CategoryDTO categoryDTO;
     private final LibraryCategoryLogic libraryCategoryLogic;
-    private ModelViewController modelViewController;
     private ColorPicker colorPicker;
     // Listener
     private DialogInterface.OnDismissListener onDismissListener;
@@ -194,10 +186,9 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
     private String categoryColor;
     private String categoryName;
 
-    public CreateCategoryDialog(@NonNull android.content.Context contextUI, ModelViewController modelViewController, LibraryCategoryLogic libraryCategoryLogic) {
+    public CreateCategoryDialog(@NonNull android.content.Context contextUI, LibraryCategoryLogic libraryCategoryLogic) {
         super(contextUI);
         setContentView(R.layout.category_new_dialog);
-        this.modelViewController = modelViewController;
         this.libraryCategoryLogic = libraryCategoryLogic;
         categoryNameET = findViewById(R.id.category_new_name_ET);
         colorPickerTV = findViewById(R.id.category_new_color_TV);
@@ -234,7 +225,7 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
     public void initColorPicker(final View v) {
         //Henter farver fra vores color resources
         int[] colorNumberarray = v.getResources().getIntArray(R.array.colorNumberList);
-        colorPicker = new ColorPicker(modelViewController.getActivity());
+        colorPicker = new ColorPicker(getOwnerActivity());
         //sætter farver på colorpickeren
         colorPicker.setColors(colorNumberarray);
         colorPicker.setRoundColorButton(true);
@@ -244,13 +235,12 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
             @Override
             public void onChooseColor(int position, int color) {
                 colorBtn.setBackgroundColor(color);
-                //confirmColor(color,v);
                 categoryColor = String.format("#%06X", (0xFFFFFF & color));
             }
 
             @Override
             public void onCancel() {
-                //
+
             }
         });
     }

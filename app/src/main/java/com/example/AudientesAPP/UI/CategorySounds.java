@@ -38,9 +38,9 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
         initialize(v);
 
         MainActivity mainActivity = (MainActivity) getActivity();
-        modelViewController = new ModelViewController(mainActivity);
+        modelViewController = mainActivity.getModelViewController();
 
-        recyclerView = (RecyclerView) v.findViewById(R.id.category_sounds_RV);
+        recyclerView = v.findViewById(R.id.category_sounds_RV);
 
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -49,27 +49,16 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
         categoryTitle.setText(category);
 
         // todo --> igen mega hardcoding og skal laves et andet sted.
-        categorySoundsLogic = new CategorySoundsLogic(modelViewController);
+
+        //categorySoundsLogic = new CategorySoundsLogic(modelViewController);
+        //Dette skal laves om til at være en final liste i logic klassen som er en liste af CategorySoundDTOer
         List<String> soundNames = categorySoundsLogic.getSoundsList(category);
         List<String> duration = categorySoundsLogic.getDuration(soundNames);
 
         soundItemAdapter = new CategorySoundAdapter(soundNames, duration);
         recyclerView.setAdapter(soundItemAdapter);
 
-
-
-        //test = MediaPlayer.create(getActivity(), R.raw.testlyd);
-        //test.setVolume(1,1);
-
-        //MEGA MEGA MEGA hardcoding (lappeløsning for at teste)
-        //LibraryMain libraryMain = (LibraryMain) LibraryListSound.this.getParentFragment();
-
-        NavHostFragment navHostFragment = (NavHostFragment) getParentFragment();
-        NavHostFragment navHostFragment2 = (NavHostFragment) getParentFragment();
-        Fragment parent = (Fragment) navHostFragment2.getParentFragment();
-
-        MainActivity main = (MainActivity) navHostFragment2.getActivity();
-        lydAfspiller = main.getLydAfspiller();
+        lydAfspiller = modelViewController.getLydAfspiller();
 
 
         soundItemAdapter.setOnClick(CategorySounds.this);
@@ -193,8 +182,7 @@ class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.Sou
     @Override
     public CategorySoundAdapter.SoundViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.sound_list_element, parent, false);
-        SoundViewHolder vh = new SoundViewHolder(v);
-        return vh;
+        return new SoundViewHolder(v);
     }
 
     @Override

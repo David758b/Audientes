@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDAO implements IDAO<CategoryDTO> {
-    private ModelViewController modelViewController;
+
     private ContentValues row;
     private SQLiteDatabase db;
     private String categoryName;
@@ -24,12 +24,10 @@ public class CategoryDAO implements IDAO<CategoryDTO> {
 
     /**
      * Constructor of the CategoryDAO which initialize the relevant attributes of the class.
-     * @param modelViewController
+     * @param db - den skal bare have en db ska den!
      */
-    public CategoryDAO(ModelViewController modelViewController) {
-        this.modelViewController = modelViewController;
-        db = modelViewController.getActivity().getDB();
-
+    public CategoryDAO(SQLiteDatabase db) {
+        this.db = db;
     }
 
     /**

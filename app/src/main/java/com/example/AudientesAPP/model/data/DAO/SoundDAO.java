@@ -14,7 +14,6 @@ import java.util.List;
 
 public class SoundDAO implements IDAO<SoundDTO> {
 
-    private ModelViewController modelViewController;
     private ContentValues row;
     private SQLiteDatabase db;
     private String soundName;
@@ -25,11 +24,10 @@ public class SoundDAO implements IDAO<SoundDTO> {
 
     /**
      * Constructor of the soundDAO which initialize the relevant attributes of the class.
-     * @param modelViewController
+     * @param db - the database
      */
-    public SoundDAO(ModelViewController modelViewController) {
-        this.modelViewController = modelViewController;
-        db = modelViewController.getActivity().getDB();
+    public SoundDAO(SQLiteDatabase db) {
+        this.db = db;
     }
 
     /**

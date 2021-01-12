@@ -19,7 +19,7 @@ public class PresetLogic {
 
 
     public PresetLogic(ModelViewController modelViewController) {
-        this.presetDAO = new PresetDAO(modelViewController);
+//        this.presetDAO = new PresetDAO(modelViewController);
         this.listeners = new ArrayList<>();
         this.presetNames = new ArrayList<>();
         initPresetNames();

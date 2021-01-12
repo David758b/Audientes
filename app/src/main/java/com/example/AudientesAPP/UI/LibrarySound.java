@@ -39,31 +39,21 @@ public class LibrarySound extends Fragment implements SoundAdapter.OnItemClicked
         MainActivity mainActivity = (MainActivity) getActivity();
         modelViewController = mainActivity.getModelViewController();
 
-        recyclerView = (RecyclerView) v.findViewById(R.id.sounds_RV);
+        recyclerView = v.findViewById(R.id.sounds_RV);
 
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
-
 
         List<String> sounds = modelViewController.getLibrarySoundLogic().getSoundsList();
         List<String> duration = modelViewController.getLibrarySoundLogic().getDuration(sounds);
         List<String> categories = modelViewController.getLibrarySoundLogic().getCategories(sounds);
 
-
         soundItemAdapter = new SoundAdapter(sounds,duration, categories);
         recyclerView.setAdapter(soundItemAdapter);
 
+        lydAfspiller = modelViewController.getLydAfspiller();
 
-        NavHostFragment navHostFragment = (NavHostFragment) getParentFragment();
-        NavHostFragment navHostFragment2 = (NavHostFragment) getParentFragment();
-        Fragment parent = (Fragment) navHostFragment2.getParentFragment();
-
-        MainActivity main = (MainActivity) navHostFragment2.getActivity();
-        lydAfspiller = main.getLydAfspiller();
-
-
-        soundItemAdapter.setOnClick(LibrarySound.this);
-        //recyclerView.setPadding(0,75,0,20);
+        soundItemAdapter.setOnClick(this);
 
         return v;
     }
@@ -189,8 +179,7 @@ class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHolder> {
     @Override
     public SoundAdapter.SoundViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.sound_list_element, parent, false);
-        SoundViewHolder vh = new SoundViewHolder(v);
-        return vh;
+        return new SoundViewHolder(v);
     }
 
     @Override

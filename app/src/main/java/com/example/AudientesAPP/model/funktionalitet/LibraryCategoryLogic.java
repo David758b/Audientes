@@ -24,8 +24,8 @@ public class LibraryCategoryLogic {
      * */
     private final List<CategoryDTO> categories;
 
-    public LibraryCategoryLogic(ModelViewController modelViewController) {
-        this.categoryDAO = new CategoryDAO(modelViewController);
+    public LibraryCategoryLogic(CategoryDAO categoryDAO) {
+        this.categoryDAO = categoryDAO;
         this.listeners = new ArrayList<>();
         this.categories = new ArrayList<>();
         initCategories();
