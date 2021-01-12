@@ -7,6 +7,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.AudioManager;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -82,8 +83,35 @@ public class MainActivity extends AppCompatActivity implements
 
         libraryLCLogic = new LibraryListCategoryLogic(controller, this);
 
-        //-------------------------------Resten er test---------------------------------------------
+        saveSounds();
 
+        //-------------------------------Resten er test---------------------------------------------
+        // printTables();
+        // mediaPlayerTest(controller);
+
+        /* This can be run to initialize the database with random test data, and output something
+        fillDBUp();
+        databaseTest();
+         */
+
+
+    }
+
+    //----------------------test-------------------------------------------------------
+    public void saveSounds(){
+        //Gemmer alle lyde i raw mappen i external storage
+        controller.getSoundSaver().saveSound(R.raw.andreangelo, "andreangelo");
+        controller.getSoundSaver().saveSound(R.raw.brown_noise, "brown_noise");
+        controller.getSoundSaver().saveSound(R.raw.chihuahua, "chihuahua");
+        controller.getSoundSaver().saveSound(R.raw.cricket, "cricket");
+        controller.getSoundSaver().saveSound(R.raw.melarancida__monks_praying, "melarancida__monks_praying");
+        controller.getSoundSaver().saveSound(R.raw.rain_street, "rain_street");
+        controller.getSoundSaver().saveSound(R.raw.testlyd, "testlyd");
+        controller.getSoundSaver().saveSound(R.raw.train_nature, "train_nature");
+    }
+
+    //Printing tables
+    public void printTables(){
         //outputs the table names in the cmd promt
         Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
         if (c.moveToFirst()) {
@@ -94,21 +122,14 @@ public class MainActivity extends AppCompatActivity implements
             }
         }
         c.close();
+    }
 
-        //Gemmer alle lyde i raw mappen i external storage
-        saveSound(R.raw.andreangelo, "andreangelo");
-        saveSound(R.raw.brown_noise, "brown_noise");
-        saveSound(R.raw.chihuahua, "chihuahua");
-        saveSound(R.raw.cricket, "cricket");
-        saveSound(R.raw.melarancida__monks_praying, "melarancida__monks_praying");
-        saveSound(R.raw.rain_street, "rain_street");
-        saveSound(R.raw.testlyd, "testlyd");
-        saveSound(R.raw.train_nature, "train_nature");
-
+    //mediaplayer test
+    public void mediaPlayerTest(Controller controller){
         //test ----det virker sgu !!!
-        /*try {
+        try {
             MediaPlayer mPlayer = new MediaPlayer();
-            SoundDAO soundDAO = new SoundDAO(context);
+            SoundDAO soundDAO = new SoundDAO(controller);
             List<SoundDTO> list = soundDAO.getList();
             Uri myUri = null;
 
@@ -125,17 +146,9 @@ public class MainActivity extends AppCompatActivity implements
         }catch (Exception e){
             e.printStackTrace();
         }
-         */
-
-        /* This can be run to initialize the database with random test data, and output something
-        fillDBUp();
-        databaseTest();
-         */
-
 
     }
 
-    //----------------------test-------------------------------------------------------
     //Fill db with test data
     public void fillDBUp(){
         CategoryDAO categoryDAO = new CategoryDAO(controller);
@@ -177,45 +190,8 @@ public class MainActivity extends AppCompatActivity implements
             System.out.println(DTO.getSoundVolume());
         }
     }
-    //test-method (not done) for saving a file in external storage and database
-    public void saveSound(int Rid, String soundName){
 
-        //to get the soundSrc
-        SoundDTO soundDTO = new SoundDTO(soundName, "", "");
-        SoundDAO soundDAO = new SoundDAO(controller);
-        ExternalStorage externalStorage = new ExternalStorage(controller);
-        File dir = externalStorage.makeDirectory();
-        externalStorage.fileSaving(Rid, dir, soundDTO.getSoundName());
-        File soundSrc = externalStorage.getFile(dir, soundDTO.getSoundName());
-        Uri uriSoundSrc = Uri.parse(soundSrc.getAbsolutePath());
-        soundDTO.setSoundSrc(uriSoundSrc.toString());
 
-        //to get sound duration
-        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-        mediaMetadataRetriever.setDataSource(soundSrc.getAbsolutePath());
-        String durationStr = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-        //can be made into a method
-        String finalString = "";
-        String secondString = "";
-        long durationMilliSec = Long.parseLong(durationStr);
-        int hours = (int) (durationMilliSec / (1000 * 60 * 60));
-        int minutes = (int) (durationMilliSec % (1000 * 60 * 60)) / (1000*60);
-        int seconds = (int) ((durationMilliSec % (1000 * 60 * 60)) % (1000*60)) / 1000;
-        if (hours > 0){
-            finalString = hours + ":";
-        }
-        if(seconds < 10){
-            secondString = "0" + seconds;
-        } else {
-            secondString = "" + seconds;
-        }
-        finalString = finalString + minutes + ":" + secondString;
-        //---------------
-
-        soundDTO.setSoundDuration(finalString);
-
-        soundDAO.add(soundDTO);
-    }
 
     //--------------------end test ----------------------------------------------------
 

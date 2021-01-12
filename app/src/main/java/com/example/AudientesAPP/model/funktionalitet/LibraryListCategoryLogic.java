@@ -53,7 +53,6 @@ public class LibraryListCategoryLogic {
     }
 
     private void notifyListeners(){
-        System.out.println("222222222222222222222222222");
         for (OnLibraryLCLogicListener listener: listeners) {
             System.out.println("----------------NOTIFY LISTENERS----------------");
             listener.updateLibraryListCategory(this);

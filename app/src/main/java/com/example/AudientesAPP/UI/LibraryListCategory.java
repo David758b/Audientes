@@ -81,13 +81,6 @@ public class LibraryListCategory extends Fragment implements LibraryListCategory
         return root;
     }
 
-    public void criteriaChanged()
-    {
-        controller.getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, new LibraryListCategory())
-                .commit();
-    }
-
     @Override
     public void updateLibraryListCategory(LibraryListCategoryLogic libraryListCategoryLogic) {
         //Hvad skal der ske når denne opdateres
@@ -174,16 +167,6 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Navigering til fragment med category sounds eller presets
-                /*switch (position) {
-                    case 0:
-                        navController.navigate(R.id.action_LibraryMain_to_HearingTest);
-                        break;
-                    case 1:
-                        navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
-                        break;
-
-                }*/
                 if (position == 0) {
                     // Hop til create category siden
                     CreateCategoryDialog categoryDialog = new CreateCategoryDialog(contextUI, controller, logic);

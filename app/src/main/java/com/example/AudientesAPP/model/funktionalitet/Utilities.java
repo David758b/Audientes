@@ -41,10 +41,26 @@ public class Utilities {
 
 
     @SuppressLint("DefaultLocale")
-    public String convertFormat(long duration){
-        return String.format("%02d:%02d"
-                , TimeUnit.MILLISECONDS.toMinutes(duration)
-                , TimeUnit.MILLISECONDS.toSeconds(duration) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration)));
+    public String convertFormat(long durationMilliSec){
+//        return String.format("%02d:%02d"
+//                , TimeUnit.MILLISECONDS.toMinutes(duration)
+//                , TimeUnit.MILLISECONDS.toSeconds(duration) -
+//                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration)));
+        String finalString = "";
+        String secondString = "";
+
+        int hours = (int) (durationMilliSec / (1000 * 60 * 60));
+        int minutes = (int) (durationMilliSec % (1000 * 60 * 60)) / (1000*60);
+        int seconds = (int) ((durationMilliSec % (1000 * 60 * 60)) % (1000*60)) / 1000;
+        if (hours > 0){
+            finalString = hours + ":";
+        }
+        if(seconds < 10){
+            secondString = "0" + seconds;
+        } else {
+            secondString = "" + seconds;
+        }
+        return finalString = finalString + minutes + ":" + secondString;
+
     }
 }

@@ -46,7 +46,6 @@ public class LibraryListSound extends Fragment implements SoundAdapter.OnItemCli
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        // todo --> igen mega hardcoding og skal laves et andet sted.
 
         List<String> sounds = controller.getSoundListLogic().getSoundsList();
         List<String> duration = controller.getSoundListLogic().getDuration(sounds);
@@ -56,13 +55,6 @@ public class LibraryListSound extends Fragment implements SoundAdapter.OnItemCli
         soundItemAdapter = new SoundAdapter(sounds,duration, categories);
         recyclerView.setAdapter(soundItemAdapter);
 
-
-
-        //test = MediaPlayer.create(getActivity(), R.raw.testlyd);
-        //test.setVolume(1,1);
-
-        //MEGA MEGA MEGA hardcoding (lappeløsning for at teste)
-        //LibraryMain libraryMain = (LibraryMain) LibraryListSound.this.getParentFragment();
 
         NavHostFragment navHostFragment = (NavHostFragment) getParentFragment();
         NavHostFragment navHostFragment2 = (NavHostFragment) getParentFragment();
