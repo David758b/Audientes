@@ -13,7 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import com.example.AudientesAPP.model.context.Context;
+import com.example.AudientesAPP.model.context.Controller;
 import com.example.AudientesAPP.DTO.CategoryDTO;
 import com.example.AudientesAPP.DTO.PresetCategoriesDTO;
 import com.example.AudientesAPP.DTO.PresetDTO;
@@ -29,6 +29,7 @@ import com.example.AudientesAPP.model.data.DAO.PresetDAO;
 import com.example.AudientesAPP.model.data.DAO.PresetElementDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundDAO;
+import com.example.AudientesAPP.model.funktionalitet.LibraryListCategoryLogic;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.io.File;
@@ -42,8 +43,9 @@ public class MainActivity extends AppCompatActivity implements
     private NavController navController;
     MediaPlayer mediaPlayer;
     LydAfspiller lydAfspiller;
+    LibraryListCategoryLogic libraryLCLogic;
     private SQLiteDatabase db;
-    private Context context;
+    private Controller controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements
         db = SoundDatabase.getWritableDatabase();
 
         //Creates a context and gives this for later use in the database
-        context = new Context(this);
+        controller = new Controller(this);
 
         //Navigations komponenten indeholder en default implementation af Navhost (NavHostFragment)
         //der viser destinationer af typen fragmenter
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements
         getSupportFragmentManager().beginTransaction().add(R.id.playBar, new PlayBar_Frag()).addToBackStack(null).commit();
         lydAfspiller = new LydAfspiller(mediaPlayer, this);
 
+        libraryLCLogic = new LibraryListCategoryLogic(controller, this);
 
         //-------------------------------Resten er test---------------------------------------------
 
@@ -118,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements
             mPlayer.setDataSource(getApplicationContext(), myUri);
             mPlayer.prepare();
             mPlayer.start();
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -134,43 +138,43 @@ public class MainActivity extends AppCompatActivity implements
     //----------------------test-------------------------------------------------------
     //Fill db with test data
     public void fillDBUp(){
-        CategoryDAO categoryDAO = new CategoryDAO(context);
+        CategoryDAO categoryDAO = new CategoryDAO(controller);
         CategoryDTO newCategory = new CategoryDTO("I Like to move it");
         categoryDAO.add(newCategory);
 
-        PresetDAO presetDAO = new PresetDAO(context);
+        PresetDAO presetDAO = new PresetDAO(controller);
         PresetDTO presetDTO = new PresetDTO("Sove tid");
         presetDAO.add(presetDTO);
 
-        SoundDAO soundDAO = new SoundDAO(context);
-        SoundDTO soundDTO = new SoundDTO("city noise", "sauce", "420");
+        SoundDAO soundDAO = new SoundDAO(controller);
+        SoundDTO soundDTO = new SoundDTO("city noise", "sauce", 420);
         soundDAO.add(soundDTO);
 
-        SoundCategoriesDAO soundCategoriesDAO = new SoundCategoriesDAO(context);
+        SoundCategoriesDAO soundCategoriesDAO = new SoundCategoriesDAO(controller);
         SoundCategoriesDTO soundCategoriesDTO = new SoundCategoriesDTO("city noise","I Like to move it");
         soundCategoriesDAO.add(soundCategoriesDTO);
 
-        PresetCategoriesDAO presetCategoriesDAO = new PresetCategoriesDAO(context);
+        PresetCategoriesDAO presetCategoriesDAO = new PresetCategoriesDAO(controller);
         PresetCategoriesDTO presetCategoriesDTO = new PresetCategoriesDTO("Sove tid","I Like to move it");
         presetCategoriesDAO.add(presetCategoriesDTO);
 
-        PresetElementDAO presetElementDAO = new PresetElementDAO(context);
+        PresetElementDAO presetElementDAO = new PresetElementDAO(controller);
         PresetElementDTO newPresetElement = new PresetElementDTO("Sove tid","city noise",15);
         presetElementDAO.add(newPresetElement);
 
     }
     //Testing of the database may delete later
     public void databaseTest(){
-        List<SoundDTO> list;
-        SoundDAO soundDAO = new SoundDAO(context);
-        list = soundDAO.getList();
-        SoundDTO DTO;
+        List list;
+        PresetElementDAO presetElementDAO = new PresetElementDAO(controller);
+        list = presetElementDAO.getList();
+        PresetElementDTO DTO;
         for (Object a: list) {
-            DTO = (SoundDTO) a;
+            DTO = (PresetElementDTO) a;
             System.out.println("CATEGORY DTO OUTPUT --------------");
+            System.out.println(DTO.getPresetName());
             System.out.println(DTO.getSoundName());
-            System.out.println(DTO.getSoundSrc());
-            System.out.println(DTO.getSoundDuration());
+            System.out.println(DTO.getSoundVolume());
         }
     }
     //test-method (not done) for saving a file in external storage and database
@@ -241,6 +245,10 @@ public class MainActivity extends AppCompatActivity implements
         return lydAfspiller;
     }
 
+    public LibraryListCategoryLogic getLibraryLCLogic(){
+        return libraryLCLogic;
+    }
+
     public NavController getNavController(){
         return navController;
     }
@@ -249,8 +257,8 @@ public class MainActivity extends AppCompatActivity implements
         return db;
     }
 
-    public Context getContext() {
-        return context;
+    public Controller getController() {
+        return controller;
     }
 
 

@@ -15,12 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.AudientesAPP.R;
-import com.example.AudientesAPP.model.context.Context;
+import com.example.AudientesAPP.model.context.Controller;
 import com.example.AudientesAPP.model.funktionalitet.CategoryListSoundsLogic;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CategoryListSounds extends Fragment implements CategoryListSoundAdapter.OnItemClicked, LydAfspiller.OnLydAfspillerListener{
@@ -32,7 +30,7 @@ public class CategoryListSounds extends Fragment implements CategoryListSoundAda
     private RecyclerView recyclerView;
     private CategoryListSoundAdapter soundItemAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private Context context;
+    private Controller controller;
     private CategoryListSoundsLogic categoryListSoundsLogic;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,18 +38,18 @@ public class CategoryListSounds extends Fragment implements CategoryListSoundAda
         initialize(v);
 
         MainActivity mainActivity = (MainActivity) getActivity();
-        context = new Context(mainActivity);
+        controller = new Controller(mainActivity);
 
         recyclerView = (RecyclerView) v.findViewById(R.id.category_sounds_RV);
 
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        String category = context.getPrefs().getString("Category", "Fejl");
+        String category = controller.getPrefs().getString("Category", "Fejl");
         categoryTitle.setText(category);
 
         // todo --> igen mega hardcoding og skal laves et andet sted.
-        categoryListSoundsLogic = new CategoryListSoundsLogic(context);
+        categoryListSoundsLogic = new CategoryListSoundsLogic(controller);
         List<String> soundNames = categoryListSoundsLogic.getSoundsList(category);
         List<String> duration = categoryListSoundsLogic.getDuration(soundNames);
 

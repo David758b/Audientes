@@ -7,15 +7,13 @@ import com.example.AudientesAPP.UI.MainActivity;
 import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
 import com.example.AudientesAPP.model.funktionalitet.SoundListLogic;
 
-public class Context {
+public class Controller {
     private MainActivity main;
     private SharedPreferences prefs;
     private SoundListLogic soundListLogic;
     //private CategoryDAO categoryDAO;
 
-
-
-    public Context(MainActivity main) {
+    public Controller(MainActivity main) {
         this.main = main;
         prefs = PreferenceManager.getDefaultSharedPreferences(main);
         soundListLogic = new SoundListLogic(this);

@@ -5,16 +5,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.AudientesAPP.DTO.PresetDTO;
-import com.example.AudientesAPP.model.data.InterfaceDAO.IDAO;
+import com.example.AudientesAPP.model.context.Controller;
 import com.example.AudientesAPP.model.data.InterfaceDAO.IPresetDAO;
 import com.example.AudientesAPP.model.data.SoundDB;
-import com.example.AudientesAPP.model.context.Context;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PresetDAO implements IPresetDAO {
-    private Context context;
+    private Controller controller;
     private ContentValues row;
     private SQLiteDatabase db;
     private String presetName;
@@ -23,11 +22,11 @@ public class PresetDAO implements IPresetDAO {
 
     /**
      * Constructor of the presetDAO which initialize the relevant attributes of the class.
-     * @param context
+     * @param controller
      */
-    public PresetDAO(Context context) {
-        this.context = context;
-        db = context.getActivity().getDB();
+    public PresetDAO(Controller controller) {
+        this.controller = controller;
+        db = controller.getActivity().getDB();
     }
 
     /**

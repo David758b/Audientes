@@ -2,9 +2,9 @@ package com.example.AudientesAPP.model.data.InterfaceDAO;
 
 import java.util.List;
 
-public interface IDAO {
+public interface IDAO<T> {
 
-    void add (Object object);
-    void delete (Object object);
-    List<Object> getList();
+    void add (T object);
+    void delete (T object);
+    List<T> getList();
 }
