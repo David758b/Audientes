@@ -1,4 +1,4 @@
-package com.example.AudientesAPP.DTO;
+package com.example.AudientesAPP.model.DTO;
 
 public class SoundDTO {
     private String soundName;

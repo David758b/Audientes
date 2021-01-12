@@ -4,8 +4,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import com.example.AudientesAPP.DTO.SoundDTO;
-import com.example.AudientesAPP.model.context.Controller;
+import com.example.AudientesAPP.model.DTO.SoundDTO;
+import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.data.InterfaceDAO.ISoundDAO;
 import com.example.AudientesAPP.model.data.SoundDB;
 
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class SoundDAO implements ISoundDAO {
 
-    private Controller controller;
+    private ModelViewController modelViewController;
     private ContentValues row;
     private SQLiteDatabase db;
     private String soundName;
@@ -25,11 +25,11 @@ public class SoundDAO implements ISoundDAO {
 
     /**
      * Constructor of the soundDAO which initialize the relevant attributes of the class.
-     * @param controller
+     * @param modelViewController
      */
-    public SoundDAO(Controller controller) {
-        this.controller = controller;
-        db = controller.getActivity().getDB();
+    public SoundDAO(ModelViewController modelViewController) {
+        this.modelViewController = modelViewController;
+        db = modelViewController.getActivity().getDB();
     }
 
     /**

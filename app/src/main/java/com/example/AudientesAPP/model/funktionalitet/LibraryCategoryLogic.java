@@ -2,22 +2,22 @@ package com.example.AudientesAPP.model.funktionalitet;
 
 import android.content.Context;
 
-import com.example.AudientesAPP.DTO.CategoryDTO;
-import com.example.AudientesAPP.model.context.Controller;
+import com.example.AudientesAPP.model.DTO.CategoryDTO;
+import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibraryListCategoryLogic {
+public class LibraryCategoryLogic {
     private CategoryDAO categoryDAO;
     private Context context;
     List<OnLibraryLCLogicListener> listeners;
     private final List<String> categoryNames;
 
-    public LibraryListCategoryLogic (Controller controller, Context context) {
+    public LibraryCategoryLogic(ModelViewController modelViewController, Context context) {
         this.context = context;
-        this.categoryDAO = new CategoryDAO(controller);
+        this.categoryDAO = new CategoryDAO(modelViewController);
         this.listeners = new ArrayList<>();
         this.categoryNames = new ArrayList<>();
         initCategoryNames();
@@ -60,7 +60,7 @@ public class LibraryListCategoryLogic {
     }
 
     public interface OnLibraryLCLogicListener{
-        void updateLibraryListCategory(LibraryListCategoryLogic libraryListCategoryLogic);
+        void updateLibraryListCategory(LibraryCategoryLogic libraryCategoryLogic);
     }
 
 }

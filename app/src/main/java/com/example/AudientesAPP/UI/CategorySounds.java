@@ -14,47 +14,55 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.AudientesAPP.model.context.Controller;
-import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.example.AudientesAPP.R;
+import com.example.AudientesAPP.model.context.ModelViewController;
+import com.example.AudientesAPP.model.funktionalitet.CategorySoundsLogic;
+import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class LibraryListSound extends Fragment implements SoundAdapter.OnItemClicked,LydAfspiller.OnLydAfspillerListener {
+public class CategorySounds extends Fragment implements CategorySoundAdapter.OnItemClicked, LydAfspiller.OnLydAfspillerListener{
     LydAfspiller lydAfspiller;
-    ImageView imageView1;
-    TextView title;
-    TextView tag;
+    ImageView imageViewOptions;
+    TextView categoryTitle;
+    TextView soundTitle;
     TextView soundLength;
     private RecyclerView recyclerView;
-    private SoundAdapter soundItemAdapter;
+    private CategorySoundAdapter soundItemAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private Controller controller;
-
+    private ModelViewController modelViewController;
+    private CategorySoundsLogic categorySoundsLogic;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.library_list_sound_frag, container, false);
+        View v = inflater.inflate(R.layout.category_list_sounds_frag, container, false);
         initialize(v);
 
         MainActivity mainActivity = (MainActivity) getActivity();
-        controller = mainActivity.getController();
+        modelViewController = new ModelViewController(mainActivity);
 
-        recyclerView = (RecyclerView) v.findViewById(R.id.sounds_RV);
+        recyclerView = (RecyclerView) v.findViewById(R.id.category_sounds_RV);
 
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
+        String category = modelViewController.getPrefs().getString("Category", "Fejl");
+        categoryTitle.setText(category);
 
-        List<String> sounds = controller.getSoundListLogic().getSoundsList();
-        List<String> duration = controller.getSoundListLogic().getDuration(sounds);
-        List<String> categories = controller.getSoundListLogic().getCategories(sounds);
+        // todo --> igen mega hardcoding og skal laves et andet sted.
+        categorySoundsLogic = new CategorySoundsLogic(modelViewController);
+        List<String> soundNames = categorySoundsLogic.getSoundsList(category);
+        List<String> duration = categorySoundsLogic.getDuration(soundNames);
 
-
-        soundItemAdapter = new SoundAdapter(sounds,duration, categories);
+        soundItemAdapter = new CategorySoundAdapter(soundNames, duration);
         recyclerView.setAdapter(soundItemAdapter);
 
+
+
+        //test = MediaPlayer.create(getActivity(), R.raw.testlyd);
+        //test.setVolume(1,1);
+
+        //MEGA MEGA MEGA hardcoding (lappeløsning for at teste)
+        //LibraryMain libraryMain = (LibraryMain) LibraryListSound.this.getParentFragment();
 
         NavHostFragment navHostFragment = (NavHostFragment) getParentFragment();
         NavHostFragment navHostFragment2 = (NavHostFragment) getParentFragment();
@@ -64,20 +72,18 @@ public class LibraryListSound extends Fragment implements SoundAdapter.OnItemCli
         lydAfspiller = main.getLydAfspiller();
 
 
-        soundItemAdapter.setOnClick(LibraryListSound.this);
-        //recyclerView.setPadding(0,75,0,20);
+        soundItemAdapter.setOnClick(CategorySounds.this);
+        recyclerView.setPadding(0,75,0,20);
 
         return v;
     }
-
     public void initialize(View v){
 
-        imageView1 = v.findViewById(R.id.sound_list_element_options);
-        title = v.findViewById(R.id.sound_title);
-        tag = v.findViewById(R.id.tag_title);
+        categoryTitle = v.findViewById(R.id.category_TV);
+        imageViewOptions = v.findViewById(R.id.sound_list_element_options);
+        soundTitle = v.findViewById(R.id.sound_title);
         soundLength = v.findViewById(R.id.sound_duration);
     }
-
 
     @Override
     public void onDestroy() {
@@ -146,24 +152,21 @@ public class LibraryListSound extends Fragment implements SoundAdapter.OnItemCli
     public void soundFinished(LydAfspiller lydAfspiller) {
 
     }
+
 }
 
-class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHolder> {
+class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.SoundViewHolder> {
 
     private List<String> mSoundSet;
-    private List<String> mDuration;
-    private List<String> mCategories;
+    private List<String> nDuration;
 
-    public SoundAdapter(List<String> mySoundSet, List<String> mDuration, List<String> mCategories ){
+    public CategorySoundAdapter(List<String> mySoundSet, List<String> nDuration){
         this.mSoundSet = mySoundSet;
-        this.mDuration = mDuration;
-        this.mCategories = mCategories;
-
+        this.nDuration = nDuration;
     }
 
     public static class SoundViewHolder extends RecyclerView.ViewHolder{
         public TextView soundTextView;
-        public TextView tagTitle;
         public TextView soundDuration;
         public ImageView soundOption;
 
@@ -172,7 +175,6 @@ class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHolder> {
             super(itemView);
             //Måske tilføje de resterende ting for et sound item
             soundTextView = itemView.findViewById(R.id.sound_title);
-            tagTitle = itemView.findViewById(R.id.tag_title);
             soundDuration = itemView.findViewById(R.id.sound_duration);
             soundOption = itemView.findViewById(R.id.sound_list_element_options);
             // ...
@@ -189,7 +191,7 @@ class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHolder> {
 
     @NonNull
     @Override
-    public SoundAdapter.SoundViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CategorySoundAdapter.SoundViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.sound_list_element, parent, false);
         SoundViewHolder vh = new SoundViewHolder(v);
         return vh;
@@ -198,8 +200,7 @@ class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull SoundViewHolder holder, final int position) {
         holder.soundTextView.setText(mSoundSet.get(position));
-        holder.soundDuration.setText(mDuration.get(position));
-        holder.tagTitle.setText(mCategories.get(position));
+        holder.soundDuration.setText(nDuration.get(position));
         holder.soundTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

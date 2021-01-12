@@ -1,17 +1,18 @@
 package com.example.AudientesAPP.model.data;
 
 import android.os.Environment;
-import com.example.AudientesAPP.model.context.Controller;
+import com.example.AudientesAPP.model.context.ModelViewController;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
 public class ExternalStorage {
 
-    private Controller controller;
+    private ModelViewController modelViewController;
 
-    public ExternalStorage(Controller controller) {
-        this.controller = controller;
+    public ExternalStorage(ModelViewController modelViewController) {
+        this.modelViewController = modelViewController;
     }
 
 
@@ -20,7 +21,7 @@ public class ExternalStorage {
      * @return the directory path
      */
     public File makeDirectory(){
-        File directory = new File(controller.getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC),"Audientes");
+        File directory = new File(modelViewController.getActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC),"Audientes");
         directory.mkdir();
         return directory;
     }
@@ -50,7 +51,7 @@ public class ExternalStorage {
         File newFile = new File(directory.getAbsolutePath(), newFileName);
 
         try {
-            InputStream in = controller.getActivity().getResources().openRawResource(RID);
+            InputStream in = modelViewController.getActivity().getResources().openRawResource(RID);
             FileOutputStream out = new FileOutputStream(newFile.getAbsolutePath());
             byte[] buff = new byte[1024];
             int read = 0;

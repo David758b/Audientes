@@ -4,23 +4,22 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.example.AudientesAPP.UI.MainActivity;
-import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
-import com.example.AudientesAPP.model.funktionalitet.SoundListLogic;
+import com.example.AudientesAPP.model.funktionalitet.LibrarySoundLogic;
 import com.example.AudientesAPP.model.funktionalitet.SoundSaver;
 import com.example.AudientesAPP.model.funktionalitet.Utilities;
 
-public class Controller {
+public class ModelViewController {
     private MainActivity main;
     private SharedPreferences prefs;
-    private SoundListLogic soundListLogic;
+    private LibrarySoundLogic librarySoundLogic;
     private Utilities utils;
     private SoundSaver soundSaver;
     //private CategoryDAO categoryDAO;
 
-    public Controller(MainActivity main) {
+    public ModelViewController(MainActivity main) {
         this.main = main;
         prefs = PreferenceManager.getDefaultSharedPreferences(main);
-        soundListLogic = new SoundListLogic(this);
+        librarySoundLogic = new LibrarySoundLogic(this);
         utils = new Utilities();
         soundSaver = new SoundSaver(this);
 //        categoryDAO = new CategoryDAO(this);
@@ -52,8 +51,8 @@ public class Controller {
         return prefs;
     }
 
-    public SoundListLogic getSoundListLogic() {
-        return soundListLogic;
+    public LibrarySoundLogic getLibrarySoundLogic() {
+        return librarySoundLogic;
     }
 
     public MainActivity getActivity(){

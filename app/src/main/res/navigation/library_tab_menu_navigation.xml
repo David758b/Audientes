@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/libraryListCategory"
-        android:name="com.example.AudientesAPP.UI.LibraryListCategory"
+        android:name="com.example.AudientesAPP.UI.LibraryCategory"
         android:label="LibraryListCategory" >
         <action
             android:id="@+id/action_libraryListCategory_to_libraryListSound"
@@ -15,6 +15,6 @@
 
     <fragment
         android:id="@+id/libraryListSound"
-        android:name="com.example.AudientesAPP.UI.LibraryListSound"
+        android:name="com.example.AudientesAPP.UI.LibrarySound"
         android:label="LibraryListSound" />
 </navigation>

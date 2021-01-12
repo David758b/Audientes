@@ -1,6 +1,6 @@
 package com.example.AudientesAPP.model.data.InterfaceDAO;
 
-import com.example.AudientesAPP.DTO.PresetElementDTO;
+import com.example.AudientesAPP.model.DTO.PresetElementDTO;
 
 import java.util.List;
 

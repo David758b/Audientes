@@ -4,9 +4,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.AudientesAPP.DTO.CategoryDTO;
-import com.example.AudientesAPP.model.context.Controller;
-import com.example.AudientesAPP.model.data.InterfaceDAO.ICategoryDAO;
+import com.example.AudientesAPP.model.DTO.CategoryDTO;
+import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.data.InterfaceDAO.IDAO;
 import com.example.AudientesAPP.model.data.SoundDB;
 
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDAO implements IDAO<CategoryDTO> {
-    private Controller controller;
+    private ModelViewController modelViewController;
     private ContentValues row;
     private SQLiteDatabase db;
     private String categoryName;
@@ -23,11 +22,11 @@ public class CategoryDAO implements IDAO<CategoryDTO> {
 
     /**
      * Constructor of the CategoryDAO which initialize the relevant attributes of the class.
-     * @param controller
+     * @param modelViewController
      */
-    public CategoryDAO(Controller controller) {
-        this.controller = controller;
-        db = controller.getActivity().getDB();
+    public CategoryDAO(ModelViewController modelViewController) {
+        this.modelViewController = modelViewController;
+        db = modelViewController.getActivity().getDB();
 
     }
 

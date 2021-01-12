@@ -1,24 +1,24 @@
 package com.example.AudientesAPP.model.funktionalitet;
 
-import com.example.AudientesAPP.DTO.SoundCategoriesDTO;
-import com.example.AudientesAPP.DTO.SoundDTO;
-import com.example.AudientesAPP.model.context.Controller;
+import com.example.AudientesAPP.model.DTO.SoundCategoriesDTO;
+import com.example.AudientesAPP.model.DTO.SoundDTO;
+import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SoundListLogic {
-    private Controller controller;
+public class LibrarySoundLogic {
+    private ModelViewController modelViewController;
     private SoundCategoriesDAO soundCategoriesDAO;
     private SoundDAO soundDAO;
 
 
-    public SoundListLogic (Controller controller) {
-        this.controller = controller;
-        this.soundCategoriesDAO = new SoundCategoriesDAO(controller);
-        this.soundDAO = new SoundDAO(controller);
+    public LibrarySoundLogic(ModelViewController modelViewController) {
+        this.modelViewController = modelViewController;
+        this.soundCategoriesDAO = new SoundCategoriesDAO(modelViewController);
+        this.soundDAO = new SoundDAO(modelViewController);
     }
 
     /**

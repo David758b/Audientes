@@ -8,21 +8,19 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
-import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import com.example.AudientesAPP.model.context.Controller;
-import com.example.AudientesAPP.DTO.CategoryDTO;
-import com.example.AudientesAPP.DTO.PresetCategoriesDTO;
-import com.example.AudientesAPP.DTO.PresetDTO;
-import com.example.AudientesAPP.DTO.PresetElementDTO;
-import com.example.AudientesAPP.DTO.SoundCategoriesDTO;
-import com.example.AudientesAPP.DTO.SoundDTO;
+import com.example.AudientesAPP.model.context.ModelViewController;
+import com.example.AudientesAPP.model.DTO.CategoryDTO;
+import com.example.AudientesAPP.model.DTO.PresetCategoriesDTO;
+import com.example.AudientesAPP.model.DTO.PresetDTO;
+import com.example.AudientesAPP.model.DTO.PresetElementDTO;
+import com.example.AudientesAPP.model.DTO.SoundCategoriesDTO;
+import com.example.AudientesAPP.model.DTO.SoundDTO;
 import com.example.AudientesAPP.R;
-import com.example.AudientesAPP.model.data.ExternalStorage;
 import com.example.AudientesAPP.model.data.SoundDB;
 import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
 import com.example.AudientesAPP.model.data.DAO.PresetCategoriesDAO;
@@ -30,10 +28,10 @@ import com.example.AudientesAPP.model.data.DAO.PresetDAO;
 import com.example.AudientesAPP.model.data.DAO.PresetElementDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundDAO;
-import com.example.AudientesAPP.model.funktionalitet.LibraryListCategoryLogic;
+import com.example.AudientesAPP.model.funktionalitet.LibraryCategoryLogic;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import java.io.File;
+
 import java.util.List;
 
 
@@ -44,9 +42,9 @@ public class MainActivity extends AppCompatActivity implements
     private NavController navController;
     MediaPlayer mediaPlayer;
     LydAfspiller lydAfspiller;
-    LibraryListCategoryLogic libraryLCLogic;
+    LibraryCategoryLogic libraryLCLogic;
     private SQLiteDatabase db;
-    private Controller controller;
+    private ModelViewController modelViewController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements
         db = SoundDatabase.getWritableDatabase();
 
         //Creates a context and gives this for later use in the database
-        controller = new Controller(this);
+        modelViewController = new ModelViewController(this);
 
         //Navigations komponenten indeholder en default implementation af Navhost (NavHostFragment)
         //der viser destinationer af typen fragmenter
@@ -81,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements
         getSupportFragmentManager().beginTransaction().add(R.id.playBar, new PlayBar_Frag()).addToBackStack(null).commit();
         lydAfspiller = new LydAfspiller(mediaPlayer, this);
 
-        libraryLCLogic = new LibraryListCategoryLogic(controller, this);
+        libraryLCLogic = new LibraryCategoryLogic(modelViewController, this);
 
         saveSounds();
 
@@ -100,14 +98,14 @@ public class MainActivity extends AppCompatActivity implements
     //----------------------test-------------------------------------------------------
     public void saveSounds(){
         //Gemmer alle lyde i raw mappen i external storage
-        controller.getSoundSaver().saveSound(R.raw.andreangelo, "andreangelo");
-        controller.getSoundSaver().saveSound(R.raw.brown_noise, "brown_noise");
-        controller.getSoundSaver().saveSound(R.raw.chihuahua, "chihuahua");
-        controller.getSoundSaver().saveSound(R.raw.cricket, "cricket");
-        controller.getSoundSaver().saveSound(R.raw.melarancida__monks_praying, "melarancida__monks_praying");
-        controller.getSoundSaver().saveSound(R.raw.rain_street, "rain_street");
-        controller.getSoundSaver().saveSound(R.raw.testlyd, "testlyd");
-        controller.getSoundSaver().saveSound(R.raw.train_nature, "train_nature");
+        modelViewController.getSoundSaver().saveSound(R.raw.andreangelo, "andreangelo");
+        modelViewController.getSoundSaver().saveSound(R.raw.brown_noise, "brown_noise");
+        modelViewController.getSoundSaver().saveSound(R.raw.chihuahua, "chihuahua");
+        modelViewController.getSoundSaver().saveSound(R.raw.cricket, "cricket");
+        modelViewController.getSoundSaver().saveSound(R.raw.melarancida__monks_praying, "melarancida__monks_praying");
+        modelViewController.getSoundSaver().saveSound(R.raw.rain_street, "rain_street");
+        modelViewController.getSoundSaver().saveSound(R.raw.testlyd, "testlyd");
+        modelViewController.getSoundSaver().saveSound(R.raw.train_nature, "train_nature");
     }
 
     //Printing tables
@@ -125,11 +123,11 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     //mediaplayer test
-    public void mediaPlayerTest(Controller controller){
+    public void mediaPlayerTest(ModelViewController modelViewController){
         //test ----det virker sgu !!!
         try {
             MediaPlayer mPlayer = new MediaPlayer();
-            SoundDAO soundDAO = new SoundDAO(controller);
+            SoundDAO soundDAO = new SoundDAO(modelViewController);
             List<SoundDTO> list = soundDAO.getList();
             Uri myUri = null;
 
@@ -151,27 +149,27 @@ public class MainActivity extends AppCompatActivity implements
 
     //Fill db with test data
     public void fillDBUp(){
-        CategoryDAO categoryDAO = new CategoryDAO(controller);
+        CategoryDAO categoryDAO = new CategoryDAO(modelViewController);
         CategoryDTO newCategory = new CategoryDTO("I Like to move it");
         categoryDAO.add(newCategory);
 
-        PresetDAO presetDAO = new PresetDAO(controller);
+        PresetDAO presetDAO = new PresetDAO(modelViewController);
         PresetDTO presetDTO = new PresetDTO("Sove tid");
         presetDAO.add(presetDTO);
 
-        SoundDAO soundDAO = new SoundDAO(controller);
+        SoundDAO soundDAO = new SoundDAO(modelViewController);
         SoundDTO soundDTO = new SoundDTO("city noise", "sauce", "420");
         soundDAO.add(soundDTO);
 
-        SoundCategoriesDAO soundCategoriesDAO = new SoundCategoriesDAO(controller);
+        SoundCategoriesDAO soundCategoriesDAO = new SoundCategoriesDAO(modelViewController);
         SoundCategoriesDTO soundCategoriesDTO = new SoundCategoriesDTO("city noise","I Like to move it");
         soundCategoriesDAO.add(soundCategoriesDTO);
 
-        PresetCategoriesDAO presetCategoriesDAO = new PresetCategoriesDAO(controller);
+        PresetCategoriesDAO presetCategoriesDAO = new PresetCategoriesDAO(modelViewController);
         PresetCategoriesDTO presetCategoriesDTO = new PresetCategoriesDTO("Sove tid","I Like to move it");
         presetCategoriesDAO.add(presetCategoriesDTO);
 
-        PresetElementDAO presetElementDAO = new PresetElementDAO(controller);
+        PresetElementDAO presetElementDAO = new PresetElementDAO(modelViewController);
         PresetElementDTO newPresetElement = new PresetElementDTO("Sove tid","city noise",15);
         presetElementDAO.add(newPresetElement);
 
@@ -179,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements
     //Testing of the database may delete later
     public void databaseTest(){
         List list;
-        PresetElementDAO presetElementDAO = new PresetElementDAO(controller);
+        PresetElementDAO presetElementDAO = new PresetElementDAO(modelViewController);
         list = presetElementDAO.getList();
         PresetElementDTO DTO;
         for (Object a: list) {
@@ -221,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements
         return lydAfspiller;
     }
 
-    public LibraryListCategoryLogic getLibraryLCLogic(){
+    public LibraryCategoryLogic getLibraryLCLogic(){
         return libraryLCLogic;
     }
 
@@ -233,8 +231,8 @@ public class MainActivity extends AppCompatActivity implements
         return db;
     }
 
-    public Controller getController() {
-        return controller;
+    public ModelViewController getModelViewController() {
+        return modelViewController;
     }
 
 

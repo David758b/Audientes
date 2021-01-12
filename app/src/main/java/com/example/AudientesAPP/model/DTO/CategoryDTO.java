@@ -1,6 +1,4 @@
-package com.example.AudientesAPP.DTO;
-
-import java.util.List;
+package com.example.AudientesAPP.model.DTO;
 
 public class CategoryDTO {
     private String categoryName;

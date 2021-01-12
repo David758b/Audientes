@@ -4,16 +4,16 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.AudientesAPP.DTO.PresetCategoriesDTO;
+import com.example.AudientesAPP.model.DTO.PresetCategoriesDTO;
 import com.example.AudientesAPP.model.data.InterfaceDAO.IPresetCategoriesDAO;
 import com.example.AudientesAPP.model.data.SoundDB;
-import com.example.AudientesAPP.model.context.Controller;
+import com.example.AudientesAPP.model.context.ModelViewController;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PresetCategoriesDAO implements IPresetCategoriesDAO {
-    private Controller controller;
+    private ModelViewController modelViewController;
     private ContentValues row;
     private SQLiteDatabase db;
     private String presetName;
@@ -24,11 +24,11 @@ public class PresetCategoriesDAO implements IPresetCategoriesDAO {
 
     /**
      * Constructor of the presetDAO which initialize the relevant attributes of the class.
-     * @param controller
+     * @param modelViewController
      */
-    public PresetCategoriesDAO(Controller controller) {
-        this.controller = controller;
-        db = controller.getActivity().getDB();
+    public PresetCategoriesDAO(ModelViewController modelViewController) {
+        this.modelViewController = modelViewController;
+        db = modelViewController.getActivity().getDB();
     }
 
 

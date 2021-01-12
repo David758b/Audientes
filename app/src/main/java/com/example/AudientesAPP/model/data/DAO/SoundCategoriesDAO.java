@@ -4,8 +4,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.AudientesAPP.DTO.SoundCategoriesDTO;
-import com.example.AudientesAPP.model.context.Controller;
+import com.example.AudientesAPP.model.DTO.SoundCategoriesDTO;
+import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.data.InterfaceDAO.ISoundCategoriesDAO;
 import com.example.AudientesAPP.model.data.SoundDB;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SoundCategoriesDAO implements ISoundCategoriesDAO {
-    private Controller controller;
+    private ModelViewController modelViewController;
     private ContentValues row;
     private SQLiteDatabase db;
     private String soundName;
@@ -22,9 +22,9 @@ public class SoundCategoriesDAO implements ISoundCategoriesDAO {
     private List<SoundCategoriesDTO> soundCategoriesDTOList;
 
 
-    public SoundCategoriesDAO(Controller controller) {
-        this.controller = controller;
-        db = controller.getActivity().getDB();
+    public SoundCategoriesDAO(ModelViewController modelViewController) {
+        this.modelViewController = modelViewController;
+        db = modelViewController.getActivity().getDB();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.example.AudientesAPP.model.data.InterfaceDAO;
 
-import com.example.AudientesAPP.DTO.PresetCategoriesDTO;
+import com.example.AudientesAPP.model.DTO.PresetCategoriesDTO;
 
 import java.util.List;
 

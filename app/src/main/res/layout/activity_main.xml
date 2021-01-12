@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:controller=".UI.MainActivity"
+    tools:modelViewController=".UI.MainActivity"
     android:background="@drawable/audientes_background"
     android:scaleType = "centerCrop">
 

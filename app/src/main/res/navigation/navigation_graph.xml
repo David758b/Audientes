@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/categoryListSounds"
-        android:name="com.example.AudientesAPP.UI.CategoryListSounds"
+        android:name="com.example.AudientesAPP.UI.CategorySounds"
         android:label="categoryListSound"/>
 
 

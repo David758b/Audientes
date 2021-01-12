@@ -1,6 +1,6 @@
 package com.example.AudientesAPP.model.data.InterfaceDAO;
 
-import com.example.AudientesAPP.DTO.SoundDTO;
+import com.example.AudientesAPP.model.DTO.SoundDTO;
 
 import java.util.List;
 
