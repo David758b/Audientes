@@ -11,15 +11,19 @@ import java.util.List;
 
 public class LibraryCategoryLogic {
     private CategoryDAO categoryDAO;
-    private Context context;
     List<OnLibraryLCLogicListener> listeners;
-    private final List<String> categoryNames;
 
-    public LibraryCategoryLogic(ModelViewController modelViewController, Context context) {
-        this.context = context;
+    //We need to creates these lists because the recycleviewAddapter can only take one instance of a list
+    private final List<String> categoryNames;
+    private final List<String> colors;
+    private final List<String> pictures;
+
+    public LibraryCategoryLogic(ModelViewController modelViewController) {
         this.categoryDAO = new CategoryDAO(modelViewController);
         this.listeners = new ArrayList<>();
         this.categoryNames = new ArrayList<>();
+        this.colors = new ArrayList<>();
+        this.pictures = new ArrayList<>();
         initCategoryNames();
     }
 
@@ -28,6 +32,8 @@ public class LibraryCategoryLogic {
         categoryDAO.add(categoryDTO);
         //Måske få listen fra DAO og kald initCategoryNames istedet for linje 30
         categoryNames.add(categoryDTO.getCategoryName());
+        pictures.add(categoryDTO.getPicture());
+        colors.add(categoryDTO.getColor());
         System.out.println("-------------------ADD CATEGORY------------------");
         notifyListeners();
     }
@@ -35,6 +41,12 @@ public class LibraryCategoryLogic {
     //Burde returnere en liste af CategoryDTO's, hvis vi også skal have farve og billede reference med.
     public List<String> getCategoryNames () {
         return categoryNames;
+    }
+    public List<String> getPictures () {
+        return pictures;
+    }
+    public List<String> getColors () {
+        return colors;
     }
 
     //Hvis init skal køres fra fragmentet og ikke konstruktøren i denne klasse skal den være public og slettes fra konstruktøren

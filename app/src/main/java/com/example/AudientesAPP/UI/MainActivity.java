@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements
         getSupportFragmentManager().beginTransaction().add(R.id.playBar, new PlayBar_Frag()).addToBackStack(null).commit();
         lydAfspiller = new LydAfspiller(mediaPlayer, this);
 
-        libraryLCLogic = new LibraryCategoryLogic(modelViewController, this);
+        libraryLCLogic = new LibraryCategoryLogic(modelViewController);
 
         saveSounds();
 
