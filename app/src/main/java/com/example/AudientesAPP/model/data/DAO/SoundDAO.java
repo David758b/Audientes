@@ -6,13 +6,13 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import com.example.AudientesAPP.model.DTO.SoundDTO;
 import com.example.AudientesAPP.model.context.ModelViewController;
-import com.example.AudientesAPP.model.data.InterfaceDAO.ISoundDAO;
+import com.example.AudientesAPP.model.data.InterfaceDAO.IDAO;
 import com.example.AudientesAPP.model.data.SoundDB;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SoundDAO implements ISoundDAO {
+public class SoundDAO implements IDAO<SoundDTO> {
 
     private ModelViewController modelViewController;
     private ContentValues row;

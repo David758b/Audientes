@@ -6,13 +6,13 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.AudientesAPP.model.DTO.PresetElementDTO;
 import com.example.AudientesAPP.model.context.ModelViewController;
-import com.example.AudientesAPP.model.data.InterfaceDAO.IPresetElementDAO;
+import com.example.AudientesAPP.model.data.InterfaceDAO.IDAO;
 import com.example.AudientesAPP.model.data.SoundDB;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PresetElementDAO implements IPresetElementDAO {
+public class PresetElementDAO implements IDAO<PresetElementDTO> {
     private ModelViewController modelViewController;
     private ContentValues row;
     private SQLiteDatabase db;
