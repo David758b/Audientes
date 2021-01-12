@@ -220,6 +220,10 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
     // Listener
     private DialogInterface.OnDismissListener onDismissListener;
 
+    //Variables
+    private String categoryColor;
+    private String categoryName;
+
     public CreateCategoryDialog(@NonNull android.content.Context contextUI, ModelViewController modelViewController, LibraryCategoryLogic libraryCategoryLogic) {
         super(contextUI);
         setContentView(R.layout.category_new_dialog);
@@ -233,14 +237,15 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
         colorBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initColorPicker();
+                initColorPicker(v);
             }
         });
 
     }
     @Override
     public void onClick(View v) {
-        String categoryName = categoryNameET.getText().toString();
+        categoryName = categoryNameET.getText().toString();
+
         if(categoryName.length() < 1) {
             String text = "Please enter a category name";
             int time = Toast.LENGTH_SHORT;
@@ -250,19 +255,26 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
             System.out.println(categoryName);
             System.out.println("----------------------------------");
             libraryCategoryLogic.addCategory(categoryName);
+            System.out.println(categoryColor);
             Toast.makeText(v.getContext(), "Category " + categoryName + " created", Toast.LENGTH_SHORT).show();
             dismiss();
         }
     }
 
-    public void initColorPicker(){
+    public void initColorPicker(final View v){
+        //Henter farver fra vores color resources
+        int[] colorNumberarray = v.getResources().getIntArray(R.array.colorNumberList);
         colorPicker = new ColorPicker(modelViewController.getActivity());
+        //sætter farver på colorpickeren
+        colorPicker.setColors(colorNumberarray);
         colorPicker.show();
         colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
             @Override
             public void onChooseColor(int position, int color) {
                 colorBtn.setBackgroundColor(color);
-                //send kategorien videre med farven til logic
+                //confirmColor(color,v);
+                categoryColor = String.format("#%06X", (0xFFFFFF & color));
+
             }
 
             @Override
