@@ -1,5 +1,6 @@
 package com.example.AudientesAPP.UI;
 
+import android.app.Activity;
 import android.app.Dialog;
 
 import android.content.Context;
@@ -65,7 +66,7 @@ public class LibraryCategory extends Fragment implements LibraryCategoryLogic.On
         //logic.initCategoryNames();
 
         try {
-            mAdapter = new CategoryAdapter(logic.getCategories(), getContext(), modelViewController.getNavController(), logic);
+            mAdapter = new CategoryAdapter(logic.getCategories(), getActivity(), modelViewController.getNavController(), logic);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -83,7 +84,7 @@ public class LibraryCategory extends Fragment implements LibraryCategoryLogic.On
 }
 
 class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
-    private final android.content.Context contextUI;
+    private Activity contextUI;
     private Fragment mFragment;
     private Bundle mBundle;
     private NavController navController;
@@ -92,7 +93,7 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
     //
     private List<CategoryDTO> data;
 
-    public CategoryAdapter(List<CategoryDTO> data, Context contextUI, NavController navController, LibraryCategoryLogic logic) {
+    public CategoryAdapter(List<CategoryDTO> data, Activity contextUI, NavController navController, LibraryCategoryLogic logic) {
         this.contextUI = contextUI;
         this.data = data;
         this.navController = navController;
@@ -179,6 +180,7 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
     private CategoryDTO categoryDTO;
     private final LibraryCategoryLogic libraryCategoryLogic;
     private ColorPicker colorPicker;
+    private Activity contextUI;
     // Listener
     private DialogInterface.OnDismissListener onDismissListener;
 
@@ -186,10 +188,11 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
     private String categoryColor;
     private String categoryName;
 
-    public CreateCategoryDialog(@NonNull android.content.Context contextUI, LibraryCategoryLogic libraryCategoryLogic) {
+    public CreateCategoryDialog(Activity contextUI, LibraryCategoryLogic libraryCategoryLogic) {
         super(contextUI);
         setContentView(R.layout.category_new_dialog);
         this.libraryCategoryLogic = libraryCategoryLogic;
+        this.contextUI = contextUI;
         categoryNameET = findViewById(R.id.category_new_name_ET);
         colorPickerTV = findViewById(R.id.category_new_color_TV);
         colorBtn = findViewById(R.id.colorPicker);
@@ -225,16 +228,17 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
     public void initColorPicker(final View v) {
         //Henter farver fra vores color resources
         int[] colorNumberarray = v.getResources().getIntArray(R.array.colorNumberList);
-        colorPicker = new ColorPicker(getOwnerActivity());
+        colorPicker = new ColorPicker(contextUI);
         //sætter farver på colorpickeren
         colorPicker.setColors(colorNumberarray);
         colorPicker.setRoundColorButton(true);
+
 
         colorPicker.show();
         colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
             @Override
             public void onChooseColor(int position, int color) {
-                colorBtn.setBackgroundColor(color);
+                colorBtn.getBackground().setTint(color);
                 categoryColor = String.format("#%06X", (0xFFFFFF & color));
             }
 
