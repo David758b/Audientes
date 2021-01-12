@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +32,8 @@ import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
 import com.example.AudientesAPP.model.funktionalitet.LibraryCategoryLogic;
 
 import java.util.List;
+
+import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class LibraryCategory extends Fragment implements LibraryCategoryLogic.OnLibraryLCLogicListener{
     // Test
@@ -207,14 +208,15 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
 
 class CreateCategoryDialog extends Dialog implements View.OnClickListener {
     // Views
-    private EditText editText;
-    private TextView textView;
-    private GridLayout gridLayout;
-    private Button button;
+    private EditText categoryNameET;
+    private TextView colorText;
+    private Button colorBtn;
+    private Button createBtn;
     // Objects
     private CategoryDTO categoryDTO;
     private final LibraryCategoryLogic libraryCategoryLogic;
     private ModelViewController modelViewController;
+    private ColorPicker colorPicker;
     // Listener
     private DialogInterface.OnDismissListener onDismissListener;
 
@@ -223,15 +225,22 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
         setContentView(R.layout.category_new_dialog);
         this.modelViewController = modelViewController;
         this.libraryCategoryLogic = libraryCategoryLogic;
-        editText = findViewById(R.id.category_new_name_ET);
-        textView = findViewById(R.id.category_new_color_TV);
-        gridLayout = findViewById(R.id.category_new_colorpicker_grid);
-        button = findViewById(R.id.category_new_create);
-        button.setOnClickListener(this);
+        categoryNameET = findViewById(R.id.category_new_name_ET);
+        colorText = findViewById(R.id.category_new_color_TV);
+        colorBtn = findViewById(R.id.colorPicker);
+        createBtn = findViewById(R.id.category_new_create);
+        createBtn.setOnClickListener(this);
+        colorBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initColorPicker();
+            }
+        });
+
     }
     @Override
     public void onClick(View v) {
-        String categoryName = editText.getText().toString();
+        String categoryName = categoryNameET.getText().toString();
         if(categoryName.length() < 1) {
             String text = "Please enter a category name";
             int time = Toast.LENGTH_SHORT;
@@ -244,5 +253,22 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
             Toast.makeText(v.getContext(), "Category " + categoryName + " created", Toast.LENGTH_SHORT).show();
             dismiss();
         }
+    }
+
+    public void initColorPicker(){
+        colorPicker = new ColorPicker(modelViewController.getActivity());
+        colorPicker.show();
+        colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
+            @Override
+            public void onChooseColor(int position, int color) {
+                colorBtn.setBackgroundColor(color);
+                //send kategorien videre med farven til logic
+            }
+
+            @Override
+            public void onCancel() {
+                //
+            }
+        });
     }
 }
