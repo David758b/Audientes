@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements
         presetDAO.add(presetDTO);
 
         SoundDAO soundDAO = new SoundDAO(controller);
-        SoundDTO soundDTO = new SoundDTO("city noise", "sauce", 420);
+        SoundDTO soundDTO = new SoundDTO("city noise", "sauce", "420");
         soundDAO.add(soundDTO);
 
         SoundCategoriesDAO soundCategoriesDAO = new SoundCategoriesDAO(controller);
@@ -182,8 +182,8 @@ public class MainActivity extends AppCompatActivity implements
 
         //to get the soundSrc
         SoundDTO soundDTO = new SoundDTO(soundName, "", "");
-        SoundDAO soundDAO = new SoundDAO(context);
-        ExternalStorage externalStorage = new ExternalStorage(context);
+        SoundDAO soundDAO = new SoundDAO(controller);
+        ExternalStorage externalStorage = new ExternalStorage(controller);
         File dir = externalStorage.makeDirectory();
         externalStorage.fileSaving(Rid, dir, soundDTO.getSoundName());
         File soundSrc = externalStorage.getFile(dir, soundDTO.getSoundName());

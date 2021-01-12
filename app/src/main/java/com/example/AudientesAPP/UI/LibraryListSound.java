@@ -14,7 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.AudientesAPP.model.context.Context;
+import com.example.AudientesAPP.model.context.Controller;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.example.AudientesAPP.R;
 
@@ -31,7 +31,7 @@ public class LibraryListSound extends Fragment implements SoundAdapter.OnItemCli
     private RecyclerView recyclerView;
     private SoundAdapter soundItemAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private Context context;
+    private Controller controller;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class LibraryListSound extends Fragment implements SoundAdapter.OnItemCli
         initialize(v);
 
         MainActivity mainActivity = (MainActivity) getActivity();
-        context = mainActivity.getContext();
+        controller = mainActivity.getController();
 
         recyclerView = (RecyclerView) v.findViewById(R.id.sounds_RV);
 
@@ -48,9 +48,9 @@ public class LibraryListSound extends Fragment implements SoundAdapter.OnItemCli
 
         // todo --> igen mega hardcoding og skal laves et andet sted.
 
-        List<String> sounds = context.getSoundListLogic().getSoundsList();
-        List<String> duration = context.getSoundListLogic().getDuration(sounds);
-        List<String> categories = context.getSoundListLogic().getCategories(sounds);
+        List<String> sounds = controller.getSoundListLogic().getSoundsList();
+        List<String> duration = controller.getSoundListLogic().getDuration(sounds);
+        List<String> categories = controller.getSoundListLogic().getCategories(sounds);
 
 
         soundItemAdapter = new SoundAdapter(sounds,duration, categories);
