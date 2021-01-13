@@ -247,7 +247,7 @@ class SoundPickerDialog extends Dialog implements View.OnClickListener{
         this.logic = logic;
         this.librarySoundLogic = soundLogic;
         this.addSoundbtn = findViewById(R.id.dialog_category_addSound);
-        this.dialogSounds = findViewById(R.id.all_sounds_RV);
+        this.dialogSounds = findViewById(R.id.allsounds_RV);
 
         this.layoutManager = new LinearLayoutManager(contextUI);
         this.dialogSounds.setLayoutManager(layoutManager);
