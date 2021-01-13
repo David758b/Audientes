@@ -11,15 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PresetLogic {
-    private PresetDAO presetDAO;
+    private final PresetDAO presetDAO;
     List<PresetLogic.OnPresetLogicListener> listeners;
 
     //We need to creates these lists because the recycleviewAddapter can only take one instance of a list
     private final List<String> presetNames;
 
 
-    public PresetLogic(ModelViewController modelViewController) {
-//        this.presetDAO = new PresetDAO(modelViewController);
+    public PresetLogic(PresetDAO presetDAO) {
+        this.presetDAO = presetDAO;
         this.listeners = new ArrayList<>();
         this.presetNames = new ArrayList<>();
         initPresetNames();

@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.AudientesAPP.R;
+import com.example.AudientesAPP.model.context.ModelViewController;
+import com.example.AudientesAPP.model.funktionalitet.LibraryCategoryLogic;
+import com.example.AudientesAPP.model.funktionalitet.PresetLogic;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -31,11 +34,22 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
     private PresetItem presetItem;
     private HashMap<String, PresetItem> presetItems;
     private View v;
+    private PresetLogic logic;
+
+    //Objects
+    private ModelViewController modelViewController;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.preset_main, container, false);
         initialize(v);
+
+        //Tildeler context, mainactivity's context
+        MainActivity mainActivity = (MainActivity) getActivity();
+        modelViewController = mainActivity.getModelViewController();
+
+        logic = modelViewController.getPresetLogic();
+
 
 
         recyclerView = (RecyclerView) v.findViewById(R.id.presets_RV);
@@ -43,11 +57,7 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        List<String> presetNames = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            presetNames.add("Preset " + i);
-        }
-
+        List<String> presetNames = logic.getPresetNames();
 
 
         presetItemAdapter = new PresetAdapter(presetNames);
