@@ -31,7 +31,7 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
     private CategorySoundAdapter soundItemAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ModelViewController modelViewController;
-    private CategorySoundsLogic categorySoundsLogic;
+    private CategorySoundsLogic logic;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.category_list_sounds_frag, container, false);
@@ -45,15 +45,22 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
+        logic = modelViewController.getCategorySoundsLogic();
         String category = modelViewController.getPrefs().getString("Category", "Fejl");
         categoryTitle.setText(category);
-
+        System.out.println(category);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!");
+        //String myValue = this.getArguments().getString("Categories");
+        //System.out.println(myValue);
+        //System.out.println("----------------------------");
         // todo --> igen mega hardcoding og skal laves et andet sted.
+        //Bundle bundle = new Bundle();
+        //String category = bundle.getString("Categories");
 
         //categorySoundsLogic = new CategorySoundsLogic(modelViewController);
         //Dette skal laves om til at være en final liste i logic klassen som er en liste af CategorySoundDTOer
-        List<String> soundNames = categorySoundsLogic.getSoundsList(category);
-        List<String> duration = categorySoundsLogic.getDuration(soundNames);
+        List<String> soundNames = logic.getSoundsList(category);
+        List<String> duration = logic.getDuration(soundNames);
 
         soundItemAdapter = new CategorySoundAdapter(soundNames, duration);
         recyclerView.setAdapter(soundItemAdapter);
@@ -188,7 +195,7 @@ class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.Sou
     @Override
     public void onBindViewHolder(@NonNull SoundViewHolder holder, final int position) {
         holder.soundTextView.setText(mSoundSet.get(position));
-        holder.soundDuration.setText(nDuration.get(position));
+        holder.soundDuration.setText(nDuration.get(position+1));
         holder.soundTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
