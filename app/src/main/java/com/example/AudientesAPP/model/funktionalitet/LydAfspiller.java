@@ -3,10 +3,13 @@ package com.example.AudientesAPP.model.funktionalitet;
 import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.util.Log;
 
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.UI.PlayBar_Frag;
+import com.example.AudientesAPP.model.DTO.SoundDTO;
+import com.example.AudientesAPP.model.data.DAO.SoundDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +20,15 @@ import java.util.List;
 public class LydAfspiller implements MediaPlayer.OnCompletionListener{
     private Context context;
     private MediaPlayer mediaPlayer;
-    boolean isPlaying;
-    List<OnLydAfspillerListener> listeners;
+    private boolean isPlaying;
+    private List<OnLydAfspillerListener> listeners;
+    private SoundDAO soundDAO;
+    private List<SoundDTO> soundDTOS;
 
-    public LydAfspiller(Context context){
+    public LydAfspiller(Context context, SoundDAO soundDAO){
         this.context = context;
-        //this.mediaPlayer = MediaPlayer.create(context, R.raw.testlyd);
         this.listeners = new ArrayList<>();
+        this.soundDAO = soundDAO;
     }
 
     public void playNewSound(int position){
@@ -31,57 +36,10 @@ public class LydAfspiller implements MediaPlayer.OnCompletionListener{
         if(mediaPlayer != null) {
             mediaPlayer.setOnCompletionListener(null);
         }
-        switch (position){
-            case 0:
+        soundDTOS = soundDAO.getList();
 
-                mediaPlayer = MediaPlayer.create(context, R.raw.testlyd);
-                mediaPlayer.start();
-                break;
-            case 1: {
-
-                mediaPlayer = MediaPlayer.create(context, R.raw.brown_noise);
-                mediaPlayer.start();
-            }
-            break;
-            case 2: {
-
-                mediaPlayer = MediaPlayer.create(context, R.raw.train_nature);
-                mediaPlayer.start();
-            }
-            break;
-            case 3: {
-
-                mediaPlayer = MediaPlayer.create(context, R.raw.rain_street);
-                mediaPlayer.start();
-            }
-            break;
-            case 4: {
-
-                mediaPlayer = MediaPlayer.create(context, R.raw.cricket);
-                mediaPlayer.start();
-            }
-            break;
-            case 5: {
-
-                mediaPlayer = MediaPlayer.create(context, R.raw.chihuahua);
-                mediaPlayer.start();
-            }
-            break;
-            case 6: {
-
-                mediaPlayer = MediaPlayer.create(context, R.raw.andreangelo);
-                mediaPlayer.start();
-            }
-            break;
-            case 7: {
-
-                mediaPlayer = MediaPlayer.create(context, R.raw.melarancida__monks_praying);
-                mediaPlayer.start();
-            }
-            break;
-            default:
-                Log.d("lyden kunne ikke afspilles", "onItemClick: ");
-        }
+        mediaPlayer = MediaPlayer.create(context, Uri.parse(soundDTOS.get(position).getSoundSrc()));
+        mediaPlayer.start();
         mediaPlayer.setOnCompletionListener(this);
         notifyListeners();
     }

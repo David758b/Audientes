@@ -68,7 +68,7 @@ public class ModelViewController {
         categorySoundsLogic = new CategorySoundsLogic(soundCategoriesDAO, soundDAO);
         soundSaver = new SoundSaver(externalStorage,soundDAO);
 
-        lydAfspiller = new LydAfspiller(context);
+        lydAfspiller = new LydAfspiller(context, soundDAO);
 
         //Navigations komponenten indeholder en default implementation af Navhost (NavHostFragment)
         //der viser destinationer af typen fragmenter

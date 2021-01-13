@@ -73,56 +73,11 @@ public class LibrarySound extends Fragment implements SoundAdapter.OnItemClicked
         super.onDestroy();
     }
 
-    // todo --> Dette er mega meget hardcoding og skal foregå i logikken i stedet
-    //  (men dette er bare en test)
-
     @Override
     public void onItemClick(int position) {
-        switch (position){
-            case 0:
-                onDestroy();
-                lydAfspiller.playNewSound(0);
+        onDestroy();
+        lydAfspiller.playNewSound(position);
 
-                break;
-            case 1: {
-                onDestroy();
-                lydAfspiller.playNewSound(1);
-            }
-            break;
-            case 2: {
-                onDestroy();
-                lydAfspiller.playNewSound(2);
-
-            }
-            break;
-            case 3: {
-                onDestroy();
-                lydAfspiller.playNewSound(3);
-            }
-            break;
-            case 4: {
-                onDestroy();
-                lydAfspiller.playNewSound(4);
-            }
-            break;
-            case 5: {
-                onDestroy();
-                lydAfspiller.playNewSound(5);
-            }
-            break;
-            case 6: {
-                onDestroy();
-                lydAfspiller.playNewSound(6);
-            }
-            break;
-            case 7: {
-                onDestroy();
-                lydAfspiller.playNewSound(7);
-            }
-            break;
-            default:
-                Log.d("lyden kunne ikke afspilles", "onItemClick: ");
-        }
     }
 
     @Override
