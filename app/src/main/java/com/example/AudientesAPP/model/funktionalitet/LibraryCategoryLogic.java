@@ -46,7 +46,6 @@ public class LibraryCategoryLogic {
         categoryDAO.add(categoryDTO);
         //Måske få listen fra DAO og kald initCategoryNames istedet for linje 30
         categories.add(categoryDTO);
-        System.out.println("-------------------ADD CATEGORY------------------");
         notifyListeners();
     }
 
@@ -85,16 +84,6 @@ public class LibraryCategoryLogic {
 
     public void fragmentJump (String categoryName, NavController navController, Fragment fragment, SharedPreferences prefs) {
         prefs.edit().putString("Category", categoryName).apply();
-        /*Fragment newFragment = new CategorySounds();
-        Bundle args = new Bundle();
-        args.putString("Categories", categoryName);
-        newFragment.setArguments(args);
-        fragment.getChildFragmentManager().beginTransaction().add(R.id.libraryMain, newFragment).commit();*/
-        /*FragmentTransaction fragmentTransaction = fragment.getChildFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.libraryMain, newFragment);
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();*/
         navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
     }
 

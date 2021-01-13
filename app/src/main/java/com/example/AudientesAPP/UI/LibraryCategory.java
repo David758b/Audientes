@@ -63,8 +63,7 @@ public class LibraryCategory extends Fragment implements LibraryCategoryLogic.On
         logic = modelViewController.getLibraryCategoryLogic();
         logic.addLibraryLCLogicListener(this);
         System.out.println();
-        // TEST - Test af logik, som nok skal være i funktionalitetsmappen
-        //logic.initCategoryNames();
+
 
         try {
             mAdapter = new CategoryAdapter(logic.getCategories(), getActivity(), modelViewController.getNavController(), logic, this, modelViewController.getPrefs());
