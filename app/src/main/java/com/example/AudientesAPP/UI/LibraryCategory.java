@@ -5,6 +5,7 @@ import android.app.Dialog;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -66,7 +67,7 @@ public class LibraryCategory extends Fragment implements LibraryCategoryLogic.On
         //logic.initCategoryNames();
 
         try {
-            mAdapter = new CategoryAdapter(logic.getCategories(), getActivity(), modelViewController.getNavController(), logic);
+            mAdapter = new CategoryAdapter(logic.getCategories(), getActivity(), modelViewController.getNavController(), logic, this, modelViewController.getPrefs());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,15 +90,18 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
     private Bundle mBundle;
     private NavController navController;
     private LibraryCategoryLogic logic;
+    private SharedPreferences prefs;
 
     //
     private List<CategoryDTO> data;
 
-    public CategoryAdapter(List<CategoryDTO> data, Activity contextUI, NavController navController, LibraryCategoryLogic logic) {
+    public CategoryAdapter(List<CategoryDTO> data, Activity contextUI, NavController navController, LibraryCategoryLogic logic, Fragment fragment, SharedPreferences prefs) {
         this.contextUI = contextUI;
         this.data = data;
         this.navController = navController;
         this.logic = logic;
+        this.mFragment = fragment;
+        this.prefs = prefs;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -139,8 +143,7 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
                 } else {
                     // Hop til den rigtige kategori
                     // Dette skal overvejes lidt nærmere... smæk det i logik klassen
-                    //contextUI.getPrefs().edit().putString("Category", categoryDTO.getCategoryName()).apply();
-                    //navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
+                    logic.fragmentJump(categoryDTO.getCategoryName(), navController, mFragment, prefs);
                 }
             }
         });
@@ -166,7 +169,7 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
         fragmentTransaction.replace(R.id.libraryMain, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();*/
-//        Navigation.findNavController(v).navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
+        //Navigation.findNavController(v).navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
     }
 }
 

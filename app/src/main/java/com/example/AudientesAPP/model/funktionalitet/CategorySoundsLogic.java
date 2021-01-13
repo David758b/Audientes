@@ -13,13 +13,19 @@ public class CategorySoundsLogic {
     private SoundCategoriesDAO soundCategoriesDAO;
     private SoundDAO soundDAO;
 
+    private final List<SoundCategoriesDTO> soundCategories;
+    private final List<SoundDTO> sounds;
+
     public CategorySoundsLogic(SoundCategoriesDAO soundCategoriesDAO, SoundDAO soundDAO) {
         this.soundCategoriesDAO = soundCategoriesDAO;
         this.soundDAO = soundDAO;
+        this.soundCategories = new ArrayList<>();
+        this.sounds = new ArrayList<>();
+        initSoundCategories();
     }
 
     public List<String> getSoundsList (String category) {
-        List<SoundCategoriesDTO> soundCategoriesDTOS = soundCategoriesDAO.getList();
+        List<SoundCategoriesDTO> soundCategoriesDTOS = getSoundCategories();
         List<String> sounds = new ArrayList<>();
         for (SoundCategoriesDTO DTO: soundCategoriesDTOS) {
             if (DTO.getCategoryName().equals(category)) {
@@ -29,10 +35,27 @@ public class CategorySoundsLogic {
         return sounds;
     }
 
+    public List<SoundCategoriesDTO> getSoundCategories(){
+        return soundCategories;
+    }
+
+    public List<SoundDTO> getSounds(){
+        return sounds;
+    }
+
+    private void initSoundCategories(){
+        soundCategories.clear();
+        sounds.clear();
+        List<SoundCategoriesDTO> soundCategoriesDTOS = soundCategoriesDAO.getList();
+        List<SoundDTO> soundDTOS = soundDAO.getList();
+        sounds.addAll(soundDTOS);
+        soundCategories.addAll(soundCategoriesDTOS);
+    }
+
     //TODO: alt for mange database kald herinde, dette skal laves om
     public List<String> getDuration (List<String> sounds) {
         List<String> durations = new ArrayList<>();
-        List<SoundDTO> soundDTOS = soundDAO.getList();
+        List<SoundDTO> soundDTOS = getSounds();
         for (String sound:sounds) {
             for (SoundDTO soundDTO: soundDTOS) {
                 if (sound.equals(soundDTO.getSoundName())){

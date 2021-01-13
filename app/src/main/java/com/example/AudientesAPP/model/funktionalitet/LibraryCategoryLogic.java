@@ -1,5 +1,15 @@
 package com.example.AudientesAPP.model.funktionalitet;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+
+import com.example.AudientesAPP.R;
+import com.example.AudientesAPP.UI.CategorySounds;
 import com.example.AudientesAPP.model.DTO.CategoryDTO;
 import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
@@ -71,6 +81,21 @@ public class LibraryCategoryLogic {
 
     public interface OnLibraryLCLogicListener {
         void updateLibraryListCategory(LibraryCategoryLogic libraryCategoryLogic);
+    }
+
+    public void fragmentJump (String categoryName, NavController navController, Fragment fragment, SharedPreferences prefs) {
+        prefs.edit().putString("Category", categoryName).apply();
+        /*Fragment newFragment = new CategorySounds();
+        Bundle args = new Bundle();
+        args.putString("Categories", categoryName);
+        newFragment.setArguments(args);
+        fragment.getChildFragmentManager().beginTransaction().add(R.id.libraryMain, newFragment).commit();*/
+        /*FragmentTransaction fragmentTransaction = fragment.getChildFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.libraryMain, newFragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();*/
+        navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
     }
 
 }
