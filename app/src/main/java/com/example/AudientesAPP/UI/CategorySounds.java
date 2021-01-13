@@ -29,7 +29,6 @@ import java.util.List;
 
 public class CategorySounds extends Fragment implements CategorySoundAdapter.OnItemClicked, LydAfspiller.OnLydAfspillerListener{
     private LydAfspiller lydAfspiller;
-    private ImageView imageViewOptions;
     private EditText categoryTitle;
     private TextView soundTitle;
     private TextView soundLength;
@@ -93,7 +92,6 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
         save = v.findViewById(R.id.saveIcon);
         returnIcon = v.findViewById(R.id.returnIcon);
         addSoundBtn = v.findViewById(R.id.category_addSound);
-        imageViewOptions = v.findViewById(R.id.sound_list_element_options);
         soundTitle = v.findViewById(R.id.sound_title);
         soundLength = v.findViewById(R.id.sound_duration);
     }
