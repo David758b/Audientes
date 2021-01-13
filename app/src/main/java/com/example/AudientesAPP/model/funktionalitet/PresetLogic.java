@@ -43,6 +43,14 @@ public class PresetLogic {
             presetNames.add(a.getPresetName());
         }
     }
+    public boolean isExisting(String presetName){
+        for (String pName:presetNames) {
+            if(presetName.equals(pName)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     //Burde returnere en liste af PresetDTO's, hvis vi også skal have farve og billede reference med.
     public List<String> getPresetNames () {

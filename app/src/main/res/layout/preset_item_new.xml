@@ -5,13 +5,36 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
 
-    <ImageView
-        android:id="@+id/preset_backarrow"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
-        app:tint="@color/white" />
+        <ImageView
+            android:id="@+id/preset_backarrow"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+
+
+            android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/preset_checkMark"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+
+            android:src="@drawable/checkmark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     <EditText
         android:id="@+id/presetTitle_ET"
