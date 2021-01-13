@@ -108,15 +108,17 @@ class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHolder> {
         public TextView soundTextView;
         public TextView tagTitle;
         public TextView soundDuration;
-        public ImageView soundOption;
+
 
 
         public SoundViewHolder(@NonNull View itemView) {
             super(itemView);
+
             //Måske tilføje de resterende ting for et sound item
             soundTextView = itemView.findViewById(R.id.sound_title);
             tagTitle = itemView.findViewById(R.id.tag_title);
             soundDuration = itemView.findViewById(R.id.sound_duration);
+
 
             // ...
         }
@@ -142,12 +144,14 @@ class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHolder> {
         holder.soundTextView.setText(mSoundSet.get(position));
         holder.soundDuration.setText(mDuration.get(position));
         holder.tagTitle.setText(mCategories.get(position));
-        holder.soundTextView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClick.onItemClick(position);
             }
         });
+
+
     }
 
     @Override
