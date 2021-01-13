@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/all_sounds_RV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <Button
+        android:id="@+id/dialog_category_addSound"
+        android:layout_height="40dp"
+        android:layout_width="125dp"
+        android:background="@drawable/round_outline"
+        android:backgroundTint="@color/AudientesOrange"
+        android:text="ADD SOUND"
+        android:fontFamily="@font/audientes_font"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="center"/>
+</LinearLayout>

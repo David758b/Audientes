@@ -118,7 +118,6 @@ class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHolder> {
             tagTitle = itemView.findViewById(R.id.tag_title);
             soundDuration = itemView.findViewById(R.id.sound_duration);
             soundOption = itemView.findViewById(R.id.sound_list_element_options);
-            // ...
         }
     }
 
