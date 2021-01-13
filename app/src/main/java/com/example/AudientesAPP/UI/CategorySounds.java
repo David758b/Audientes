@@ -309,12 +309,10 @@ class CategorySoundDialogAdapter extends RecyclerView.Adapter<CategorySoundDialo
     public void onBindViewHolder(@NonNull SoundViewHolder holder, final int position) {
         holder.soundTextView.setText(mSoundSet.get(position));
         holder.soundDuration.setText(nDuration.get(position));
-        holder.soundTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClick.onItemClick(position);
-            }
-        });
+        holder.itemView.setMinimumWidth(250);
+        // TODO: HUSK ONCLICK FUNKTION
+        /*holder.soundTextView.setOnClickListener(new View.OnClickListener() {
+        });*/
     }
 
     @Override

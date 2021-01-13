@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:minWidth="400dp"
-    android:layout_margin="15dp"
+    android:layout_height="wrap_content"
+    android:background="@color/LightGrey"
+    android:minWidth="300dp"
     android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/allsounds_RV"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="60dp"
+        android:minWidth="275dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"/>
 
 
     <Button
         android:id="@+id/dialog_category_addSound"
-        android:layout_height="40dp"
         android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
         android:background="@drawable/round_outline"
         android:backgroundTint="@color/AudientesOrange"
-        android:text="ADD SOUND"
         android:fontFamily="@font/audientes_font"
+        android:layout_marginBottom="60dp"
+        android:text="ADD SOUND"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:layout_marginTop="25dp"
-        android:layout_gravity="center"/>
-</LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/allsounds_RV"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
