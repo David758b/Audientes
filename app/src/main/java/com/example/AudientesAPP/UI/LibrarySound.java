@@ -60,7 +60,7 @@ public class LibrarySound extends Fragment implements SoundAdapter.OnItemClicked
 
     public void initialize(View v){
 
-        imageView1 = v.findViewById(R.id.sound_list_element_options);
+
         title = v.findViewById(R.id.sound_title);
         tag = v.findViewById(R.id.tag_title);
         soundLength = v.findViewById(R.id.sound_duration);
@@ -117,7 +117,7 @@ class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHolder> {
             soundTextView = itemView.findViewById(R.id.sound_title);
             tagTitle = itemView.findViewById(R.id.tag_title);
             soundDuration = itemView.findViewById(R.id.sound_duration);
-            soundOption = itemView.findViewById(R.id.sound_list_element_options);
+
             // ...
         }
     }

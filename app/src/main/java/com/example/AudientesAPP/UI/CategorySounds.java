@@ -76,7 +76,6 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
     public void initialize(View v){
 
         categoryTitle = v.findViewById(R.id.category_TV);
-        imageViewOptions = v.findViewById(R.id.sound_list_element_options);
         soundTitle = v.findViewById(R.id.sound_title);
         soundLength = v.findViewById(R.id.sound_duration);
     }
@@ -172,7 +171,6 @@ class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.Sou
             //Måske tilføje de resterende ting for et sound item
             soundTextView = itemView.findViewById(R.id.sound_title);
             soundDuration = itemView.findViewById(R.id.sound_duration);
-            soundOption = itemView.findViewById(R.id.sound_list_element_options);
             // ...
         }
     }
