@@ -24,6 +24,7 @@ public class LydAfspiller implements MediaPlayer.OnCompletionListener{
     private List<OnLydAfspillerListener> listeners;
     private SoundDAO soundDAO;
     private List<SoundDTO> soundDTOS;
+    private String currentSong;
 
     public LydAfspiller(Context context, SoundDAO soundDAO){
         this.context = context;
@@ -39,6 +40,7 @@ public class LydAfspiller implements MediaPlayer.OnCompletionListener{
         soundDTOS = soundDAO.getList();
 
         mediaPlayer = MediaPlayer.create(context, Uri.parse(soundDTOS.get(position).getSoundSrc()));
+        currentSong = soundDTOS.get(position).getSoundName();
         mediaPlayer.start();
         mediaPlayer.setOnCompletionListener(this);
         notifyListeners();
@@ -91,6 +93,10 @@ public class LydAfspiller implements MediaPlayer.OnCompletionListener{
         for (OnLydAfspillerListener listener: listeners) {
             listener.updateLydAfspiller(this);
         }
+    }
+
+    public String getCurrentSong() {
+        return currentSong;
     }
 
     @Override

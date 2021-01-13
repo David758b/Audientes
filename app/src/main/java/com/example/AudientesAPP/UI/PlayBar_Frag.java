@@ -52,6 +52,7 @@ public class PlayBar_Frag extends Fragment implements LydAfspiller.OnLydAfspille
         lydAfspiller = modelViewController.getLydAfspiller();
 
 
+
         //Listeners
         lydAfspiller.addOnLydAfspillerListener(this);
         seekBar.setOnSeekBarChangeListener(this);
@@ -87,6 +88,9 @@ public class PlayBar_Frag extends Fragment implements LydAfspiller.OnLydAfspille
             if (!playerPosition.getText().equals(totalDuration)) {
                 playerDuration.setText(Utilities.convertFormat(totalDuration));
             }
+
+            //updates the name of the playing sound
+            soundTitle.setText(lydAfspiller.getCurrentSong());
 
             //Viser den afspillede tid (nuværende)
             playerPosition.setText(Utilities.convertFormat(currentDuration));
