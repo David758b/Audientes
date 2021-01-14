@@ -11,6 +11,7 @@ import androidx.navigation.NavController;
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.UI.CategorySounds;
 import com.example.AudientesAPP.model.DTO.CategoryDTO;
+import com.example.AudientesAPP.model.DTO.SoundCategoriesDTO;
 import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
 
@@ -96,16 +97,37 @@ public class LibraryCategoryLogic {
         navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
     }
 
-    public void updateCategory(CategoryDTO oldCategoryDTO, CategoryDTO newCategoryDTO){
+    /**
+     * Updates the category name to a another given category name
+     * @param oldCategoryName The current name of the category
+     * @param newCategoryName The desired name of the category
+     */
+    // Note to self: checks for difference in names should happen in the class that calls the method
+    public void updateCategory(String oldCategoryName, String newCategoryName){
+        CategoryDTO categoryOldDTO = getCategory(oldCategoryName);
+        CategoryDTO categoryNewDTO = new CategoryDTO(categoryOldDTO.getCategoryName(), categoryOldDTO.getPicture(), categoryOldDTO.getColor());
+        categoryNewDTO.setCategoryName(newCategoryName);
+
         //updates the database
-        categoryDAO.updateName(oldCategoryDTO, newCategoryDTO);
+        categoryDAO.updateName(categoryOldDTO, categoryNewDTO);
 
         //updates the list
         for (CategoryDTO dto:categories) {
-            if (oldCategoryDTO.getCategoryName().equals(dto.getCategoryName())){
-                dto.setCategoryName(newCategoryDTO.getCategoryName());
+            if (categoryOldDTO.getCategoryName().equals(dto.getCategoryName())){
+                dto.setCategoryName(categoryNewDTO.getCategoryName());
             }
         }
+    }
+
+
+
+    public boolean isExisting(String categoryName){
+        for (CategoryDTO DTO: categories) {
+            if(DTO.getCategoryName().equals(categoryName)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

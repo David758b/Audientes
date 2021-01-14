@@ -8,10 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -25,6 +27,7 @@ import com.example.AudientesAPP.model.funktionalitet.CategorySoundsLogic;
 import com.example.AudientesAPP.model.funktionalitet.LibraryCategoryLogic;
 import com.example.AudientesAPP.model.funktionalitet.LibrarySoundLogic;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
+import com.example.AudientesAPP.model.funktionalitet.Utilities;
 
 import java.util.List;
 
@@ -59,6 +62,7 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
         libCategoryLogic = modelViewController.getLibraryCategoryLogic();
         final String category = modelViewController.getPrefs().getString("Category", "Fejl");
         categoryTitle.setText(category);
+        categoryTitle.clearFocus();
         // todo --> igen mega hardcoding og skal laves et andet sted.
 
         //Dette skal laves om til at være en final liste i logic klassen som er en liste af CategorySoundDTOer
@@ -77,22 +81,33 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus){
-
                     categoryTitle.setCursorVisible(true);
                     save.setVisibility(View.VISIBLE);
+                } else {
+                    categoryTitle.clearFocus();
                 }
             }
         });
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Change categoryDTO name, picture, & color
-                CategoryDTO categoryOldDTO = libCategoryLogic.getCategory(category);
-                CategoryDTO categoryNewDTO = new CategoryDTO(categoryOldDTO.getCategoryName(),categoryOldDTO.getPicture(),categoryOldDTO.getColor());
-                categoryNewDTO.setCategoryName(categoryTitle.getText().toString());
-                System.out.println("GAMLE DTO NAVN" + categoryOldDTO.getCategoryName() + "\nNYE DTO NAVN " + categoryNewDTO.getCategoryName());
-                libCategoryLogic.updateCategory(categoryOldDTO,categoryNewDTO);
+                // Tjekker om det indtastet navn er det samme som kategori navnet (Uændret kategori navn)
+                if (category.equals(categoryTitle.getText().toString())) {
+                    Toast.makeText(v.getContext(), "This category already has the given name", Toast.LENGTH_SHORT).show();
+                    // Tjekker om den angivet kategori navn allerede findes som en anden kategori
+                } else if (libCategoryLogic.isExisting(categoryTitle.getText().toString())) {
+                    Toast.makeText(v.getContext(), "A category with the given name already exists", Toast.LENGTH_SHORT).show();
+                } else {
+                    libCategoryLogic.updateCategory(category, categoryTitle.getText().toString());
+                    Toast.makeText(v.getContext(), "Category name changed!", Toast.LENGTH_SHORT).show();
+                    categoryTitle.clearFocus();
+                }
+                categoryTitle.clearFocus();
+                // Fjerner keyboard fra skærmen
+                Utilities.hideKeyboard(v, modelViewController.getContext());
 
+                save.setVisibility(View.INVISIBLE);
             }
         });
 

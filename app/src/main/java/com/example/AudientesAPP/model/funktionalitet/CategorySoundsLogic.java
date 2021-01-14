@@ -1,8 +1,10 @@
 package com.example.AudientesAPP.model.funktionalitet;
 
+import com.example.AudientesAPP.model.DTO.CategoryDTO;
 import com.example.AudientesAPP.model.DTO.SoundCategoriesDTO;
 import com.example.AudientesAPP.model.DTO.SoundDTO;
 import com.example.AudientesAPP.model.context.ModelViewController;
+import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundDAO;
 
@@ -66,5 +68,6 @@ public class CategorySoundsLogic {
 
         return durations;
     }
+
 
 }

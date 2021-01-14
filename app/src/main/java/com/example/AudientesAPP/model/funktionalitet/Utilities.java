@@ -1,10 +1,16 @@
 package com.example.AudientesAPP.model.funktionalitet;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+
+import androidx.appcompat.widget.ActivityChooserView;
 
 import java.util.concurrent.TimeUnit;
 
 public class Utilities {
+    // TODO: Vi bør nok referer utilities gennem modelViewController istedet for direkte i UI'en
 
     /**
      * Metode til at få procenten af progress
@@ -62,5 +68,11 @@ public class Utilities {
         }
         return finalString = finalString + minutes + ":" + secondString;
 
+    }
+
+    public static void hideKeyboard(View v, Activity activity) {
+        // Fjerner keyboard fra skærmen
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 }
