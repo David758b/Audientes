@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -192,13 +193,15 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
 
     public CreateCategoryDialog(Activity contextUI, LibraryCategoryLogic libraryCategoryLogic) {
         super(contextUI);
-        setContentView(R.layout.category_new_dialog);
         this.libraryCategoryLogic = libraryCategoryLogic;
         this.contextUI = contextUI;
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.category_new_dialog);
+        getWindow().getDecorView().setBackgroundResource(android.R.color.transparent);
+        createBtn = findViewById(R.id.category_new_create);
         categoryNameET = findViewById(R.id.category_new_name_ET);
         colorPickerTV = findViewById(R.id.category_new_color_TV);
         colorBtn = findViewById(R.id.colorPicker);
-        createBtn = findViewById(R.id.category_new_create);
         createBtn.setOnClickListener(this);
         colorBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,7 +209,6 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
                 initColorPicker(v);
             }
         });
-
     }
 
     @Override

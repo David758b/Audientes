@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/LightGrey"
+    android:background="@drawable/round_outline"
+    android:backgroundTint="@color/DialogDarkBlue"
     android:minWidth="300dp"
     android:orientation="vertical">
 

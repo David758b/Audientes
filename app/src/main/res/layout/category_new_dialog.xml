@@ -4,13 +4,16 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="15dp">
+    android:backgroundTint="@color/DialogDarkBlue"
+
+    android:background="@drawable/round_outline">
 
     <EditText
         android:id="@+id/category_new_name_ET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:textColorHint="@color/white"
         android:hint="Enter category name"/>
 
     <TextView
@@ -19,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:text="Choose color (optional)"
+        android:textColor="@color/white"
         android:layout_gravity="center"/>
     <Button
         android:id="@+id/colorPicker"
@@ -40,6 +44,7 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_marginTop="25dp"
+        android:layout_marginBottom="10dp"
         android:layout_gravity="center"/>
 
 

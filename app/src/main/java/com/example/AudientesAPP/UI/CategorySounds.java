@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -243,9 +244,12 @@ class SoundPickerDialog extends Dialog implements View.OnClickListener{
 
     public SoundPickerDialog(Activity contextUI, CategorySoundsLogic logic, LibrarySoundLogic soundLogic) {
         super(contextUI);
-        setContentView(R.layout.category_add_sound_dialog);
         this.logic = logic;
         this.librarySoundLogic = soundLogic;
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.category_add_sound_dialog);
+        getWindow().getDecorView().setBackgroundResource(android.R.color.transparent);
+
         this.addSoundbtn = findViewById(R.id.dialog_category_addSound);
         this.dialogSounds = findViewById(R.id.allsounds_RV);
 
