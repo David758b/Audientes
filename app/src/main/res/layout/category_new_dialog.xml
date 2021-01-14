@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textColorHint="@color/white"
-        android:hint="Enter category name"/>
+        android:hint="Enter category name"
+        android:textColor="@color/white"/>
 
     <TextView
         android:id="@+id/category_new_color_TV"

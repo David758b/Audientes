@@ -54,6 +54,15 @@ public class LibraryCategoryLogic {
         return categories;
     }
 
+    public CategoryDTO getCategory(String categoryName){
+        for (CategoryDTO categoryDTO:categories) {
+            if (categoryDTO.getCategoryName().equals(categoryName)){
+                return categoryDTO;
+            }
+        }
+        return null;
+    }
+
     //Hvis init skal køres fra fragmentet og ikke konstruktøren i denne klasse skal den være public og slettes fra konstruktøren
     private void initCategories() {
         //Hvis den indeholder noget så clearer vi den

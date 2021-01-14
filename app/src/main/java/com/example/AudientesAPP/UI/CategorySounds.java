@@ -2,7 +2,6 @@ package com.example.AudientesAPP.UI;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,13 +15,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.AudientesAPP.R;
+import com.example.AudientesAPP.model.DTO.CategoryDTO;
 import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.funktionalitet.CategorySoundsLogic;
+import com.example.AudientesAPP.model.funktionalitet.LibraryCategoryLogic;
 import com.example.AudientesAPP.model.funktionalitet.LibrarySoundLogic;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 
@@ -40,7 +40,8 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
     private CategorySoundAdapter soundItemAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ModelViewController modelViewController;
-    private CategorySoundsLogic logic;
+    private CategorySoundsLogic categorySoundsLogic;
+    private LibraryCategoryLogic libCategoryLogic;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.category_list_sounds_frag, container, false);
@@ -54,14 +55,15 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        logic = modelViewController.getCategorySoundsLogic();
+        categorySoundsLogic = modelViewController.getCategorySoundsLogic();
+        libCategoryLogic = modelViewController.getLibraryCategoryLogic();
         final String category = modelViewController.getPrefs().getString("Category", "Fejl");
         categoryTitle.setText(category);
         // todo --> igen mega hardcoding og skal laves et andet sted.
 
         //Dette skal laves om til at være en final liste i logic klassen som er en liste af CategorySoundDTOer
-        List<String> soundNames = logic.getSoundsList(category);
-        List<String> duration = logic.getDuration(soundNames);
+        List<String> soundNames = categorySoundsLogic.getSoundsList(category);
+        List<String> duration = categorySoundsLogic.getDuration(soundNames);
 
         soundItemAdapter = new CategorySoundAdapter(soundNames, duration);
         recyclerView.setAdapter(soundItemAdapter);
@@ -76,10 +78,23 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
                 save.setVisibility(View.VISIBLE);
             }
         });
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Change categoryDTO name, picture, & color
+                CategoryDTO categoryOldDTO = libCategoryLogic.getCategory(category);
+                CategoryDTO categoryNewDTO = new CategoryDTO(categoryOldDTO.getCategoryName(),categoryOldDTO.getPicture(),categoryOldDTO.getColor());
+                categoryNewDTO.setCategoryName(categoryTitle.getText().toString());
+                System.out.println("GAMLE DTO NAVN" + categoryOldDTO.getCategoryName() + "\nNYE DTO NAVN " + categoryNewDTO.getCategoryName());
+                libCategoryLogic.updateCategory(categoryOldDTO,categoryNewDTO);
+
+            }
+        });
+
         addSoundBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SoundPickerDialog soundPickerDialog = new SoundPickerDialog(getActivity(), logic, modelViewController.getLibrarySoundLogic());
+                SoundPickerDialog soundPickerDialog = new SoundPickerDialog(getActivity(), categorySoundsLogic, modelViewController.getLibrarySoundLogic());
                 soundPickerDialog.show();
             }
         });
@@ -108,51 +123,7 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
 
     @Override
     public void onItemClick(int position) {
-        switch (position){
-            case 0:
-                onDestroy();
-                lydAfspiller.playNewSound(0);
-
-                break;
-            case 1: {
-                onDestroy();
-                lydAfspiller.playNewSound(1);
-            }
-            break;
-            case 2: {
-                onDestroy();
-                lydAfspiller.playNewSound(2);
-
-            }
-            break;
-            case 3: {
-                onDestroy();
-                lydAfspiller.playNewSound(3);
-            }
-            break;
-            case 4: {
-                onDestroy();
-                lydAfspiller.playNewSound(4);
-            }
-            break;
-            case 5: {
-                onDestroy();
-                lydAfspiller.playNewSound(5);
-            }
-            break;
-            case 6: {
-                onDestroy();
-                lydAfspiller.playNewSound(6);
-            }
-            break;
-            case 7: {
-                onDestroy();
-                lydAfspiller.playNewSound(7);
-            }
-            break;
-            default:
-                Log.d("lyden kunne ikke afspilles", "onItemClick: ");
-        }
+        lydAfspiller.playNewSound(position);
     }
 
     @Override
