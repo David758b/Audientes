@@ -72,8 +72,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         databaseTest();
          */
 
-        //fillDBUp();
-
     }
 
     //----------------------test-------------------------------------------------------
@@ -124,34 +122,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    //Fill db with test data
-    public void fillDBUp() {
-        CategoryDAO categoryDAO = modelViewController.getCategoryDAO();
-        CategoryDTO newCategory = new CategoryDTO("I Like to move it", "pictureSrc", "Blue");
-        categoryDAO.add(newCategory);
-
-        PresetDAO presetDAO = modelViewController.getPresetDAO();
-        PresetDTO presetDTO = new PresetDTO("Sove tid");
-        presetDAO.add(presetDTO);
-
-        SoundDAO soundDAO = modelViewController.getSoundDAO();
-        SoundDTO soundDTO = new SoundDTO("city noise", "sauce", "420");
-        soundDAO.add(soundDTO);
-
-        SoundCategoriesDAO soundCategoriesDAO = modelViewController.getSoundCategoriesDAO();
-        SoundCategoriesDTO soundCategoriesDTO = new SoundCategoriesDTO("city noise", "I Like to move it");
-        soundCategoriesDAO.add(soundCategoriesDTO);
-
-        PresetCategoriesDAO presetCategoriesDAO = modelViewController.getPresetCategoriesDAO();
-        PresetCategoriesDTO presetCategoriesDTO = new PresetCategoriesDTO("Sove tid", "I Like to move it");
-        presetCategoriesDAO.add(presetCategoriesDTO);
-
-        PresetElementDAO presetElementDAO = modelViewController.getPresetElementDAO();
-        PresetElementDTO newPresetElement = new PresetElementDTO("Sove tid", "city noise", 15);
-        presetElementDAO.add(newPresetElement);
-
     }
 
     //Testing of the database may delete later

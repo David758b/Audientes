@@ -9,6 +9,12 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.UI.MainActivity;
+import com.example.AudientesAPP.model.DTO.CategoryDTO;
+import com.example.AudientesAPP.model.DTO.PresetCategoriesDTO;
+import com.example.AudientesAPP.model.DTO.PresetDTO;
+import com.example.AudientesAPP.model.DTO.PresetElementDTO;
+import com.example.AudientesAPP.model.DTO.SoundCategoriesDTO;
+import com.example.AudientesAPP.model.DTO.SoundDTO;
 import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
 import com.example.AudientesAPP.model.data.DAO.PresetCategoriesDAO;
 import com.example.AudientesAPP.model.data.DAO.PresetDAO;
@@ -65,6 +71,9 @@ public class ModelViewController {
         soundDAO = new SoundDAO(db);
         categoryDAO = new CategoryDAO(db);
         presetDAO = new PresetDAO(db);
+        // Giver indhold til databasen før logik klasserne instantieres
+        fillDBUp();
+
         librarySoundLogic = new LibrarySoundLogic(soundCategoriesDAO,soundDAO);
         libraryCategoryLogic = new LibraryCategoryLogic(categoryDAO);
         categorySoundsLogic = new CategorySoundsLogic(soundCategoriesDAO, soundDAO);
@@ -169,5 +178,33 @@ public class ModelViewController {
 
     public PresetCategoriesDAO getPresetCategoriesDAO() {
         return presetCategoriesDAO;
+    }
+
+    //Fill db with test data
+    public void fillDBUp() {
+        CategoryDAO categoryDAO = getCategoryDAO();
+        CategoryDTO newCategory = new CategoryDTO("I Like to move it", "pictureSrc", "Blue");
+        categoryDAO.add(newCategory);
+
+        PresetDAO presetDAO = getPresetDAO();
+        PresetDTO presetDTO = new PresetDTO("Sove tid");
+        presetDAO.add(presetDTO);
+
+        SoundDAO soundDAO = getSoundDAO();
+        SoundDTO soundDTO = new SoundDTO("city noise", "sauce", "420");
+        soundDAO.add(soundDTO);
+
+        SoundCategoriesDAO soundCategoriesDAO = getSoundCategoriesDAO();
+        SoundCategoriesDTO soundCategoriesDTO = new SoundCategoriesDTO("city noise", "I Like to move it");
+        soundCategoriesDAO.add(soundCategoriesDTO);
+
+        PresetCategoriesDAO presetCategoriesDAO = getPresetCategoriesDAO();
+        PresetCategoriesDTO presetCategoriesDTO = new PresetCategoriesDTO("Sove tid", "I Like to move it");
+        presetCategoriesDAO.add(presetCategoriesDTO);
+
+        PresetElementDAO presetElementDAO = getPresetElementDAO();
+        PresetElementDTO newPresetElement = new PresetElementDTO("Sove tid", "city noise", 15);
+        presetElementDAO.add(newPresetElement);
+
     }
 }
