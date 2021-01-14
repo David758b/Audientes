@@ -89,6 +89,13 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
             }
         });
 
+        returnIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                modelViewController.getNavController().navigate(R.id.action_categorySounds_to_libraryCategory);
+            }
+        });
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +104,7 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
                     Toast.makeText(v.getContext(), "This category already has the given name", Toast.LENGTH_SHORT).show();
                     // Tjekker om den angivet kategori navn allerede findes som en anden kategori
                 } else if (libCategoryLogic.isExisting(categoryTitle.getText().toString())) {
+                    categoryTitle.setText(category);
                     Toast.makeText(v.getContext(), "A category with the given name already exists", Toast.LENGTH_SHORT).show();
                 } else {
                     libCategoryLogic.updateCategory(category, categoryTitle.getText().toString());

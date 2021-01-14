@@ -15,6 +15,7 @@
             android:id="@+id/action_libraryListCategory_to_CategoryListSounds"
             app:destination="@+id/categoryListSounds"/>
         <!-- Test -->
+
         <action
             android:id="@+id/action_LibraryMain_to_HearingTest"
             app:destination="@id/hearingtestMain" />
@@ -23,7 +24,13 @@
     <fragment
         android:id="@+id/categoryListSounds"
         android:name="com.example.AudientesAPP.UI.CategorySounds"
-        android:label="categoryListSound"/>
+        android:label="categoryListSound">
+    <action
+        android:id="@+id/action_categorySounds_to_libraryCategory"
+        app:destination="@+id/libraryMain"
+
+        />
+    </fragment>
 
 
     <!-- Navigation for presets -->
