@@ -68,16 +68,10 @@ public class DownloadSoundFiles {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        File fileSrc = getFile(makeDirectory(),newFileName);
+        //File fileSrc = getFile(makeDirectory(),newFileName);
         Uri uriFileSrc = Uri.parse(extFileSrc.getAbsolutePath());
         System.out.println("EXISTINGFILESRC---" + extFileSrc.getAbsolutePath());
-        String fileDur = getFileDuration(fileSrc);
-
-        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-        mediaMetadataRetriever.setDataSource(fileSrc.getAbsolutePath());
-        String durationStr = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-        long durationMilliSec = Long.parseLong(durationStr);
-        String finalString = Utilities.convertFormat(durationMilliSec);
+        //String fileDur = getFileDuration(fileSrc);
 
 
 
