@@ -92,6 +92,7 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
         returnIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utilities.hideKeyboard(v, modelViewController.getContext());
                 modelViewController.getNavController().navigate(R.id.action_categorySounds_to_libraryCategory);
             }
         });
