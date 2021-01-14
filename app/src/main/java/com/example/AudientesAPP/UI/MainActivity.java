@@ -33,6 +33,8 @@ import com.example.AudientesAPP.model.data.DAO.SoundDAO;
 import com.example.AudientesAPP.model.funktionalitet.LibraryCategoryLogic;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -87,6 +89,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         modelViewController.getSoundSaver().saveSound(R.raw.rain_street, "rain_street");
         modelViewController.getSoundSaver().saveSound(R.raw.testlyd, "testlyd");
         modelViewController.getSoundSaver().saveSound(R.raw.train_nature, "train_nature");
+        modelViewController.getDlSoundFiles().downloadSoundFiles("cobratronik_wind","soundfiles/117136__cobratronik__wind-artic-cold.wav");
+        modelViewController.getDlSoundFiles().downloadSoundFiles("cathedral_ambience_01","soundfiles/170675__klankbeeld__cathedral-ambience-01.wav");
+        modelViewController.getDlSoundFiles().downloadSoundFiles("water_dripping_in_cave","soundfiles/177958__sclolex__water-dripping-in-cave.wav");
+        modelViewController.getDlSoundFiles().downloadSoundFiles("downtown_calm","soundfiles/216734__klankbeeld__down-town-calm-140124-01.wav");
+        modelViewController.getDlSoundFiles().downloadSoundFiles("rain_and_thunder_4","soundfiles/237729__flathill__rain-and-thunder-4.wav");
+
     }
 
     //Printing tables

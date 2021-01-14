@@ -15,6 +15,7 @@ import com.example.AudientesAPP.model.data.DAO.PresetDAO;
 import com.example.AudientesAPP.model.data.DAO.PresetElementDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundDAO;
+import com.example.AudientesAPP.model.data.DownloadSoundFiles;
 import com.example.AudientesAPP.model.data.ExternalStorage;
 import com.example.AudientesAPP.model.data.SoundDB;
 import com.example.AudientesAPP.model.funktionalitet.CategorySoundsLogic;
@@ -24,6 +25,8 @@ import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.example.AudientesAPP.model.funktionalitet.PresetLogic;
 import com.example.AudientesAPP.model.funktionalitet.SoundSaver;
 import com.example.AudientesAPP.model.funktionalitet.Utilities;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class ModelViewController {
     private MainActivity context;
@@ -35,8 +38,10 @@ public class ModelViewController {
     private LydAfspiller lydAfspiller;
     private NavController navController;
     private SoundSaver soundSaver;
+    private DownloadSoundFiles dlSoundFiles;
 
     //Data
+
     private ExternalStorage externalStorage;
     private SQLiteDatabase db;
     private SoundDB soundDB;
@@ -56,6 +61,9 @@ public class ModelViewController {
         soundDB = new SoundDB(context);
         db = soundDB.getWritableDatabase();
 
+        //Storage reference til firebase
+
+
         externalStorage = new ExternalStorage(context);
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -63,6 +71,7 @@ public class ModelViewController {
         presetCategoriesDAO = new PresetCategoriesDAO(db);
         presetElementDAO = new PresetElementDAO(db);
         soundDAO = new SoundDAO(db);
+        dlSoundFiles = new DownloadSoundFiles(context,soundDAO);
         categoryDAO = new CategoryDAO(db);
         presetDAO = new PresetDAO(db);
         librarySoundLogic = new LibrarySoundLogic(soundCategoriesDAO,soundDAO);
@@ -169,5 +178,9 @@ public class ModelViewController {
 
     public PresetCategoriesDAO getPresetCategoriesDAO() {
         return presetCategoriesDAO;
+    }
+
+    public DownloadSoundFiles getDlSoundFiles() {
+        return dlSoundFiles;
     }
 }

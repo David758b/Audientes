@@ -42,7 +42,7 @@ public class ExternalStorage {
 
         //returns if a file is allready existing
         for (String fileName: existingFiles) {
-            System.out.println("Files in Audientes dir:   " + fileName);
+            //System.out.println("Files in Audientes dir:   " + fileName);
             if (fileName.equals(newFileName)){
                 return;
             }
