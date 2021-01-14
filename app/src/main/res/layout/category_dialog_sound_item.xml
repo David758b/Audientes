@@ -2,43 +2,56 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:weightSum="2">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_weight="0.01"
         android:weightSum="2">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="0.5">
+            android:layout_weight="0.5"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/sound_title_dialog_TV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:fontFamily="@font/audientes_font"
+                android:text="TextView"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/sound_duration_dialog_TV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:fontFamily="@font/audientes_font"
+                android:text="TextView"
+                android:textColor="@color/white"
+                android:textSize="14dp" />
         </LinearLayout>
 
         <ImageView
             android:id="@+id/sound_add_btn"
-            android:layout_width="match_parent"
+            android:layout_width="120dp"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_baseline_add_circle_outline_24"
             android:layout_weight="1.5"
             android:backgroundTint="@color/AudientesOrange"
-            android:contentDescription="ADD SOUND" />
+            android:contentDescription="ADD SOUND"
+            app:srcCompat="@drawable/ic_baseline_add_circle_outline_24" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/DarkGrey"
+        android:layout_weight="0.01"/>
 
 </LinearLayout>

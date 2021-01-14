@@ -254,13 +254,21 @@ class CategorySoundDialogAdapter extends RecyclerView.Adapter<CategorySoundDialo
     public static class SoundViewHolder extends RecyclerView.ViewHolder{
         public TextView soundTextView;
         public TextView soundDuration;
+        public ImageView addSoundBtn;
 
 
         public SoundViewHolder(@NonNull View itemView) {
             super(itemView);
             //Måske tilføje de resterende ting for et sound item
-            soundTextView = itemView.findViewById(R.id.sound_title);
-            soundDuration = itemView.findViewById(R.id.sound_duration);
+            soundTextView = itemView.findViewById(R.id.sound_title_dialog_TV);
+            soundDuration = itemView.findViewById(R.id.sound_duration_dialog_TV);
+            addSoundBtn = itemView.findViewById(R.id.sound_add_btn);
+            addSoundBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
             // ...
         }
     }
@@ -276,7 +284,7 @@ class CategorySoundDialogAdapter extends RecyclerView.Adapter<CategorySoundDialo
     @NonNull
     @Override
     public CategorySoundDialogAdapter.SoundViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.sound_list_element, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_dialog_sound_item, parent, false);
         return new SoundViewHolder(v);
     }
 
