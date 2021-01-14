@@ -70,12 +70,17 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
 
         lydAfspiller = modelViewController.getLydAfspiller();
 
-        //addSoundBtn.setOnClickListener();
-        categoryTitle.setOnClickListener(new View.OnClickListener() {
+        // Vi bruger en setOnFocusChangeListener istedet for en normal OnClickListener på EditText
+        // Da der var problemer med at denne ikke fokuseret første gang man klikkede på EditText
+        // og derfor kom Save "knappen" og cursoren ikke frem.
+        categoryTitle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View v) {
-                categoryTitle.setCursorVisible(true);
-                save.setVisibility(View.VISIBLE);
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+
+                    categoryTitle.setCursorVisible(true);
+                    save.setVisibility(View.VISIBLE);
+                }
             }
         });
         save.setOnClickListener(new View.OnClickListener() {
