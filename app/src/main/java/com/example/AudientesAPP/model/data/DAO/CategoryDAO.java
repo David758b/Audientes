@@ -90,4 +90,19 @@ public class CategoryDAO implements IDAO<CategoryDTO> {
 
         return categoryDTOList;
     }
+
+    public void updateName(CategoryDTO oldCategoryDTO,CategoryDTO newCategoryDTO){
+
+        // UPDATE TABLE_CATEGORY SET CATEGORY_NAME = newName WHERE CATEGORY_NAME = oldName
+        row = new ContentValues();
+
+        row.put(SoundDB.CATEGORY_NAME,newCategoryDTO.getCategoryName());
+        row.put(SoundDB.CATEGORY_Pic,newCategoryDTO.getPicture());
+        row.put(SoundDB.CATEGORY_Color,newCategoryDTO.getColor());
+        db.update(SoundDB.TABEL_Category,row,SoundDB.CATEGORY_NAME +
+                " = '" + oldCategoryDTO.getCategoryName() + "'",null);
+
+
+    }
+
 }

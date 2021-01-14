@@ -87,4 +87,16 @@ public class LibraryCategoryLogic {
         navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
     }
 
+    public void updateCategory(CategoryDTO oldCategoryDTO, CategoryDTO newCategoryDTO){
+        //updates the database
+        categoryDAO.updateName(oldCategoryDTO, newCategoryDTO);
+
+        //updates the list
+        for (CategoryDTO dto:categories) {
+            if (oldCategoryDTO.getCategoryName().equals(dto.getCategoryName())){
+                dto.setCategoryName(newCategoryDTO.getCategoryName());
+            }
+        }
+    }
+
 }
