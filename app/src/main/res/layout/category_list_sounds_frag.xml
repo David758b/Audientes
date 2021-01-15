@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_constraintVertical_chainStyle="packed">
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="4">
+        android:weightSum="4"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:id="@+id/returnIcon"
             android:layout_width="wrap_content"
@@ -17,51 +25,73 @@
             android:layout_weight="1"
             android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
             app:tint="@color/white" />
+
         <EditText
             android:id="@+id/category_TV"
-            android:layout_height="56dp"
             android:layout_width="wrap_content"
-            android:fontFamily="@font/audientes_font"
-            android:text="Category"
+            android:layout_height="56dp"
+            android:layout_weight="2"
             android:cursorVisible="false"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="32dp"
+            android:fontFamily="@font/audientes_font"
             android:gravity="center"
             android:shadowColor="#000000"
             android:shadowDx="1.5"
             android:shadowDy="1.3"
             android:shadowRadius="1.6"
+            android:text="Category"
             android:textAllCaps="false"
-            android:textStyle="bold"
-            android:layout_weight="2"
-            />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="32dp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/saveIcon"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="SAVE"
             android:fontFamily="@font/audientes_font"
             android:gravity="center"
+            android:text="SAVE"
             android:textColor="@color/AudientesOrange"
             android:visibility="gone"
             app:tint="@color/white" />
     </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        android:layout_weight="1">
+        <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/category_sounds_RV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    </LinearLayout>
 
-    <ImageView
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="5dp">
+        <ImageView
         android:id="@+id/category_addSound"
-        android:layout_height="40dp"
         android:layout_width="325dp"
-        android:src="@drawable/ic_baseline_add_24"
+        android:layout_height="40dp"
         android:background="@drawable/round_outline"
         android:backgroundTint="@color/AudientesOrange"
-        app:tint="@color/white"
-        android:layout_gravity="center" />
+        android:src="@drawable/ic_baseline_add_24"
+
+        app:tint="@color/white" />
+    </LinearLayout>
+
 
 </LinearLayout>

@@ -344,7 +344,7 @@ class CategorySoundDialogAdapter extends RecyclerView.Adapter<CategorySoundDialo
                 boolean chosen = chosenSounds.contains(pos);
                 if (!chosen) {
                     holder.linearLayout.setBackgroundResource(R.color.LightGrey);
-                    holder.addSoundBtn.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24);
+                    holder.addSoundBtn.setImageResource(R.drawable.ic_baseline_cancel_24);
                     chosenSounds.add(pos);
                 } else {
                     holder.linearLayout.setBackgroundResource(R.color.DialogDarkBlue);
