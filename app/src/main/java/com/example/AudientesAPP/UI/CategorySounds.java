@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -271,7 +272,6 @@ class SoundPickerDialog extends Dialog implements View.OnClickListener{
 }
 
 class CategorySoundDialogAdapter extends RecyclerView.Adapter<CategorySoundDialogAdapter.SoundViewHolder> {
-
     private List<String> mSoundSet;
     private List<String> nDuration;
 
@@ -284,6 +284,7 @@ class CategorySoundDialogAdapter extends RecyclerView.Adapter<CategorySoundDialo
         public TextView soundTextView;
         public TextView soundDuration;
         public ImageView addSoundBtn;
+        public LinearLayout linearLayout;
 
 
         public SoundViewHolder(@NonNull View itemView) {
@@ -292,12 +293,7 @@ class CategorySoundDialogAdapter extends RecyclerView.Adapter<CategorySoundDialo
             soundTextView = itemView.findViewById(R.id.sound_title_dialog_TV);
             soundDuration = itemView.findViewById(R.id.sound_duration_dialog_TV);
             addSoundBtn = itemView.findViewById(R.id.sound_add_btn);
-            addSoundBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
+            linearLayout = itemView.findViewById(R.id.LinearLayoutList);
             // ...
         }
     }
@@ -318,10 +314,20 @@ class CategorySoundDialogAdapter extends RecyclerView.Adapter<CategorySoundDialo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SoundViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final SoundViewHolder holder, final int position) {
         holder.soundTextView.setText(mSoundSet.get(position));
         holder.soundDuration.setText(nDuration.get(position));
         holder.itemView.setMinimumWidth(250);
+
+
+        holder.addSoundBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.linearLayout.setBackgroundResource(R.color.LightGrey);
+                holder.addSoundBtn.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24);
+            }
+        });
+
         // TODO: HUSK ONCLICK FUNKTION
         /*holder.soundTextView.setOnClickListener(new View.OnClickListener() {
         });*/

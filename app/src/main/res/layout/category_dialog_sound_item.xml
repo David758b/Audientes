@@ -7,6 +7,7 @@
     android:weightSum="2">
 
     <LinearLayout
+        android:id="@+id/LinearLayoutList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -43,6 +44,7 @@
             android:layout_width="120dp"
             android:layout_height="match_parent"
             android:layout_weight="1.5"
+            android:clickable="true"
             android:backgroundTint="@color/AudientesOrange"
             android:contentDescription="ADD SOUND"
             app:srcCompat="@drawable/ic_baseline_add_circle_outline_24" />
