@@ -12,6 +12,8 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -36,6 +38,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private ModelViewController modelViewController;
     private NavController navController;
     private Executor bgThread;
+    private Handler uiThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.activity_main);
 
         bgThread = Executors.newSingleThreadExecutor();
+        uiThread = new Handler(Looper.getMainLooper());
         //Creates a context and gives this for later use in the database
         //Denne skal kun bruge context
         modelViewController = new ModelViewController(this);
@@ -67,7 +72,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         getSupportFragmentManager().beginTransaction().add(R.id.playBar, new PlayBar_Frag()).addToBackStack(null).commit();
-        bgThread.execute(()-> saveSounds());
+
+        bgThread.execute(()->{
+            saveSounds();
+            uiThread.post(()->{
+                setContentView(R.layout.activity_main);
+                System.out.println("CHANGE ACTIVITY");
+            });
+        });
 
         //-------------------------------Resten er test---------------------------------------------
         // printTables();
@@ -93,11 +105,39 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         modelViewController.getSoundSaver().saveSound(R.raw.rain_street, "rain_street");
         modelViewController.getSoundSaver().saveSound(R.raw.testlyd, "testlyd");
         modelViewController.getSoundSaver().saveSound(R.raw.train_nature, "train_nature");
-        modelViewController.getDlSoundFiles().downloadSoundFiles("cobratronik_wind","soundfiles/117136__cobratronik__wind-artic-cold.wav");
-        modelViewController.getDlSoundFiles().downloadSoundFiles("cathedral_ambience_01","soundfiles/170675__klankbeeld__cathedral-ambience-01.wav");
-        modelViewController.getDlSoundFiles().downloadSoundFiles("water_dripping_in_cave","soundfiles/177958__sclolex__water-dripping-in-cave.wav");
-        modelViewController.getDlSoundFiles().downloadSoundFiles("downtown_calm","soundfiles/216734__klankbeeld__down-town-calm-140124-01.wav");
-        modelViewController.getDlSoundFiles().downloadSoundFiles("rain_and_thunder_4","soundfiles/237729__flathill__rain-and-thunder-4.wav");
+        boolean isDownloaded = false;
+
+
+        List<String> newFileNames = new ArrayList<>();
+        List<String> filePath = new ArrayList<>();
+        //adding all the files to a list so we can comepare the length with the length of our database to see when everything is dowlnoaded
+        newFileNames.add("cobratronik_wind");
+        filePath.add("soundfiles/117136__cobratronik__wind-artic-cold.wav");
+        newFileNames.add("cathedral_ambience_01");
+        filePath.add("soundfiles/170675__klankbeeld__cathedral-ambience-01.wav");
+        newFileNames.add("water_dripping_in_cave");
+        filePath.add("soundfiles/177958__sclolex__water-dripping-in-cave.wav");
+        newFileNames.add("downtown_calm");
+        filePath.add("soundfiles/216734__klankbeeld__down-town-calm-140124-01.wav");
+        newFileNames.add("rain_and_thunder_4");
+        filePath.add("soundfiles/237729__flathill__rain-and-thunder-4.wav");
+
+
+        for (int i = 0; i < newFileNames.size(); i++) {
+            modelViewController.getDlSoundFiles().downloadSoundFiles(newFileNames.get(i),filePath.get(i));
+        }
+
+        int totalFilesAmount = modelViewController.getSoundDAO().getList().size();
+
+      //  while(modelViewController.getSoundDAO().getList().size() != newFileNames.size() + 8 ){
+        //}
+
+
+        //modelViewController.getDlSoundFiles().downloadSoundFiles(newFileNames.get(0),"soundfiles/117136__cobratronik__wind-artic-cold.wav");
+        //modelViewController.getDlSoundFiles().downloadSoundFiles("cathedral_ambience_01","soundfiles/170675__klankbeeld__cathedral-ambience-01.wav");
+        //modelViewController.getDlSoundFiles().downloadSoundFiles("water_dripping_in_cave","soundfiles/177958__sclolex__water-dripping-in-cave.wav");
+        //modelViewController.getDlSoundFiles().downloadSoundFiles("downtown_calm","soundfiles/216734__klankbeeld__down-town-calm-140124-01.wav");
+        //modelViewController.getDlSoundFiles().downloadSoundFiles("rain_and_thunder_4","soundfiles/237729__flathill__rain-and-thunder-4.wav");
     }
 
     //Printing tables
