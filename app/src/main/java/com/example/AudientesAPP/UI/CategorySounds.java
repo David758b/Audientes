@@ -30,6 +30,7 @@ import com.example.AudientesAPP.model.funktionalitet.LibrarySoundLogic;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.example.AudientesAPP.model.funktionalitet.Utilities;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class CategorySounds extends Fragment implements CategorySoundAdapter.OnItemClicked, LydAfspiller.OnLydAfspillerListener{
@@ -274,6 +275,7 @@ class SoundPickerDialog extends Dialog implements View.OnClickListener{
 class CategorySoundDialogAdapter extends RecyclerView.Adapter<CategorySoundDialogAdapter.SoundViewHolder> {
     private List<String> mSoundSet;
     private List<String> nDuration;
+    HashSet<Integer> chosenSounds = new HashSet<>();
 
     public CategorySoundDialogAdapter(List<String> mySoundSet, List<String> nDuration){
         this.mSoundSet = mySoundSet;
@@ -315,6 +317,7 @@ class CategorySoundDialogAdapter extends RecyclerView.Adapter<CategorySoundDialo
 
     @Override
     public void onBindViewHolder(@NonNull final SoundViewHolder holder, final int position) {
+        final int pos = holder.getAdapterPosition();
         holder.soundTextView.setText(mSoundSet.get(position));
         holder.soundDuration.setText(nDuration.get(position));
         holder.itemView.setMinimumWidth(250);
@@ -323,8 +326,17 @@ class CategorySoundDialogAdapter extends RecyclerView.Adapter<CategorySoundDialo
         holder.addSoundBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.linearLayout.setBackgroundResource(R.color.LightGrey);
-                holder.addSoundBtn.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24);
+                // Highlighter samt fjerner highlight hvis man dobbelt klikker (klikker igen på et highlightet element)
+                boolean chosen = chosenSounds.contains(pos);
+                if (!chosen) {
+                    holder.linearLayout.setBackgroundResource(R.color.LightGrey);
+                    holder.addSoundBtn.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24);
+                    chosenSounds.add(pos);
+                } else {
+                    holder.linearLayout.setBackgroundResource(R.color.DialogDarkBlue);
+                    holder.addSoundBtn.setImageResource(R.drawable.ic_baseline_add_circle_outline_24);
+                    chosenSounds.remove(pos);
+                }
             }
         });
 
