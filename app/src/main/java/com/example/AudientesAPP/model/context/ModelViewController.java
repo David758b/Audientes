@@ -72,7 +72,7 @@ public class ModelViewController {
         categoryDAO = new CategoryDAO(db);
         presetDAO = new PresetDAO(db);
         // Giver indhold til databasen før logik klasserne instantieres
-        fillDBUp();
+        //fillDBUp();
 
         librarySoundLogic = new LibrarySoundLogic(soundCategoriesDAO,soundDAO);
         categorySoundsLogic = new CategorySoundsLogic(soundCategoriesDAO, soundDAO);

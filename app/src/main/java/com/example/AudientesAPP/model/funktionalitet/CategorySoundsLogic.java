@@ -69,6 +69,21 @@ public class CategorySoundsLogic {
         return durations;
     }
 
+    /**
+     * Adds a SoundCategoriesDTO with a given category name and soundname to a SoundCategoriesDAO and
+     * updates the temporary list of soundCategoriesDTO
+     * @param categoryName The given category you want to add a sound to
+     * @param soundName The sound you want to add to the given category
+     */
+    //Todo vi skal nok have noget listener værk her
+    public void addSoundsToCategory(String categoryName, String soundName){
+
+        SoundCategoriesDTO soundCategoriesDTO = new SoundCategoriesDTO(soundName,categoryName);
+        soundCategoriesDAO.add(soundCategoriesDTO);
+        soundCategories.add(soundCategoriesDTO);
+
+    }
+
 
 
 
