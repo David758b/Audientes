@@ -37,11 +37,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     private ModelViewController modelViewController;
     private NavController navController;
+    private Executor bgThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        bgThread = Executors.newSingleThreadExecutor();
         //Creates a context and gives this for later use in the database
         //Denne skal kun bruge context
         modelViewController = new ModelViewController(this);
@@ -63,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         getSupportFragmentManager().beginTransaction().add(R.id.playBar, new PlayBar_Frag()).addToBackStack(null).commit();
-        saveSounds();
+        bgThread.execute(()-> saveSounds());
 
         //-------------------------------Resten er test---------------------------------------------
         // printTables();
@@ -94,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         modelViewController.getDlSoundFiles().downloadSoundFiles("water_dripping_in_cave","soundfiles/177958__sclolex__water-dripping-in-cave.wav");
         modelViewController.getDlSoundFiles().downloadSoundFiles("downtown_calm","soundfiles/216734__klankbeeld__down-town-calm-140124-01.wav");
         modelViewController.getDlSoundFiles().downloadSoundFiles("rain_and_thunder_4","soundfiles/237729__flathill__rain-and-thunder-4.wav");
-
     }
 
     //Printing tables

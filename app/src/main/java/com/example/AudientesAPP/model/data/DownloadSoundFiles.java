@@ -4,6 +4,8 @@ import android.content.Context;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +23,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class DownloadSoundFiles {
     private StorageReference mStorageRef;
@@ -36,7 +40,6 @@ public class DownloadSoundFiles {
 
     public void downloadSoundFiles(String newFileName, String filePath) {
 
-
         StorageReference soundRef = mStorageRef.child(filePath);
 
         File audientesDirectory = makeDirectory();
@@ -50,37 +53,36 @@ public class DownloadSoundFiles {
                 return;
             }
         }
-        File extFileSrc = new File(audientesDirectory,newFileName);
 
-        try {
-            extFileSrc.createNewFile();
-            soundRef.getFile(extFileSrc).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(context, "Downloaded", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    System.out.println("FAILED TOAST");
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //File fileSrc = getFile(makeDirectory(),newFileName);
-        Uri uriFileSrc = Uri.parse(extFileSrc.getAbsolutePath());
-        System.out.println("EXISTINGFILESRC---" + extFileSrc.getAbsolutePath());
-        //String fileDur = getFileDuration(fileSrc);
+            File extFileSrc = new File(audientesDirectory,newFileName);
 
-
-
-        SoundDTO soundDTO = new SoundDTO(newFileName, uriFileSrc.toString(),"fileDur");
-        System.out.println(" SOUND DURATION --" + soundDTO.getSoundDuration());
-        System.out.println(" SOUND FILENAME --" + soundDTO.getSoundName());
-        System.out.println(" SOUND SRC --" + soundDTO.getSoundSrc());
-        soundDAO.add(soundDTO);
+            try {
+                extFileSrc.createNewFile();
+                soundRef.getFile(extFileSrc).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        System.out.println("Downloaded the file: " + soundRef.getName());
+                        File fileSrc = getFile(makeDirectory(),newFileName);
+                        Uri uriFileSrc = Uri.parse(extFileSrc.getAbsolutePath());
+                        System.out.println("EXISTINGFILESRC---" + extFileSrc.getAbsolutePath());
+                        String fileDur = getFileDuration(fileSrc);
+                        SoundDTO soundDTO = new SoundDTO(newFileName, uriFileSrc.toString(),fileDur);
+                        System.out.println(" SOUND DURATION --" + soundDTO.getSoundDuration());
+                        System.out.println(" SOUND FILENAME --" + soundDTO.getSoundName());
+                        System.out.println(" SOUND SRC --" + soundDTO.getSoundSrc());
+                        soundDAO.add(soundDTO);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        System.out.println("FAILED TOAST");
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
     }
+
         public File makeDirectory(){
             File directory = new File(context.getExternalFilesDir(Environment.DIRECTORY_MUSIC),"Audientes");
             directory.mkdir();
