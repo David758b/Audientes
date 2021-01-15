@@ -38,6 +38,7 @@ public class CategorySoundsLogic {
     }
 
     public List<SoundCategoriesDTO> getSoundCategories(){
+        initSoundCategories();
         return soundCategories;
     }
 

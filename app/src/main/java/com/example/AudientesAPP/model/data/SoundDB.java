@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SoundDB extends SQLiteOpenHelper {
 
 
-        public static final int VERSION = 5;
+        public static final int VERSION = 7;
         public static final String DATABASE = "sound.db";
         public static final String TABEL_Sounds = "Sounds";
         public static final String TABEL_Category = "Category";

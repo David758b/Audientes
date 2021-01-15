@@ -131,7 +131,7 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
             }
         });
         soundItemAdapter.setOnClick(CategorySounds.this);
-
+        modelViewController.getContext().databaseTest();
         return v;
     }
     public void initialize(View v){

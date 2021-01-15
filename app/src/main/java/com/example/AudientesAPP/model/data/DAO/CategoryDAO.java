@@ -99,10 +99,18 @@ public class CategoryDAO implements IDAO<CategoryDTO> {
         row.put(SoundDB.CATEGORY_NAME,newCategoryDTO.getCategoryName());
         //row.put(SoundDB.CATEGORY_Pic,newCategoryDTO.getPicture());
         //row.put(SoundDB.CATEGORY_Color,newCategoryDTO.getColor());
-        db.update(SoundDB.TABEL_SoundCategories,row,SoundDB.CATEGORY_NAME +
-                " = '" + oldCategoryDTO.getCategoryName() + "'",null);
-
-
+        //db.update(SoundDB.TABEL_SoundCategories,row,SoundDB.CATEGORY_NAME +
+        //        " = '" + oldCategoryDTO.getCategoryName() + "'",null);
+        db.execSQL("UPDATE " + SoundDB.TABEL_Category + " SET " + SoundDB.CATEGORY_NAME + "="
+        + "'" + newCategoryDTO.getCategoryName()+ "'" + " WHERE " + SoundDB.CATEGORY_NAME + " = "
+                + "'" + oldCategoryDTO.getCategoryName() + "'");
+        db.execSQL("UPDATE " + SoundDB.TABEL_SoundCategories + " SET " + SoundDB.CATEGORY_NAME + "="
+                + "'" + newCategoryDTO.getCategoryName()+ "'" + " WHERE " + SoundDB.CATEGORY_NAME + " = "
+                + "'" + oldCategoryDTO.getCategoryName() + "'");
+        db.execSQL("UPDATE " + SoundDB.TABEL_PresetCategories + " SET " + SoundDB.CATEGORY_NAME + "="
+                + "'" + newCategoryDTO.getCategoryName()+ "'" + " WHERE " + SoundDB.CATEGORY_NAME + " = "
+                + "'" + oldCategoryDTO.getCategoryName() + "'");
+        // UPDATE TABEL_Category SET
     }
 
 }
