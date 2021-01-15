@@ -45,7 +45,7 @@ public class CategorySoundsLogic {
         return sounds;
     }
 
-    private void initSoundCategories(){
+    public void initSoundCategories(){
         soundCategories.clear();
         sounds.clear();
         List<SoundCategoriesDTO> soundCategoriesDTOS = soundCategoriesDAO.getList();
@@ -68,6 +68,8 @@ public class CategorySoundsLogic {
 
         return durations;
     }
+
+
 
 
 }

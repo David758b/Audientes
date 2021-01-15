@@ -75,8 +75,8 @@ public class ModelViewController {
         fillDBUp();
 
         librarySoundLogic = new LibrarySoundLogic(soundCategoriesDAO,soundDAO);
-        libraryCategoryLogic = new LibraryCategoryLogic(categoryDAO);
         categorySoundsLogic = new CategorySoundsLogic(soundCategoriesDAO, soundDAO);
+        libraryCategoryLogic = new LibraryCategoryLogic(categoryDAO, categorySoundsLogic);
         presetLogic = new PresetLogic(presetDAO);
         soundSaver = new SoundSaver(externalStorage,soundDAO);
 

@@ -127,15 +127,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     //Testing of the database may delete later
     public void databaseTest() {
         List list;
-        PresetElementDAO presetElementDAO = modelViewController.getPresetElementDAO();
-        list = presetElementDAO.getList();
-        PresetElementDTO DTO;
+        SoundCategoriesDAO soundCategoriesDAO = modelViewController.getSoundCategoriesDAO();
+        list = soundCategoriesDAO.getList();
+        SoundCategoriesDTO DTO;
         for (Object a : list) {
-            DTO = (PresetElementDTO) a;
+            DTO = (SoundCategoriesDTO) a;
             System.out.println("CATEGORY DTO OUTPUT --------------");
-            System.out.println(DTO.getPresetName());
+            System.out.println(DTO.getCategoryName());
             System.out.println(DTO.getSoundName());
-            System.out.println(DTO.getSoundVolume());
+ //           System.out.println(DTO.getSoundDuration());
         }
     }
     //--------------------end test ----------------------------------------------------

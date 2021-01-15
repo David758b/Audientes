@@ -14,6 +14,7 @@ import com.example.AudientesAPP.model.DTO.CategoryDTO;
 import com.example.AudientesAPP.model.DTO.SoundCategoriesDTO;
 import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
+import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
 public class LibraryCategoryLogic {
     private CategoryDAO categoryDAO;
     List<OnLibraryLCLogicListener> listeners;
-
+    private CategorySoundsLogic categorySoundsLogic;
     /*
      * final list of CategoryDTO's, this list gets cleared everytime the constructor gets called
      * and gets filled up with data from the database
@@ -35,10 +36,12 @@ public class LibraryCategoryLogic {
      * */
     private final List<CategoryDTO> categories;
 
-    public LibraryCategoryLogic(CategoryDAO categoryDAO) {
+    public LibraryCategoryLogic(CategoryDAO categoryDAO, CategorySoundsLogic categorySoundsLogic) {
         this.categoryDAO = categoryDAO;
         this.listeners = new ArrayList<>();
         this.categories = new ArrayList<>();
+        this.categorySoundsLogic = categorySoundsLogic;
+        // TODO: Den skal også kende presetCategoriesLogic
         initCategories();
     }
 
@@ -117,6 +120,7 @@ public class LibraryCategoryLogic {
                 dto.setCategoryName(categoryNewDTO.getCategoryName());
             }
         }
+        categorySoundsLogic.initSoundCategories();
     }
 
 

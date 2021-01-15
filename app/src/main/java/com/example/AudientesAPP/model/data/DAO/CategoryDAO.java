@@ -97,9 +97,9 @@ public class CategoryDAO implements IDAO<CategoryDTO> {
         row = new ContentValues();
 
         row.put(SoundDB.CATEGORY_NAME,newCategoryDTO.getCategoryName());
-        row.put(SoundDB.CATEGORY_Pic,newCategoryDTO.getPicture());
-        row.put(SoundDB.CATEGORY_Color,newCategoryDTO.getColor());
-        db.update(SoundDB.TABEL_Category,row,SoundDB.CATEGORY_NAME +
+        //row.put(SoundDB.CATEGORY_Pic,newCategoryDTO.getPicture());
+        //row.put(SoundDB.CATEGORY_Color,newCategoryDTO.getColor());
+        db.update(SoundDB.TABEL_SoundCategories,row,SoundDB.CATEGORY_NAME +
                 " = '" + oldCategoryDTO.getCategoryName() + "'",null);
 
 

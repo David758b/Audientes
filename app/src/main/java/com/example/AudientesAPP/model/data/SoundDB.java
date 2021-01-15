@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SoundDB extends SQLiteOpenHelper {
 
 
-        public static final int VERSION = 4;
+        public static final int VERSION = 5;
         public static final String DATABASE = "sound.db";
         public static final String TABEL_Sounds = "Sounds";
         public static final String TABEL_Category = "Category";
@@ -62,23 +62,23 @@ public class SoundDB extends SQLiteOpenHelper {
                         PATH+" TEXT, "+DURATION+" TEXT)");
 
                 db.execSQL("CREATE TABLE "+TABEL_Category+ " ("+CATEGORY_NAME+" TEXT PRIMARY KEY, "+
-                        CATEGORY_Pic +" TEXT, "+ CATEGORY_Color + " TEXT)");
-
+                        CATEGORY_Pic +" TEXT, "+ CATEGORY_Color + " TEXT) ");
+                // CREATE TABLE TABEL_Category (CATEGORY_NAME TEXT PRIMARY KEY, CATEGORY_Pic TEXT, CATEGORY_Color TEXT, ON UPDATE CASCADE)
                 db.execSQL("CREATE TABLE "+TABEL_Presets+ " ("+PRESET_NAME+" TEXT PRIMARY KEY)");
 
                 db.execSQL("CREATE TABLE "+TABEL_PresetCategories+ " (" +
                         PRESET_NAME + " TEXT, " +
                         CATEGORY_NAME + " TEXT, PRIMARY KEY(" + PRESET_NAME + ", " + CATEGORY_NAME + "),"
-                        + " FOREIGN KEY(" + CATEGORY_NAME + ") REFERENCES " + TABEL_Category + "(" + CATEGORY_NAME + ") ON DELETE CASCADE"
-                        + ", FOREIGN KEY(" + PRESET_NAME + ") REFERENCES " + TABEL_Presets + "(" + PRESET_NAME + ") ON DELETE CASCADE)" );
+                        + " FOREIGN KEY(" + CATEGORY_NAME + ") REFERENCES " + TABEL_Category + "(" + CATEGORY_NAME + ") ON DELETE CASCADE ON UPDATE CASCADE"
+                        + ", FOREIGN KEY(" + PRESET_NAME + ") REFERENCES " + TABEL_Presets + "(" + PRESET_NAME + ") ON DELETE CASCADE ON UPDATE CASCADE)" );
 
                 // CREATE TABLE TABEL_PresetCategories (PRESET_NAME TEXT PRIMARY KEY, CATEGORY_NAME TEXT PRIMARY KEY, FOREIGN KEY(CATEGORY_NAME) REFERENCES TABEL_Category(CATEGORY_NAME),
                 // FOREIGN KEY(PRESET_NAME) REFERENCES TABEL_Presets(PRESET_NAME) );
                 db.execSQL("CREATE TABLE "+TABEL_SoundCategories+ " (" +
                         SOUND_NAME + " TEXT, " +
                         CATEGORY_NAME + " TEXT, PRIMARY KEY(" + SOUND_NAME + ", " + CATEGORY_NAME + "),"
-                        + " FOREIGN KEY(" + CATEGORY_NAME + ") REFERENCES " + TABEL_Category + "(" + CATEGORY_NAME + ") ON DELETE CASCADE" +
-                        ", FOREIGN KEY(" + SOUND_NAME + ") REFERENCES " + TABEL_Sounds + "(" + SOUND_NAME + ") ON DELETE CASCADE)" );
+                        + " FOREIGN KEY(" + CATEGORY_NAME + ") REFERENCES " + TABEL_Category + "(" + CATEGORY_NAME + ") ON DELETE CASCADE ON UPDATE CASCADE" +
+                        ", FOREIGN KEY(" + SOUND_NAME + ") REFERENCES " + TABEL_Sounds + "(" + SOUND_NAME + ") ON DELETE CASCADE ON UPDATE CASCADE)" );
 
                 db.execSQL("CREATE TABLE "+TABEL_PresetElements+ " (" +
                         PRESET_NAME + " TEXT, " +
@@ -87,8 +87,8 @@ public class SoundDB extends SQLiteOpenHelper {
                         VOLUME + " INTEGER, " +
                         DELAY_BEFORE_PLAYING + " INTEGER, " +
                         LOOP + " INTEGER, PRIMARY KEY(" + PRESET_NAME + ", " + SOUND_NAME + ")," +
-                        " FOREIGN KEY(" + PRESET_NAME + ") REFERENCES " + TABEL_Presets + "(" + PRESET_NAME + ") ON DELETE CASCADE" +
-                        ", FOREIGN KEY(" + SOUND_NAME + ") REFERENCES " + TABEL_Sounds + "(" + SOUND_NAME + ") ON DELETE CASCADE)" );
+                        " FOREIGN KEY(" + PRESET_NAME + ") REFERENCES " + TABEL_Presets + "(" + PRESET_NAME + ") ON DELETE CASCADE ON UPDATE CASCADE" +
+                        ", FOREIGN KEY(" + SOUND_NAME + ") REFERENCES " + TABEL_Sounds + "(" + SOUND_NAME + ") ON DELETE CASCADE ON UPDATE CASCADE)" );
 
 
         }
