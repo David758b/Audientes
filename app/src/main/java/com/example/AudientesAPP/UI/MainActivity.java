@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
@@ -40,6 +42,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -49,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private NavController navController;
     private Executor bgThread;
     private Handler uiThread;
+    private List<String> newFileNames = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +78,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         getSupportFragmentManager().beginTransaction().add(R.id.playBar, new PlayBar_Frag()).addToBackStack(null).commit();
 
+
+        //dialog
+        showHProgressDialog(findViewById(R.id.libraryMain));
+
+
+
         bgThread.execute(()->{
             saveSounds();
             uiThread.post(()->{
-                setContentView(R.layout.activity_main);
+               // setContentView(R.layout.activity_main);
                 System.out.println("CHANGE ACTIVITY");
             });
         });
@@ -105,24 +116,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         modelViewController.getSoundSaver().saveSound(R.raw.rain_street, "rain_street");
         modelViewController.getSoundSaver().saveSound(R.raw.testlyd, "testlyd");
         modelViewController.getSoundSaver().saveSound(R.raw.train_nature, "train_nature");
-        boolean isDownloaded = false;
 
 
-        List<String> newFileNames = new ArrayList<>();
+
+
         List<String> filePath = new ArrayList<>();
         //adding all the files to a list so we can comepare the length with the length of our database to see when everything is dowlnoaded
-        newFileNames.add("cobratronik_wind");
-        filePath.add("soundfiles/117136__cobratronik__wind-artic-cold.wav");
-        newFileNames.add("cathedral_ambience_01");
-        filePath.add("soundfiles/170675__klankbeeld__cathedral-ambience-01.wav");
-        newFileNames.add("water_dripping_in_cave");
-        filePath.add("soundfiles/177958__sclolex__water-dripping-in-cave.wav");
-        newFileNames.add("downtown_calm");
-        filePath.add("soundfiles/216734__klankbeeld__down-town-calm-140124-01.wav");
-        newFileNames.add("rain_and_thunder_4");
-        filePath.add("soundfiles/237729__flathill__rain-and-thunder-4.wav");
+//        newFileNames.add("cobratronik_wind");
+//        filePath.add("soundfiles/117136__cobratronik__wind-artic-cold.wav");
+//        newFileNames.add("cathedral_ambience_01");
+//        filePath.add("soundfiles/170675__klankbeeld__cathedral-ambience-01.wav");
+//        newFileNames.add("water_dripping_in_cave");
+//        filePath.add("soundfiles/177958__sclolex__water-dripping-in-cave.wav");
+//        newFileNames.add("downtown_calm");
+//        filePath.add("soundfiles/216734__klankbeeld__down-town-calm-140124-01.wav");
+//        newFileNames.add("rain_and_thunder_4");
+//        filePath.add("soundfiles/237729__flathill__rain-and-thunder-4.wav");
 
-
+        boolean isDownloaded = false;
         for (int i = 0; i < newFileNames.size(); i++) {
             modelViewController.getDlSoundFiles().downloadSoundFiles(newFileNames.get(i),filePath.get(i));
         }
@@ -240,6 +251,59 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public ModelViewController getModelViewController() {
         return modelViewController;
     }
+
+    public void showHProgressDialog(View view)
+    {
+
+
+        final Timer timer = new Timer();
+        final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+
+        dialog.setMax(100);
+        dialog.setTitle("Dialog Title");
+        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+
+        // Update the progress bar
+        Handler handler = new Handler();
+
+        TimerTask tt = new TimerTask() {
+            int counter = 0;
+            @Override
+            public void run() {
+                counter++;
+                dialog.setProgress(counter);
+                if (counter == 100){
+                    timer.cancel();
+                }
+            }
+        };
+
+        timer.schedule(tt,0,100);
+
+//
+//        handler.post(new Runnable() {
+//            public void run() {
+//
+//                while(true) {
+//                    try {
+//                        timer.wait(500);
+//                        helo++;
+//                        dialog.setProgress(helo);
+//                        //dialog.setProgress(modelViewController.getSoundDAO().getList().size());
+//                    } catch(Exception e){
+//                        System.out.println("EXCEPTION IN RUN IN THE DIALOG: " + e );
+//                    }
+//                }
+//
+//            }
+  //      });
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+    }
+
+
 }
 
 
