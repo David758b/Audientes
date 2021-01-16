@@ -46,6 +46,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -272,6 +273,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             public void run() {
                 counter++;
                 dialog.setProgress(counter);
+
                 if (counter == 100){
                     timer.cancel();
                 }
@@ -279,6 +281,23 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         };
 
         timer.schedule(tt,0,100);
+
+
+        while(modelViewController.getSoundDAO().getList().size() != newFileNames.size() + 8 ){
+            System.out.println("getList: "+modelViewController.getSoundDAO().getList().size());
+            System.out.println("newFiles: "+newFileNames.size() + 8 );
+
+            System.out.println("Inside while downloading loop");
+            try {
+                TimeUnit.MILLISECONDS.sleep(10000);
+            } catch (Exception e){
+                System.out.println(" TIMER ERROR: " + e);
+            }
+            System.out.println("After 10 sec loop");
+        }
+        //dialog.setCancelable(false);
+        //dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
 
 //
 //        handler.post(new Runnable() {
@@ -297,9 +316,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //
 //            }
   //      });
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
+
 
     }
 
