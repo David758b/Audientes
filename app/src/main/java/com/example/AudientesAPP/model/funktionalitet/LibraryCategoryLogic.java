@@ -118,6 +118,23 @@ public class LibraryCategoryLogic {
         return false;
     }
 
+    public void deleteCategory(String categoryName){
+        CategoryDTO categoryDTO = new CategoryDTO(categoryName,"","");
+        categoryDAO.delete(categoryDTO);
+
+        for (int i = 0; i < categories.size(); i++) {
+            if(categories.get(i).getCategoryName().equals(categoryName)){
+                categories.remove(i);
+                System.out.println("HAHSIDOHAOISHDOIAHSOFHOIAH");
+            }
+        }
+        for (CategoryDTO a:categories) {
+            System.out.println("------nej" +a.getCategoryName());
+        }
+
+
+    }
+
 //--------------------------------- LISTENER INTERFACE ---------------------
     public interface OnLibraryLCLogicListener {
         void updateLibraryListCategory(LibraryCategoryLogic libraryCategoryLogic);
@@ -133,4 +150,5 @@ public class LibraryCategoryLogic {
             listener.updateLibraryListCategory(this);
         }
     }
+
 }

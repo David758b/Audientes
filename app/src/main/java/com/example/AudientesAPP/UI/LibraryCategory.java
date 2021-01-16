@@ -1,6 +1,7 @@
 package com.example.AudientesAPP.UI;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 
 import android.content.Context;
@@ -106,11 +107,14 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView categoryNameTV;
         public ImageView categoryIcon;
+        public ImageView delete;
 
         public MyViewHolder(View v) {
             super(v);
             categoryNameTV = v.findViewById(R.id.categoryName_TV);
             categoryIcon = v.findViewById(R.id.categoryIcon_IV);
+            delete = v.findViewById(R.id.delete_category);
+
         }
     }
 
@@ -123,6 +127,11 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+
+        //there should not be a delete button on the create category field
+        if(position == 0){
+            holder.delete.setVisibility(View.GONE);
+        }
         final CategoryDTO categoryDTO = data.get(position);
         Typeface typeface = ResourcesCompat.getFont(contextUI, R.font.audientes_font);
         holder.categoryNameTV.setTypeface(typeface);
@@ -130,6 +139,47 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
         holder.itemView.getBackground().setTint(Color.parseColor(categoryDTO.getColor()));
         System.out.println(categoryDTO.getCategoryName() + "'s FARVE---------------------" + categoryDTO.getColor());
 
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+
+                builder.setMessage("Do you want to remove this category?");
+                builder.setTitle("Removing category!");
+                builder.setCancelable(true);
+
+
+                builder.setPositiveButton("Remove",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        logic.deleteCategory(categoryDTO.getCategoryName());
+                        System.out.println("DELETED CATEGORY ::::::::::::::::");
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                // Create the Alert dialog
+                AlertDialog alertDialog = builder.create();
+
+
+
+//                alertDialog = builder.create();
+
+                // Show the Alert Dialog box
+                alertDialog.show();
+                Button nbutton = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+                nbutton.setBackgroundColor(Color.WHITE);
+                nbutton.setTextColor(Color.BLACK);
+                Button pbutton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                pbutton.setBackgroundColor(Color.BLACK);
+            }
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
