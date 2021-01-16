@@ -47,7 +47,6 @@ public class ModelViewController {
     private DownloadSoundFiles dlSoundFiles;
 
     //Data
-
     private ExternalStorage externalStorage;
     private SQLiteDatabase db;
     private SoundDB soundDB;
@@ -81,8 +80,8 @@ public class ModelViewController {
         categoryDAO = new CategoryDAO(db);
         presetDAO = new PresetDAO(db);
         librarySoundLogic = new LibrarySoundLogic(soundCategoriesDAO,soundDAO);
-        libraryCategoryLogic = new LibraryCategoryLogic(categoryDAO);
         categorySoundsLogic = new CategorySoundsLogic(soundCategoriesDAO, soundDAO);
+        libraryCategoryLogic = new LibraryCategoryLogic(categoryDAO, categorySoundsLogic);
         presetLogic = new PresetLogic(presetDAO);
         soundSaver = new SoundSaver(externalStorage,soundDAO);
 

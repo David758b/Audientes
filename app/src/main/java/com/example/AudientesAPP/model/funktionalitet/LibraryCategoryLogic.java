@@ -14,6 +14,7 @@ import com.example.AudientesAPP.model.DTO.CategoryDTO;
 import com.example.AudientesAPP.model.DTO.SoundCategoriesDTO;
 import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
+import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
 public class LibraryCategoryLogic {
     private CategoryDAO categoryDAO;
     List<OnLibraryLCLogicListener> listeners;
-
+    private CategorySoundsLogic categorySoundsLogic;
     /*
      * final list of CategoryDTO's, this list gets cleared everytime the constructor gets called
      * and gets filled up with data from the database
@@ -35,35 +36,16 @@ public class LibraryCategoryLogic {
      * */
     private final List<CategoryDTO> categories;
 
-    public LibraryCategoryLogic(CategoryDAO categoryDAO) {
+    public LibraryCategoryLogic(CategoryDAO categoryDAO, CategorySoundsLogic categorySoundsLogic) {
         this.categoryDAO = categoryDAO;
         this.listeners = new ArrayList<>();
         this.categories = new ArrayList<>();
+        this.categorySoundsLogic = categorySoundsLogic;
+        // TODO: Den skal også kende presetCategoriesLogic
         initCategories();
     }
 
-    public void addCategory(String categoryName, String picture, String color) {
-        CategoryDTO categoryDTO = new CategoryDTO(categoryName, picture, color);
-        categoryDAO.add(categoryDTO);
-        //Måske få listen fra DAO og kald initCategoryNames istedet for linje 30
-        categories.add(categoryDTO);
-        notifyListeners();
-    }
-
     //Burde returnere en liste af CategoryDTO's, hvis vi også skal have farve og billede reference med.
-    public List<CategoryDTO> getCategories() {
-        return categories;
-    }
-
-    public CategoryDTO getCategory(String categoryName){
-        for (CategoryDTO categoryDTO:categories) {
-            if (categoryDTO.getCategoryName().equals(categoryName)){
-                return categoryDTO;
-            }
-        }
-        return null;
-    }
-
     //Hvis init skal køres fra fragmentet og ikke konstruktøren i denne klasse skal den være public og slettes fra konstruktøren
     private void initCategories() {
         //Hvis den indeholder noget så clearer vi den
@@ -77,19 +59,25 @@ public class LibraryCategoryLogic {
         categories.addAll(categoryDTOS);
     }
 
-    public void addLibraryLCLogicListener(OnLibraryLCLogicListener listener) {
-        listeners.add(listener);
+    public List<CategoryDTO> getCategories() {
+        return categories;
     }
 
-    private void notifyListeners() {
-        for (OnLibraryLCLogicListener listener : listeners) {
-            System.out.println("----------------NOTIFY LISTENERS----------------");
-            listener.updateLibraryListCategory(this);
+    public CategoryDTO getCategory(String categoryName){
+        for (CategoryDTO categoryDTO:categories) {
+            if (categoryDTO.getCategoryName().equals(categoryName)){
+                return categoryDTO;
+            }
         }
+        return null;
     }
 
-    public interface OnLibraryLCLogicListener {
-        void updateLibraryListCategory(LibraryCategoryLogic libraryCategoryLogic);
+    public void addCategory(String categoryName, String picture, String color) {
+        CategoryDTO categoryDTO = new CategoryDTO(categoryName, picture, color);
+        categoryDAO.add(categoryDTO);
+        //Måske få listen fra DAO og kald initCategoryNames istedet for linje 30
+        categories.add(categoryDTO);
+        notifyListeners();
     }
 
     public void fragmentJump (String categoryName, NavController navController, Fragment fragment, SharedPreferences prefs) {
@@ -117,8 +105,8 @@ public class LibraryCategoryLogic {
                 dto.setCategoryName(categoryNewDTO.getCategoryName());
             }
         }
+        categorySoundsLogic.initSoundCategories();
     }
-
 
 
     public boolean isExisting(String categoryName){
@@ -130,4 +118,19 @@ public class LibraryCategoryLogic {
         return false;
     }
 
+//--------------------------------- LISTENER INTERFACE ---------------------
+    public interface OnLibraryLCLogicListener {
+        void updateLibraryListCategory(LibraryCategoryLogic libraryCategoryLogic);
+    }
+
+    public void addLibraryLCLogicListener(OnLibraryLCLogicListener listener) {
+        listeners.add(listener);
+    }
+
+    private void notifyListeners() {
+        for (OnLibraryLCLogicListener listener : listeners) {
+            System.out.println("----------------NOTIFY LISTENERS----------------");
+            listener.updateLibraryListCategory(this);
+        }
+    }
 }
