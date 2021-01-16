@@ -85,7 +85,35 @@ public class CategorySoundsLogic {
 
     }
 
+    /**
+     * method for getting the sounds which is not in the given category
+     * @param categoryName The given category
+     * @return List of soundNames of the sounds that is not in the category
+     */
+    public List<String> getAvailableSounds(String categoryName){
+        List<String> categorySounds = getSoundsList(categoryName);
+        List<SoundDTO> allSoundsDTO = getSounds();
+        List<String> availableSounds = new ArrayList<>();
 
+        /*
+        for (String name: categorySounds) {
+            for (SoundDTO dto: allSoundsDTO) {
 
+                if(!dto.getSoundName().equals(name)){
+                    availableSounds.add(dto.getSoundName());
+                }
+            }
+        }
 
+         */
+
+        for (SoundDTO dto: allSoundsDTO) {
+
+            if(!categorySounds.contains(dto.getSoundName())){
+                availableSounds.add(dto.getSoundName());
+            }
+        }
+
+        return availableSounds;
+    }
 }

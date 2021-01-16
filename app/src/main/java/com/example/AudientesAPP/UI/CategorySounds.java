@@ -233,6 +233,7 @@ class SoundPickerDialog extends Dialog implements View.OnClickListener{
     private final CategorySoundsLogic logic;
     private final LibrarySoundLogic librarySoundLogic;
     private ModelViewController modelViewController;
+    private String categoryName;
 
     // View references
     private Button addSoundbtn;
@@ -248,6 +249,7 @@ class SoundPickerDialog extends Dialog implements View.OnClickListener{
         this.modelViewController = modelViewController;
         this.logic = logic;
         this.librarySoundLogic = soundLogic;
+        categoryName = modelViewController.getPrefs().getString("Category", "NOOO");
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.category_add_sound_dialog);
         getWindow().getDecorView().setBackgroundResource(android.R.color.transparent);
@@ -258,7 +260,7 @@ class SoundPickerDialog extends Dialog implements View.OnClickListener{
         this.layoutManager = new LinearLayoutManager(contextUI);
         this.dialogSounds.setLayoutManager(layoutManager);
         try {
-            dialogAdapter = new CategorySoundDialogAdapter(this.librarySoundLogic.getSoundsList(), this.logic.getDuration(this.librarySoundLogic.getSoundsList()));
+            dialogAdapter = new CategorySoundDialogAdapter(this.logic.getAvailableSounds(categoryName), this.logic.getDuration(this.logic.getAvailableSounds(categoryName)));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -274,13 +276,12 @@ class SoundPickerDialog extends Dialog implements View.OnClickListener{
 
         //Laver nogle lister. En med de valgte positioner og en med de lyde der kan vælges i mellem
         List<Integer> selectedPositions =  new ArrayList<Integer>(dialogAdapter.getChosenSounds());
-        List<String> sounds = librarySoundLogic.getSoundsList();
+        List<String> sounds = logic.getAvailableSounds(categoryName);
         // todo måske skulle dette rykkes et sted hen i logikken ?
         //Et for-loop, hvor vi tager fat i værdien i selectedPositions (Integer), hvilken gemmes i counter.
         //Counter bruges som et index til sounds listen.
         int counter = 0;
         int i;
-        String categoryName = modelViewController.getPrefs().getString("Category", "NOOO");
         for (i = 0; i < selectedPositions.size() ; i++) {
             counter = selectedPositions.get(i);
             logic.addSoundsToCategory(categoryName, sounds.get(counter));
@@ -372,4 +373,5 @@ class CategorySoundDialogAdapter extends RecyclerView.Adapter<CategorySoundDialo
     public void setOnClick(OnItemClicked onClick){
         this.onClick = onClick;
     }
+
 }
