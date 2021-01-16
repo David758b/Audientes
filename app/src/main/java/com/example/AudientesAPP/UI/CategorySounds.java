@@ -1,9 +1,14 @@
 package com.example.AudientesAPP.UI;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -74,7 +80,7 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
         List<String> duration = categorySoundsLogic.getDuration(soundNames);
 
         try {
-            soundItemAdapter = new CategorySoundAdapter(soundNames, duration);
+            soundItemAdapter = new CategorySoundAdapter(soundNames, duration,categorySoundsLogic,modelViewController);
             System.out.println("CategorySoundAdapter er lavet-------------");
         }catch(Exception e){
             e.printStackTrace();
@@ -184,22 +190,31 @@ class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.Sou
 
     private List<String> mSoundSet;
     private List<String> nDuration;
+    private CategorySoundsLogic categorySoundsLogic;
+    private ModelViewController modelViewController;
 
-    public CategorySoundAdapter(List<String> mySoundSet, List<String> nDuration){
+    public CategorySoundAdapter(List<String> mySoundSet, List<String> nDuration, CategorySoundsLogic categorySoundsLogic, ModelViewController modelViewController){
         this.mSoundSet = mySoundSet;
         this.nDuration = nDuration;
+        this.categorySoundsLogic = categorySoundsLogic;
+        this.modelViewController = modelViewController;
     }
 
     public static class SoundViewHolder extends RecyclerView.ViewHolder{
         public TextView soundTextView;
         public TextView soundDuration;
+        public TextView categoryTag;
+        public ImageView delete;
 
 
         public SoundViewHolder(@NonNull View itemView) {
             super(itemView);
             //Måske tilføje de resterende ting for et sound item
-            soundTextView = itemView.findViewById(R.id.sound_title);
-            soundDuration = itemView.findViewById(R.id.sound_duration);
+            soundTextView = itemView.findViewById(R.id.category_sound_title);
+            soundDuration = itemView.findViewById(R.id.category_sound_duration);
+            categoryTag = itemView.findViewById(R.id.category_tag_title);
+            delete = itemView.findViewById(R.id.delete_sound);
+
             // ...
         }
     }
@@ -215,7 +230,7 @@ class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.Sou
     @NonNull
     @Override
     public CategorySoundAdapter.SoundViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.sound_list_element, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_sound_list_elements, parent, false);
         return new SoundViewHolder(v);
     }
 
@@ -223,6 +238,51 @@ class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.Sou
     public void onBindViewHolder(@NonNull SoundViewHolder holder, final int position) {
         holder.soundTextView.setText(mSoundSet.get(position));
         holder.soundDuration.setText(nDuration.get(position));
+
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+
+                builder.setMessage("Do you want to remove this sound?");
+                builder.setTitle("Removing sound from category!");
+                builder.setCancelable(true);
+
+
+                builder.setPositiveButton("Remove",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        categorySoundsLogic.deleteSoundCategory(modelViewController.getPrefs().getString("Category",null),mSoundSet.get(position));
+                        System.out.println("DELETED SOUND FROM CATEGORY ::::::::::::::::");
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                // Create the Alert dialog
+                AlertDialog alertDialog = builder.create();
+
+
+
+//                alertDialog = builder.create();
+
+                // Show the Alert Dialog box
+                alertDialog.show();
+                Button nbutton = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+                nbutton.setBackgroundColor(Color.WHITE);
+                nbutton.setTextColor(Color.BLACK);
+                Button pbutton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                pbutton.setBackgroundColor(Color.BLACK);
+            }
+        });
+
+
         holder.soundTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

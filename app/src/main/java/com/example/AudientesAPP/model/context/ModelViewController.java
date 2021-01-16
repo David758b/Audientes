@@ -214,7 +214,7 @@ public class ModelViewController {
         getSoundSaver().saveSound(R.raw.brown_noise, "brown_noise");
         getSoundSaver().saveSound(R.raw.chihuahua, "chihuahua");
         getSoundSaver().saveSound(R.raw.cricket, "cricket");
-        getSoundSaver().saveSound(R.raw.melarancida__monks_praying, "melarancida__monks_praying");
+        getSoundSaver().saveSound(R.raw.melarancida__monks_praying, "monks_praying");
         getSoundSaver().saveSound(R.raw.rain_street, "rain_street");
         getSoundSaver().saveSound(R.raw.testlyd, "testlyd");
         getSoundSaver().saveSound(R.raw.train_nature, "train_nature");

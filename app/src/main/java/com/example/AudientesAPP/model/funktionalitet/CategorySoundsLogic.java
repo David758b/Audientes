@@ -131,4 +131,15 @@ public class CategorySoundsLogic {
             listener.updateCategorySounds(this);
         }
     }
+
+    public void deleteSoundCategory(String categoryName, String soundName) {
+        SoundCategoriesDTO soundCategoriesDTO = new SoundCategoriesDTO(soundName, categoryName);
+        soundCategoriesDAO.delete(soundCategoriesDTO);
+         //kan ikke bruge foreach, det skal være fori
+        for (int i = 0; i < soundCategories.size(); i++) {
+            if (soundCategories.get(i).getCategoryName().equals(categoryName) && soundCategories.get(i).getSoundName().equals(soundName)) {
+                soundCategories.remove(soundCategories.get(i));
+            }
+        }
+    }
 }
