@@ -32,6 +32,7 @@ import com.example.AudientesAPP.model.data.DAO.PresetDAO;
 import com.example.AudientesAPP.model.data.DAO.PresetElementDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundDAO;
+import com.example.AudientesAPP.model.funktionalitet.LibraryCategoryLogic;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -104,18 +105,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     protected void onResume() {
-
         super.onResume();
-
         if (prefs.getBoolean("firstrun", true)) {
-
             saveSounds();
-            //dialog
-            System.out.println("---------------NEWFILENAMES SIZE-----------------------" + newFileNames.size());
+            System.out.println("Amount of new files: " + newFileNames.size());
             if (newFileNames.size() != 0) {
                 showProgressDialog(findViewById(R.id.libraryMain));
             }
-
         }
     }
 
@@ -207,15 +203,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void updateDownloadSoundFiles(DownloadSoundFiles dlSoundFiles) {
-        System.out.println("New sound downloaded");
         counter++;
         if (counter != dialog.getMax()) {
-            System.out.println("Counter has been set to:" + counter);
+            System.out.println("Files downloaded \"counter\": " + counter);
             dialog.setProgress(counter);
         } else {
-            System.out.println("DIALOG IS NOW DISMISSED!!!!!!!!!!!");
+            System.out.println("Downloading finished. Dismissing dialog...");
             dialog.dismiss();
-            //fillDBUp();
+            fillDBUp();
             prefs.edit().putBoolean("firstrun", false).commit();
             navController.navigate(R.id.libraryMain);
         }
@@ -236,8 +231,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         List<String> filePath = new ArrayList<>();
         //adding all the files to a list so we can comepare the length with the length of our database to see when everything is dowlnoaded
-        newFileNames.add("cobratronik_wind");
-        filePath.add("soundfiles/117136__cobratronik__wind-artic-cold.wav");
+//        newFileNames.add("cobratronik_wind");
+//        filePath.add("soundfiles/117136__cobratronik__wind-artic-cold.wav");
 //        newFileNames.add("cathedral_ambience_01");
 //        filePath.add("soundfiles/170675__klankbeeld__cathedral-ambience-01.wav");
 //        newFileNames.add("water_dripping_in_cave");
@@ -254,9 +249,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     //Fill db with test data
     public void fillDBUp() {
-        CategoryDAO categoryDAO = modelViewController.getCategoryDAO();
+        LibraryCategoryLogic categoryLogic = modelViewController.getLibraryCategoryLogic();
         CategoryDTO newCategory = new CategoryDTO("I Like to move it", "pictureSrc", "Blue");
-        categoryDAO.add(newCategory);
+        categoryLogic.addCategory(newCategory.getCategoryName(),newCategory.getPicture(),newCategory.getColor());
 
         PresetDAO presetDAO = modelViewController.getPresetDAO();
         PresetDTO presetDTO = new PresetDTO("Sove tid");
