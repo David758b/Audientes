@@ -62,6 +62,8 @@ public class CategoryDAO implements IDAO<CategoryDTO> {
         categoryName = categoryDTO.getCategoryName();
 
         db.delete(SoundDB.TABEL_Category,SoundDB.CATEGORY_NAME + " = '" + categoryName + "'",null);
+        db.delete(SoundDB.TABEL_PresetCategories,SoundDB.CATEGORY_NAME + " = '" + categoryName + "'",null);
+        db.delete(SoundDB.TABEL_SoundCategories,SoundDB.CATEGORY_NAME + " = '" + categoryName + "'",null);
 
         //TODO: remove all categories in all the tables. you only need the category name.
     }
