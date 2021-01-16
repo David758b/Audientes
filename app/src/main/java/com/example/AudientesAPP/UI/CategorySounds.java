@@ -283,6 +283,7 @@ class SoundPickerDialog extends Dialog implements View.OnClickListener{
             counter = selectedPositions.get(i);
             logic.addSoundsToCategory(modelViewController.getPrefs().getString("Category", "NOOO"), sounds.get(counter));
         }
+        dismiss();
     }
 }
 
