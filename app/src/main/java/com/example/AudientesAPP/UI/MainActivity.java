@@ -32,7 +32,9 @@ import com.example.AudientesAPP.model.data.DAO.PresetDAO;
 import com.example.AudientesAPP.model.data.DAO.PresetElementDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundDAO;
+import com.example.AudientesAPP.model.funktionalitet.CategorySoundsLogic;
 import com.example.AudientesAPP.model.funktionalitet.LibraryCategoryLogic;
+import com.example.AudientesAPP.model.funktionalitet.PresetLogic;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -220,23 +222,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         } else {
             System.out.println("Downloading finished. Dismissing dialog...");
             dialog.dismiss();
-            fillDBUp();
             prefs.edit().putBoolean("firstrun", false).commit();
             navController.navigate(R.id.libraryMain);
         }
     }
 
     public void saveSounds() {
-
-        //Gemmer alle lyde i raw mappen i external storage
-        modelViewController.getSoundSaver().saveSound(R.raw.andreangelo, "andreangelo");
-        modelViewController.getSoundSaver().saveSound(R.raw.brown_noise, "brown_noise");
-        modelViewController.getSoundSaver().saveSound(R.raw.chihuahua, "chihuahua");
-        modelViewController.getSoundSaver().saveSound(R.raw.cricket, "cricket");
-        modelViewController.getSoundSaver().saveSound(R.raw.melarancida__monks_praying, "melarancida__monks_praying");
-        modelViewController.getSoundSaver().saveSound(R.raw.rain_street, "rain_street");
-        modelViewController.getSoundSaver().saveSound(R.raw.testlyd, "testlyd");
-        modelViewController.getSoundSaver().saveSound(R.raw.train_nature, "train_nature");
 
 
         List<String> filePath = new ArrayList<>();
@@ -249,39 +240,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //        filePath.add("soundfiles/177958__sclolex__water-dripping-in-cave.wav");
 //        newFileNames.add("downtown_calm");
 //        filePath.add("soundfiles/216734__klankbeeld__down-town-calm-140124-01.wav");
-        newFileNames.add("rain_and_thunder_4");
-        filePath.add("soundfiles/237729__flathill__rain-and-thunder-4.wav");
+//        newFileNames.add("rain_and_thunder_4");
+//        filePath.add("soundfiles/237729__flathill__rain-and-thunder-4.wav");
 
         for (int i = 0; i < newFileNames.size(); i++) {
             modelViewController.getDlSoundFiles().downloadSoundFiles(newFileNames.get(i), filePath.get(i));
         }
-    }
-
-    //Fill db with test data
-    public void fillDBUp() {
-        LibraryCategoryLogic categoryLogic = modelViewController.getLibraryCategoryLogic();
-        CategoryDTO newCategory = new CategoryDTO("I Like to move it", "pictureSrc", "Blue");
-        categoryLogic.addCategory(newCategory.getCategoryName(),newCategory.getPicture(),newCategory.getColor());
-
-        PresetDAO presetDAO = modelViewController.getPresetDAO();
-        PresetDTO presetDTO = new PresetDTO("Sove tid");
-        presetDAO.add(presetDTO);
-
-        SoundDAO soundDAO = modelViewController.getSoundDAO();
-        SoundDTO soundDTO = new SoundDTO("city noise", "sauce", "420");
-        soundDAO.add(soundDTO);
-
-        SoundCategoriesDAO soundCategoriesDAO = modelViewController.getSoundCategoriesDAO();
-        SoundCategoriesDTO soundCategoriesDTO = new SoundCategoriesDTO("city noise", "I Like to move it");
-        soundCategoriesDAO.add(soundCategoriesDTO);
-
-        PresetCategoriesDAO presetCategoriesDAO = modelViewController.getPresetCategoriesDAO();
-        PresetCategoriesDTO presetCategoriesDTO = new PresetCategoriesDTO("Sove tid", "I Like to move it");
-        presetCategoriesDAO.add(presetCategoriesDTO);
-
-        PresetElementDAO presetElementDAO = modelViewController.getPresetElementDAO();
-        PresetElementDTO newPresetElement = new PresetElementDTO("Sove tid", "city noise", 15);
-        presetElementDAO.add(newPresetElement);
     }
 }
 

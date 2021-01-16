@@ -72,6 +72,18 @@ public class ModelViewController {
         externalStorage = new ExternalStorage(context);
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
+        //---------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------
+        //----------------------!!!!!!!!!!!!VIGTIGT!!!!!!!!!!!!----------------------------
+        /*
+        - DAO'erne SKAL være initialiseret før soundSaver
+        - soundSaver skal oprettes før saveRawFiles()
+        - saveRawFiles skal laves før fillDBUp()
+        - fillDBUp skal laves før logik klasserne
+         */
+        //----------------------!!!!!!!!!!!!VIGTIGT!!!!!!!!!!!!----------------------------
+        //---------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------
         soundCategoriesDAO = new SoundCategoriesDAO(db);
         presetCategoriesDAO = new PresetCategoriesDAO(db);
         presetElementDAO = new PresetElementDAO(db);
@@ -79,11 +91,18 @@ public class ModelViewController {
         dlSoundFiles = new DownloadSoundFiles(context,soundDAO);
         categoryDAO = new CategoryDAO(db);
         presetDAO = new PresetDAO(db);
+
+        soundSaver = new SoundSaver(externalStorage,soundDAO);
+        if (prefs.getBoolean("firstDBrun", true)) {
+            saveRawFiles();
+            fillDBUp();
+            prefs.edit().putBoolean("firstDBrun", false).commit();
+        }
         librarySoundLogic = new LibrarySoundLogic(soundCategoriesDAO,soundDAO);
         categorySoundsLogic = new CategorySoundsLogic(soundCategoriesDAO, soundDAO);
         libraryCategoryLogic = new LibraryCategoryLogic(categoryDAO, categorySoundsLogic);
         presetLogic = new PresetLogic(presetDAO);
-        soundSaver = new SoundSaver(externalStorage,soundDAO);
+
 
         lydAfspiller = new LydAfspiller(context, soundDAO);
 
@@ -187,5 +206,45 @@ public class ModelViewController {
 
     public DownloadSoundFiles getDlSoundFiles() {
         return dlSoundFiles;
+    }
+
+    public void saveRawFiles(){
+        //Gemmer alle lyde i raw mappen i external storage
+        getSoundSaver().saveSound(R.raw.andreangelo, "andreangelo");
+        getSoundSaver().saveSound(R.raw.brown_noise, "brown_noise");
+        getSoundSaver().saveSound(R.raw.chihuahua, "chihuahua");
+        getSoundSaver().saveSound(R.raw.cricket, "cricket");
+        getSoundSaver().saveSound(R.raw.melarancida__monks_praying, "melarancida__monks_praying");
+        getSoundSaver().saveSound(R.raw.rain_street, "rain_street");
+        getSoundSaver().saveSound(R.raw.testlyd, "testlyd");
+        getSoundSaver().saveSound(R.raw.train_nature, "train_nature");
+    }
+
+
+
+
+
+    //Fill db with test data
+    public void fillDBUp() {
+        CategoryDAO categoryDAO = getCategoryDAO();
+        CategoryDTO newCategory = new CategoryDTO("I Like to move it", "pictureSrc", "Blue");
+        categoryDAO.add(newCategory);
+
+        PresetDAO presetDAO = getPresetDAO();
+        PresetDTO presetDTO = new PresetDTO("Sove tid");
+        presetDAO.add(presetDTO);
+
+        SoundCategoriesDAO soundCategoriesDAO = getSoundCategoriesDAO();
+        SoundCategoriesDTO soundCategoriesDTO = new SoundCategoriesDTO("brown_noise", "I Like to move it");
+        soundCategoriesDAO.add(soundCategoriesDTO);
+
+        // TODO: Mangler logic klasser til de sidste to tabeller
+        PresetCategoriesDAO presetCategoriesDAO = getPresetCategoriesDAO();
+        PresetCategoriesDTO presetCategoriesDTO = new PresetCategoriesDTO("Sove tid", "I Like to move it");
+        presetCategoriesDAO.add(presetCategoriesDTO);
+
+        PresetElementDAO presetElementDAO = getPresetElementDAO();
+        PresetElementDTO newPresetElement = new PresetElementDTO("Sove tid", "brown_noise", 15);
+        presetElementDAO.add(newPresetElement);
     }
 }
