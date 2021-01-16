@@ -279,10 +279,13 @@ class SoundPickerDialog extends Dialog implements View.OnClickListener{
         //Et for-loop, hvor vi tager fat i værdien i selectedPositions (Integer), hvilken gemmes i counter.
         //Counter bruges som et index til sounds listen.
         int counter = 0;
-        for (int i = 0; i < selectedPositions.size() ; i++) {
+        int i;
+        String categoryName = modelViewController.getPrefs().getString("Category", "NOOO");
+        for (i = 0; i < selectedPositions.size() ; i++) {
             counter = selectedPositions.get(i);
-            logic.addSoundsToCategory(modelViewController.getPrefs().getString("Category", "NOOO"), sounds.get(counter));
+            logic.addSoundsToCategory(categoryName, sounds.get(counter));
         }
+        Toast.makeText(v.getContext(), i + " sounds were added to "+ categoryName, Toast.LENGTH_SHORT).show();
         dismiss();
     }
 }
