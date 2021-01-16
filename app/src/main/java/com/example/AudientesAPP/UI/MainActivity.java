@@ -27,6 +27,7 @@ import com.example.AudientesAPP.model.DTO.PresetElementDTO;
 import com.example.AudientesAPP.model.DTO.SoundCategoriesDTO;
 import com.example.AudientesAPP.model.DTO.SoundDTO;
 import com.example.AudientesAPP.R;
+import com.example.AudientesAPP.model.data.DownloadSoundFiles;
 import com.example.AudientesAPP.model.data.SoundDB;
 import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
 import com.example.AudientesAPP.model.data.DAO.PresetCategoriesDAO;
@@ -49,11 +50,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, DownloadSoundFiles.OnDownloadSoundFilesListener {
     private ModelViewController modelViewController;
     private NavController navController;
     private Executor bgThread;
     private Handler uiThread;
+    private DownloadSoundFiles dlLogic;
+    private ProgressDialog dialog;
+    private int counter = 0;
     private List<String> newFileNames = new ArrayList<>();
 
     @Override
@@ -64,6 +68,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         bgThread = Executors.newSingleThreadExecutor();
         uiThread = new Handler(Looper.getMainLooper());
+
+        //Instansierer dialog **TEST**
+        dialog = new ProgressDialog(MainActivity.this);
+
         //Creates a context and gives this for later use in the database
         //Denne skal kun bruge context
         modelViewController = new ModelViewController(this);
@@ -76,22 +84,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         //Sætter en listener, så man kan håndterer hvad der skal ske, når der trykkes på et
         //menu item
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        dlLogic = modelViewController.getDlSoundFiles();
+        dlLogic.addDLSoundFilesListener(this);
 
         getSupportFragmentManager().beginTransaction().add(R.id.playBar, new PlayBar_Frag()).addToBackStack(null).commit();
 
 
+        saveSounds();
         //dialog
-        showHProgressDialog(findViewById(R.id.libraryMain));
+        System.out.println("---------------NEWFILENAMES SIZE-----------------------" + newFileNames.size());
+        if (newFileNames.size() != 0) {
+            showHProgressDialog(findViewById(R.id.libraryMain));
+        }
 
 
-
-        bgThread.execute(()->{
-            saveSounds();
-            uiThread.post(()->{
-               // setContentView(R.layout.activity_main);
-                System.out.println("CHANGE ACTIVITY");
-            });
-        });
 
         //-------------------------------Resten er test---------------------------------------------
         // printTables();
@@ -123,16 +129,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         List<String> filePath = new ArrayList<>();
         //adding all the files to a list so we can comepare the length with the length of our database to see when everything is dowlnoaded
-//        newFileNames.add("cobratronik_wind");
-//        filePath.add("soundfiles/117136__cobratronik__wind-artic-cold.wav");
+        newFileNames.add("cobratronik_wind");
+        filePath.add("soundfiles/117136__cobratronik__wind-artic-cold.wav");
 //        newFileNames.add("cathedral_ambience_01");
 //        filePath.add("soundfiles/170675__klankbeeld__cathedral-ambience-01.wav");
 //        newFileNames.add("water_dripping_in_cave");
 //        filePath.add("soundfiles/177958__sclolex__water-dripping-in-cave.wav");
 //        newFileNames.add("downtown_calm");
 //        filePath.add("soundfiles/216734__klankbeeld__down-town-calm-140124-01.wav");
-//        newFileNames.add("rain_and_thunder_4");
-//        filePath.add("soundfiles/237729__flathill__rain-and-thunder-4.wav");
+        newFileNames.add("rain_and_thunder_4");
+        filePath.add("soundfiles/237729__flathill__rain-and-thunder-4.wav");
 
         boolean isDownloaded = false;
         for (int i = 0; i < newFileNames.size(); i++) {
@@ -255,72 +261,48 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public void showHProgressDialog(View view)
     {
-
-
-        final Timer timer = new Timer();
-        final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
-
-        dialog.setMax(100);
+        //final Timer timer = new Timer();
+        System.out.println("dialog.toString() ved ikke hvad det her er : " + dialog.toString());
+        dialog.setMax(newFileNames.size());
         dialog.setTitle("Dialog Title");
         dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 
         // Update the progress bar
-        Handler handler = new Handler();
+//        Handler handler = new Handler();
 
-        TimerTask tt = new TimerTask() {
-            int counter = 0;
-            @Override
-            public void run() {
-                counter++;
-                dialog.setProgress(counter);
+//        TimerTask tt = new TimerTask() {
+//
+//            @Override
+//            public void run() {
+//                counter++;
+//                dialog.setProgress(counter);
+//
+//                if (counter == 100){
+//                    timer.cancel();
+//                }
+//            }
+//        };
+//
+//        timer.schedule(tt,0,100);
 
-                if (counter == 100){
-                    timer.cancel();
-                }
-            }
-        };
-
-        timer.schedule(tt,0,100);
-
-
-        while(modelViewController.getSoundDAO().getList().size() != newFileNames.size() + 8 ){
-            System.out.println("getList: "+modelViewController.getSoundDAO().getList().size());
-            System.out.println("newFiles: "+newFileNames.size() + 8 );
-
-            System.out.println("Inside while downloading loop");
-            try {
-                TimeUnit.MILLISECONDS.sleep(10000);
-            } catch (Exception e){
-                System.out.println(" TIMER ERROR: " + e);
-            }
-            System.out.println("After 10 sec loop");
-        }
         //dialog.setCancelable(false);
         //dialog.setCanceledOnTouchOutside(false);
         dialog.show();
-
-//
-//        handler.post(new Runnable() {
-//            public void run() {
-//
-//                while(true) {
-//                    try {
-//                        timer.wait(500);
-//                        helo++;
-//                        dialog.setProgress(helo);
-//                        //dialog.setProgress(modelViewController.getSoundDAO().getList().size());
-//                    } catch(Exception e){
-//                        System.out.println("EXCEPTION IN RUN IN THE DIALOG: " + e );
-//                    }
-//                }
-//
-//            }
-  //      });
-
-
     }
 
 
+    @Override
+    public void updateDownloadSoundFiles(DownloadSoundFiles dlSoundFiles) {
+        System.out.println("New sound downloaded");
+        counter++;
+        if (counter != dialog.getMax()){
+            System.out.println("Counter has been set to:" + counter);
+            dialog.setProgress(counter);
+        }else{
+            System.out.println("DIALOG IS NOW DISMISSED!!!!!!!!!!!");
+            dialog.dismiss();
+        }
+    }
 }
 
 

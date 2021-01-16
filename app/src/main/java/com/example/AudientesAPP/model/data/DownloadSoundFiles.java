@@ -23,6 +23,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -31,10 +33,12 @@ public class DownloadSoundFiles {
     private ModelViewController modelViewController;
     private Context context;
     private SoundDAO soundDAO;
+    List<OnDownloadSoundFilesListener> listeners;
 
     public DownloadSoundFiles(Context context, SoundDAO soundDAO) {
         this.context = context;
         this.soundDAO = soundDAO;
+        this.listeners = new ArrayList<>();
         mStorageRef = FirebaseStorage.getInstance().getReference();
     }
 
@@ -71,6 +75,7 @@ public class DownloadSoundFiles {
                         System.out.println(" SOUND FILENAME --" + soundDTO.getSoundName());
                         System.out.println(" SOUND SRC --" + soundDTO.getSoundSrc());
                         soundDAO.add(soundDTO);
+                        notifyListeners();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -108,4 +113,21 @@ public class DownloadSoundFiles {
         long durationMilliSec = Long.parseLong(durationStr);
         return Utilities.convertFormat(durationMilliSec);
     }
+
+    public void addDLSoundFilesListener(OnDownloadSoundFilesListener listener){
+        listeners.add(listener);
+    }
+
+
+    private void notifyListeners(){
+        for (OnDownloadSoundFilesListener listener: listeners) {
+            listener.updateDownloadSoundFiles(this);
+        }
+    }
+
+    public interface OnDownloadSoundFilesListener{
+        void updateDownloadSoundFiles(DownloadSoundFiles dlSoundFiles);
+    }
+
+
 }
