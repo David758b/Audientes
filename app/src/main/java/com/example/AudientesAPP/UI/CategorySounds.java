@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class CategorySounds extends Fragment implements CategorySoundAdapter.OnItemClicked, LydAfspiller.OnLydAfspillerListener{
+public class CategorySounds extends Fragment implements CategorySoundAdapter.OnItemClicked, LydAfspiller.OnLydAfspillerListener, CategorySoundsLogic.OnCategorySoundsLogicListener {
     private LydAfspiller lydAfspiller;
     private EditText categoryTitle;
     private TextView soundTitle;
@@ -63,6 +63,7 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
 
         categorySoundsLogic = modelViewController.getCategorySoundsLogic();
         libCategoryLogic = modelViewController.getLibraryCategoryLogic();
+        categorySoundsLogic.addCategorySoundsLogicListener(this);
         final String category = modelViewController.getPrefs().getString("Category", "Fejl");
         categoryTitle.setText(category);
         categoryTitle.clearFocus();
@@ -166,6 +167,12 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
 
     }
 
+    @Override
+    public void updateCategorySounds(CategorySoundsLogic categorySoundsLogic) {
+        System.out.println("NOOOTOFYYYYYYY JAJAJAJAJAJAjA");
+        soundItemAdapter.notifyDataSetChanged();
+
+    }
 }
 
 class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.SoundViewHolder> {

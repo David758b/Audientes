@@ -14,6 +14,7 @@ import java.util.List;
 public class CategorySoundsLogic {
     private SoundCategoriesDAO soundCategoriesDAO;
     private SoundDAO soundDAO;
+    List<OnCategorySoundsLogicListener> listeners;
 
     private final List<SoundCategoriesDTO> soundCategories;
     private final List<SoundDTO> sounds;
@@ -21,6 +22,7 @@ public class CategorySoundsLogic {
     public CategorySoundsLogic(SoundCategoriesDAO soundCategoriesDAO, SoundDAO soundDAO) {
         this.soundCategoriesDAO = soundCategoriesDAO;
         this.soundDAO = soundDAO;
+        this.listeners = new ArrayList<>();
         this.soundCategories = new ArrayList<>();
         this.sounds = new ArrayList<>();
         initSoundCategories();
@@ -82,6 +84,7 @@ public class CategorySoundsLogic {
         SoundCategoriesDTO soundCategoriesDTO = new SoundCategoriesDTO(soundName,categoryName);
         soundCategoriesDAO.add(soundCategoriesDTO);
         soundCategories.add(soundCategoriesDTO);
+        notifyListeners();
 
     }
 
@@ -115,5 +118,21 @@ public class CategorySoundsLogic {
         }
 
         return availableSounds;
+    }
+
+
+    public interface OnCategorySoundsLogicListener {
+        void updateCategorySounds(CategorySoundsLogic categorySoundsLogic);
+    }
+
+    public void addCategorySoundsLogicListener(OnCategorySoundsLogicListener listener) {
+        listeners.add(listener);
+    }
+
+    private void notifyListeners() {
+        for (OnCategorySoundsLogicListener  listener : listeners) {
+            System.out.println("----------------NOTIFY LISTENERS----------------");
+            listener.updateCategorySounds(this);
+        }
     }
 }
