@@ -73,7 +73,12 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
         List<String> soundNames = categorySoundsLogic.getSoundsList(category);
         List<String> duration = categorySoundsLogic.getDuration(soundNames);
 
-        soundItemAdapter = new CategorySoundAdapter(soundNames, duration);
+        try {
+            soundItemAdapter = new CategorySoundAdapter(soundNames, duration);
+            System.out.println("CategorySoundAdapter er lavet-------------");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         recyclerView.setAdapter(soundItemAdapter);
 
         lydAfspiller = modelViewController.getLydAfspiller();
@@ -146,6 +151,12 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
     }
 
     @Override
+    public void updateCategorySounds(CategorySoundsLogic categorySoundsLogic) {
+        soundItemAdapter.notifyDataSetChanged();
+        System.out.println("NOOOTOFYYYYYYY JAJAJAJAJAJAjA");
+    }
+
+    @Override
     public void onDestroy() {
         lydAfspiller.stop();
         super.onDestroy();
@@ -166,15 +177,9 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
     public void soundFinished(LydAfspiller lydAfspiller) {
 
     }
-
-    @Override
-    public void updateCategorySounds(CategorySoundsLogic categorySoundsLogic) {
-        System.out.println("NOOOTOFYYYYYYY JAJAJAJAJAJAjA");
-        soundItemAdapter.notifyDataSetChanged();
-
-    }
 }
 
+//------------------------------------------- CATEGORYSOUNDADAPTER -----------------------------
 class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.SoundViewHolder> {
 
     private List<String> mSoundSet;
@@ -271,7 +276,7 @@ class SoundPickerDialog extends Dialog implements View.OnClickListener{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.dialogSounds.setAdapter(dialogAdapter);
+        dialogSounds.setAdapter(dialogAdapter);
 
         addSoundbtn.setOnClickListener(this);
 

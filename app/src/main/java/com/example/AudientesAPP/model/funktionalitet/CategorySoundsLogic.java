@@ -28,6 +28,15 @@ public class CategorySoundsLogic {
         initSoundCategories();
     }
 
+    public void initSoundCategories(){
+        soundCategories.clear();
+        sounds.clear();
+        List<SoundCategoriesDTO> soundCategoriesDTOS = soundCategoriesDAO.getList();
+        List<SoundDTO> soundDTOS = soundDAO.getList();
+        sounds.addAll(soundDTOS);
+        soundCategories.addAll(soundCategoriesDTOS);
+    }
+
     public List<String> getSoundsList (String category) {
         List<SoundCategoriesDTO> soundCategoriesDTOS = getSoundCategories();
         List<String> sounds = new ArrayList<>();
@@ -40,21 +49,11 @@ public class CategorySoundsLogic {
     }
 
     public List<SoundCategoriesDTO> getSoundCategories(){
-        initSoundCategories();
         return soundCategories;
     }
 
     public List<SoundDTO> getSounds(){
         return sounds;
-    }
-
-    public void initSoundCategories(){
-        soundCategories.clear();
-        sounds.clear();
-        List<SoundCategoriesDTO> soundCategoriesDTOS = soundCategoriesDAO.getList();
-        List<SoundDTO> soundDTOS = soundDAO.getList();
-        sounds.addAll(soundDTOS);
-        soundCategories.addAll(soundCategoriesDTOS);
     }
 
     //TODO: alt for mange database kald herinde, dette skal laves om
@@ -68,7 +67,6 @@ public class CategorySoundsLogic {
                 }
             }
         }
-
         return durations;
     }
 
@@ -80,12 +78,10 @@ public class CategorySoundsLogic {
      */
     //Todo vi skal nok have noget listener værk her
     public void addSoundsToCategory(String categoryName, String soundName){
-
         SoundCategoriesDTO soundCategoriesDTO = new SoundCategoriesDTO(soundName,categoryName);
         soundCategoriesDAO.add(soundCategoriesDTO);
         soundCategories.add(soundCategoriesDTO);
         notifyListeners();
-
     }
 
     /**
