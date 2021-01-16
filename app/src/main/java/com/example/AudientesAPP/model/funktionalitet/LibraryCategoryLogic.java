@@ -131,6 +131,7 @@ public class LibraryCategoryLogic {
         for (CategoryDTO a:categories) {
             System.out.println("------nej" +a.getCategoryName());
         }
+        notifyListeners();
 
 
     }
@@ -146,7 +147,6 @@ public class LibraryCategoryLogic {
 
     private void notifyListeners() {
         for (OnLibraryLCLogicListener listener : listeners) {
-            System.out.println("----------------NOTIFY LISTENERS----------------");
             listener.updateLibraryListCategory(this);
         }
     }
