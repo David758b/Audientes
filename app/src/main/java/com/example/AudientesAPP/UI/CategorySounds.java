@@ -54,6 +54,7 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
     private ModelViewController modelViewController;
     private CategorySoundsLogic categorySoundsLogic;
     private LibraryCategoryLogic libCategoryLogic;
+    private LibrarySoundLogic librarySoundLogic;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.category_list_sounds_frag, container, false);
@@ -69,6 +70,7 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
 
         categorySoundsLogic = modelViewController.getCategorySoundsLogic();
         libCategoryLogic = modelViewController.getLibraryCategoryLogic();
+        librarySoundLogic = modelViewController.getLibrarySoundLogic();
         categorySoundsLogic.addCategorySoundsLogicListener(this);
         final String category = modelViewController.getPrefs().getString("Category", "Fejl");
         categoryTitle.setText(category);
@@ -78,9 +80,9 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
         //Dette skal laves om til at være en final liste i logic klassen som er en liste af CategorySoundDTOer
         List<String> soundNames = categorySoundsLogic.getSoundsList(category);
         List<String> duration = categorySoundsLogic.getDuration(soundNames);
-
+        List<String> categoryTag = librarySoundLogic.getCategories(soundNames);
         try {
-            soundItemAdapter = new CategorySoundAdapter(soundNames, duration,categorySoundsLogic,modelViewController);
+            soundItemAdapter = new CategorySoundAdapter(soundNames, duration,categorySoundsLogic,modelViewController,categoryTag);
             System.out.println("CategorySoundAdapter er lavet-------------");
         }catch(Exception e){
             e.printStackTrace();
@@ -190,10 +192,12 @@ class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.Sou
 
     private List<String> mSoundSet;
     private List<String> nDuration;
+    private List<String> categoryTag;
     private CategorySoundsLogic categorySoundsLogic;
     private ModelViewController modelViewController;
 
-    public CategorySoundAdapter(List<String> mySoundSet, List<String> nDuration, CategorySoundsLogic categorySoundsLogic, ModelViewController modelViewController){
+    public CategorySoundAdapter(List<String> mySoundSet, List<String> nDuration, CategorySoundsLogic categorySoundsLogic, ModelViewController modelViewController, List<String> categoryTag){
+        this.categoryTag = categoryTag;
         this.mSoundSet = mySoundSet;
         this.nDuration = nDuration;
         this.categorySoundsLogic = categorySoundsLogic;
@@ -238,6 +242,7 @@ class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.Sou
     public void onBindViewHolder(@NonNull SoundViewHolder holder, final int position) {
         holder.soundTextView.setText(mSoundSet.get(position));
         holder.soundDuration.setText(nDuration.get(position));
+        holder.categoryTag.setText(categoryTag.get(position));
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ResourceAsColor")
