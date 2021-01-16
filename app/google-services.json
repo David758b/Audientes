@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "62147661370",
+    "project_id": "audientesappc3",
+    "storage_bucket": "audientesappc3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:62147661370:android:0756771b3b839c9692af03",
+        "android_client_info": {
+          "package_name": "com.example.audientesapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "62147661370-h2cqtgvc35l990g6h8uou5fud24sh07n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd1aEbRtq_QlgrdJ2Cs73eyGptl9BT2qc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "62147661370-h2cqtgvc35l990g6h8uou5fud24sh07n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

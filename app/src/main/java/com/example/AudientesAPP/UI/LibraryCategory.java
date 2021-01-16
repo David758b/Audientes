@@ -63,7 +63,6 @@ public class LibraryCategory extends Fragment implements LibraryCategoryLogic.On
         //Listeners
         logic = modelViewController.getLibraryCategoryLogic();
         logic.addLibraryLCLogicListener(this);
-        System.out.println();
 
 
         try {

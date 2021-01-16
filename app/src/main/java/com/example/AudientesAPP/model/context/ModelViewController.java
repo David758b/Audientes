@@ -21,6 +21,7 @@ import com.example.AudientesAPP.model.data.DAO.PresetDAO;
 import com.example.AudientesAPP.model.data.DAO.PresetElementDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
 import com.example.AudientesAPP.model.data.DAO.SoundDAO;
+import com.example.AudientesAPP.model.data.DownloadSoundFiles;
 import com.example.AudientesAPP.model.data.ExternalStorage;
 import com.example.AudientesAPP.model.data.SoundDB;
 import com.example.AudientesAPP.model.funktionalitet.CategorySoundsLogic;
@@ -30,6 +31,8 @@ import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.example.AudientesAPP.model.funktionalitet.PresetLogic;
 import com.example.AudientesAPP.model.funktionalitet.SoundSaver;
 import com.example.AudientesAPP.model.funktionalitet.Utilities;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class ModelViewController {
     private MainActivity context;
@@ -41,8 +44,10 @@ public class ModelViewController {
     private LydAfspiller lydAfspiller;
     private NavController navController;
     private SoundSaver soundSaver;
+    private DownloadSoundFiles dlSoundFiles;
 
     //Data
+
     private ExternalStorage externalStorage;
     private SQLiteDatabase db;
     private SoundDB soundDB;
@@ -62,6 +67,9 @@ public class ModelViewController {
         soundDB = new SoundDB(context);
         db = soundDB.getWritableDatabase();
 
+        //Storage reference til firebase
+
+
         externalStorage = new ExternalStorage(context);
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -69,11 +77,9 @@ public class ModelViewController {
         presetCategoriesDAO = new PresetCategoriesDAO(db);
         presetElementDAO = new PresetElementDAO(db);
         soundDAO = new SoundDAO(db);
+        dlSoundFiles = new DownloadSoundFiles(context,soundDAO);
         categoryDAO = new CategoryDAO(db);
         presetDAO = new PresetDAO(db);
-        // Giver indhold til databasen før logik klasserne instantieres
-        fillDBUp();
-
         librarySoundLogic = new LibrarySoundLogic(soundCategoriesDAO,soundDAO);
         libraryCategoryLogic = new LibraryCategoryLogic(categoryDAO);
         categorySoundsLogic = new CategorySoundsLogic(soundCategoriesDAO, soundDAO);
@@ -180,31 +186,7 @@ public class ModelViewController {
         return presetCategoriesDAO;
     }
 
-    //Fill db with test data
-    public void fillDBUp() {
-        CategoryDAO categoryDAO = getCategoryDAO();
-        CategoryDTO newCategory = new CategoryDTO("I Like to move it", "pictureSrc", "Blue");
-        categoryDAO.add(newCategory);
-
-        PresetDAO presetDAO = getPresetDAO();
-        PresetDTO presetDTO = new PresetDTO("Sove tid");
-        presetDAO.add(presetDTO);
-
-        SoundDAO soundDAO = getSoundDAO();
-        SoundDTO soundDTO = new SoundDTO("city noise", "sauce", "420");
-        soundDAO.add(soundDTO);
-
-        SoundCategoriesDAO soundCategoriesDAO = getSoundCategoriesDAO();
-        SoundCategoriesDTO soundCategoriesDTO = new SoundCategoriesDTO("city noise", "I Like to move it");
-        soundCategoriesDAO.add(soundCategoriesDTO);
-
-        PresetCategoriesDAO presetCategoriesDAO = getPresetCategoriesDAO();
-        PresetCategoriesDTO presetCategoriesDTO = new PresetCategoriesDTO("Sove tid", "I Like to move it");
-        presetCategoriesDAO.add(presetCategoriesDTO);
-
-        PresetElementDAO presetElementDAO = getPresetElementDAO();
-        PresetElementDTO newPresetElement = new PresetElementDTO("Sove tid", "city noise", 15);
-        presetElementDAO.add(newPresetElement);
-
+    public DownloadSoundFiles getDlSoundFiles() {
+        return dlSoundFiles;
     }
 }
