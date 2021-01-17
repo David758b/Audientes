@@ -272,6 +272,11 @@ class CreateCategoryDialog extends Dialog implements View.OnClickListener {
         } else {
             System.out.println(categoryName);
             System.out.println("----------------------------------");
+
+            //sætter en default farve hvis der ikke er valgt en
+            if(categoryColor==null){
+                categoryColor = "#bbbbbb";
+            }
             libraryCategoryLogic.addCategory(categoryName, "", categoryColor);
             Toast.makeText(v.getContext(), "Category " + categoryName + " created", Toast.LENGTH_SHORT).show();
             dismiss();
