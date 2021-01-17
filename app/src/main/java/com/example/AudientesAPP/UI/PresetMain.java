@@ -135,7 +135,7 @@ class PresetAdapter extends RecyclerView.Adapter<PresetAdapter.MyViewHolder>{
 
             @Override
             public void onClick(View v) {
-                //Naviger til preset fragment med alt info omkring preset.
+
 
             }
         });
