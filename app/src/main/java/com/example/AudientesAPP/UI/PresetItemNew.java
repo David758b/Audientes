@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,12 +20,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.funktionalitet.PresetLogic;
+import com.example.AudientesAPP.model.funktionalitet.Utilities;
 
 public class PresetItemNew extends Fragment implements AdapterView.OnItemClickListener {
 
     private ImageView backarrow;
-    private ImageView checkMark;
+    private TextView save;
     private EditText presetTitle_ET;
+    private HorizontalScrollView horizontalScrollView;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter presetSoundAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -46,12 +50,13 @@ public class PresetItemNew extends Fragment implements AdapterView.OnItemClickLi
 
     private void initialize(View v){
         backarrow = v.findViewById(R.id.preset_backarrow);
-        presetTitle_ET = v.findViewById(R.id.presetTitle_ET);
+        horizontalScrollView = v.findViewById(R.id.hScrollView);
         newSoundBtn = v.findViewById(R.id.preset_addSound);
-        checkMark = v.findViewById(R.id.preset_checkMark);
+        save = v.findViewById(R.id.savePresetIcon);
+        presetTitle_ET = v.findViewById(R.id.presetTitle_ET);
 
 
-        checkMark.setOnClickListener(new View.OnClickListener() {
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //If statement checks if the preset name already exists. If it does then it creates a toast alert.
@@ -60,7 +65,13 @@ public class PresetItemNew extends Fragment implements AdapterView.OnItemClickLi
                             "Please choose another name",Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.TOP,0,0);
                     toast.show();
+                } else if (presetTitle_ET.getText().toString().equals("")) {
+                    toast = Toast.makeText(v.getContext(),"Please enter a preset name!", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP,0,0);
+                    toast.show();
                 } else {
+                    presetTitle_ET.clearFocus();
+                    Utilities.hideKeyboard(v,modelViewController.getContext());
                     logic.addPreset(presetTitle_ET.getText().toString());
                     Navigation.findNavController(v).navigateUp();
                 }
@@ -72,6 +83,8 @@ public class PresetItemNew extends Fragment implements AdapterView.OnItemClickLi
         backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                presetTitle_ET.clearFocus();
+                Utilities.hideKeyboard(v,modelViewController.getContext());
                 Navigation.findNavController(v).navigateUp();
             }
         });

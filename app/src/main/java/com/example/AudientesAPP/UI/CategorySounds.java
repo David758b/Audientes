@@ -110,6 +110,7 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
         returnIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                categoryTitle.clearFocus();
                 Utilities.hideKeyboard(v, modelViewController.getContext());
                 modelViewController.getNavController().navigate(R.id.action_categorySounds_to_libraryCategory);
             }
@@ -151,6 +152,7 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
+                categoryTitle.clearFocus();
                 modelViewController.getNavController().navigate(R.id.action_categorySounds_to_libraryCategory);
             }
         };
