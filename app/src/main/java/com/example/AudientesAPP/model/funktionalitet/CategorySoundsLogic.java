@@ -142,4 +142,16 @@ public class CategorySoundsLogic {
             }
         }
     }
+
+    public void deleteCategory(String categoryName){
+
+        int counter = 0;
+        while(counter!=soundCategories.size()){
+            if(soundCategories.get(counter).getCategoryName().equals(categoryName)){
+                soundCategories.remove(counter);
+            }else{
+                counter++;
+            }
+        }
+    }
 }

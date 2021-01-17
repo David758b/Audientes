@@ -132,6 +132,7 @@ public class LibraryCategoryLogic {
             System.out.println("------nej" +a.getCategoryName());
         }
         notifyListeners();
+        categorySoundsLogic.deleteCategory(categoryName);
 
 
     }
