@@ -48,14 +48,25 @@
             app:destination="@id/hearingtestMain" />
         <action
             android:id="@+id/action_presetMain_to_preset_item_new"
-            app:destination="@id/preset_item_new"
-            />
+            app:destination="@id/preset_item_new" />
+        <action
+            android:id="@+id/action_presetMain_to_presetContent"
+            app:destination="@+id/presetContent"/>
     </fragment>
     <fragment
         android:id="@+id/preset_item_new"
         android:name="com.example.AudientesAPP.UI.PresetItemNew"
         android:label="presetItemNew"
         />
+
+    <fragment
+        android:id="@+id/presetContent"
+        android:name="com.example.AudientesAPP.UI.PresetContent"
+        android:label="presetContent">
+        <action
+            android:id="@+id/action_presetContent_to_presetMain"
+            app:destination="@+id/presetMain"/>
+    </fragment>
 
     <!-- Navigation fra hearingtest -->
     <fragment

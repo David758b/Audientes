@@ -1,16 +1,20 @@
 package com.example.AudientesAPP.UI;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,11 +27,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.funktionalitet.CategorySoundsLogic;
+import com.example.AudientesAPP.model.funktionalitet.LibrarySoundLogic;
+import com.example.AudientesAPP.model.funktionalitet.PresetContentLogic;
+import com.example.AudientesAPP.model.funktionalitet.PresetLogic;
 import com.example.AudientesAPP.model.funktionalitet.Utilities;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
-public class PresetContent extends Fragment {
+public class PresetContent extends Fragment implements PresetContentLogic.OnPresetContentLogicListener, PresetSoundAdapter.OnItemClicked {
 
     private EditText presetTitle;
     private TextView savePresetTitle;
@@ -36,12 +45,10 @@ public class PresetContent extends Fragment {
     private ImageView addSoundsToPreset;
     private ModelViewController modelViewController;
     private RecyclerView.LayoutManager layoutManager;
-
-
-
-
-
-
+    private PresetSoundAdapter presetSoundAdapter;
+    private PresetContentLogic presetContentLogic;
+    private PresetLogic presetLogic;
+    private String preset;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.preset_content, container, false);
@@ -50,42 +57,42 @@ public class PresetContent extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         modelViewController = mainActivity.getModelViewController();
 
-        recyclerView = v.findViewById(R.id.category_sounds_RV);
+        recyclerView = v.findViewById(R.id.preset_content_RV);
 
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
 
+        presetContentLogic = modelViewController.getPresetContentLogic();
+        presetLogic = modelViewController.getPresetLogic();
 
-        categorySoundsLogic = modelViewController.getCategorySoundsLogic();
-        libCategoryLogic = modelViewController.getLibraryCategoryLogic();
-        categorySoundsLogic.addCategorySoundsLogicListener(this);
-        category = categorySoundsLogic.getCurrentCategory();
-        categoryTitle.setText(category);
-        categoryTitle.clearFocus();
+        presetContentLogic.addPresetContentLogicListener(this);
+        preset = presetContentLogic.getCurrentPreset();
+        presetTitle.setText(preset);
+        presetTitle.clearFocus();
 
 
         try {
-            soundItemAdapter = new CategorySoundAdapter(categorySoundsLogic.getSoundsWithDuration(),categorySoundsLogic,modelViewController);
-            System.out.println("CategorySoundAdapter er lavet-------------");
+            presetSoundAdapter = new PresetSoundAdapter(presetContentLogic.getSoundsWithDuration(),presetContentLogic,modelViewController);
         }catch(Exception e){
             e.printStackTrace();
         }
-        recyclerView.setAdapter(soundItemAdapter);
+        recyclerView.setAdapter(presetSoundAdapter);
 
-        lydAfspiller = modelViewController.getLydAfspiller();
+        // Todo: Kigge på at implementere en "play preset" knap
+        //lydAfspiller = modelViewController.getLydAfspiller();
 
         // Vi bruger en setOnFocusChangeListener istedet for en normal OnClickListener på EditText
         // Da der var problemer med at denne ikke fokuseret første gang man klikkede på EditText
         // og derfor kom Save "knappen" og cursoren ikke frem.
-        categoryTitle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        presetTitle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus){
-                    categoryTitle.setCursorVisible(true);
-                    save.setVisibility(View.VISIBLE);
+                    presetTitle.setCursorVisible(true);
+                    savePresetTitle.setVisibility(View.VISIBLE);
                 } else {
-                    categoryTitle.clearFocus();
+                    presetTitle.clearFocus();
                 }
             }
         });
@@ -93,50 +100,50 @@ public class PresetContent extends Fragment {
         returnIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                categoryTitle.clearFocus();
+                presetTitle.clearFocus();
                 Utilities.hideKeyboard(v, modelViewController.getContext());
-                modelViewController.getNavController().navigate(R.id.action_categorySounds_to_libraryCategory);
+                modelViewController.getNavController().navigate(R.id.action_presetContent_to_presetMain);
             }
         });
 
-        save.setOnClickListener(new View.OnClickListener() {
+        savePresetTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Tjekker om det indtastet navn er det samme som kategori navnet (Uændret kategori navn)
-                if (category.equals(categoryTitle.getText().toString())) {
-                    Toast.makeText(v.getContext(), "This category already has the given name", Toast.LENGTH_SHORT).show();
+                if (preset.equals(presetTitle.getText().toString())) {
+                    Toast.makeText(v.getContext(), "This preset already has the given name", Toast.LENGTH_SHORT).show();
                     // Tjekker om den angivet kategori navn allerede findes som en anden kategori
-                } else if (libCategoryLogic.isExisting(categoryTitle.getText().toString())) {
-                    categoryTitle.setText(category);
-                    Toast.makeText(v.getContext(), "A category with the given name already exists", Toast.LENGTH_SHORT).show();
+                } else if (presetLogic.isExisting(presetTitle.getText().toString())) {
+                    presetTitle.setText(preset);
+                    Toast.makeText(v.getContext(), "A preset with the given name already exists", Toast.LENGTH_SHORT).show();
                 } else {
-                    libCategoryLogic.updateCategory(category, categoryTitle.getText().toString());
-                    Toast.makeText(v.getContext(), "Category name changed!", Toast.LENGTH_SHORT).show();
-                    categoryTitle.clearFocus();
+                    presetLogic.updatePreset(preset, presetTitle.getText().toString());
+                    Toast.makeText(v.getContext(), "Preset name changed!", Toast.LENGTH_SHORT).show();
+                    presetTitle.clearFocus();
                 }
-                categoryTitle.clearFocus();
+                presetTitle.clearFocus();
                 // Fjerner keyboard fra skærmen
                 Utilities.hideKeyboard(v, modelViewController.getContext());
 
-                save.setVisibility(View.INVISIBLE);
+                savePresetTitle.setVisibility(View.INVISIBLE);
             }
         });
 
-        addSoundBtn.setOnClickListener(new View.OnClickListener() {
+        addSoundsToPreset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SoundPickerDialog soundPickerDialog = new SoundPickerDialog(getActivity(), categorySoundsLogic, modelViewController.getLibrarySoundLogic(), modelViewController);
-                soundPickerDialog.show();
+                pSoundPickerDialog pSoundPickerDialog = new pSoundPickerDialog(getActivity(), presetContentLogic, modelViewController.getLibrarySoundLogic(), modelViewController);
+                pSoundPickerDialog.show();
             }
         });
-        soundItemAdapter.setOnClick(CategorySounds.this);
-        modelViewController.getContext().databaseTest();
+        presetSoundAdapter.setOnClick(PresetContent.this);
+        //modelViewController.getContext().databaseTest();
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                categoryTitle.clearFocus();
-                modelViewController.getNavController().navigate(R.id.action_categorySounds_to_libraryCategory);
+                presetTitle.clearFocus();
+                modelViewController.getNavController().navigate(R.id.action_presetContent_to_presetMain);
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(mainActivity, callback);
@@ -151,36 +158,43 @@ public class PresetContent extends Fragment {
          recyclerView = v.findViewById(R.id.preset_content_RV);
          addSoundsToPreset = v.findViewById(R.id.preset_addSound);
     }
+
+    @Override
+    public void updatePresetElements(PresetContentLogic presetContentLogic) {
+        presetSoundAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(int position) {
+    }
 }
 
 
 class PresetSoundAdapter extends RecyclerView.Adapter<PresetSoundAdapter.SoundViewHolder> {
 
-    private List<CategorySoundsLogic.SoundWithDuration> mSoundSet;
+    private List<PresetContentLogic.SoundWithDuration> mSoundSet;
     //private List<String> nDuration;
-    private CategorySoundsLogic categorySoundsLogic;
+    private PresetContentLogic presetContentLogic;
     private ModelViewController modelViewController;
 
-    public CategorySoundAdapter(List<CategorySoundsLogic.SoundWithDuration> mySoundSet, CategorySoundsLogic categorySoundsLogic, ModelViewController modelViewController){
+    public PresetSoundAdapter(List<PresetContentLogic.SoundWithDuration> mySoundSet,PresetContentLogic presetContentLogic , ModelViewController modelViewController){
         this.mSoundSet = mySoundSet;
         //this.nDuration = nDuration;
-        this.categorySoundsLogic = categorySoundsLogic;
+        this.presetContentLogic = presetContentLogic;
         this.modelViewController = modelViewController;
     }
 
     public static class SoundViewHolder extends RecyclerView.ViewHolder{
         public TextView soundTextView;
         public TextView soundDuration;
-        public TextView categoryTag;
         public ImageView delete;
 
 
         public SoundViewHolder(@NonNull View itemView) {
             super(itemView);
             //Måske tilføje de resterende ting for et sound item
-            soundTextView = itemView.findViewById(R.id.category_sound_title);
-            soundDuration = itemView.findViewById(R.id.category_sound_duration);
-            categoryTag = itemView.findViewById(R.id.category_tag_title);
+            soundTextView = itemView.findViewById(R.id.rv_sound_title);
+            soundDuration = itemView.findViewById(R.id.rv_sound_duration);
             delete = itemView.findViewById(R.id.delete_sound);
 
             // ...
@@ -197,14 +211,14 @@ class PresetSoundAdapter extends RecyclerView.Adapter<PresetSoundAdapter.SoundVi
 
     @NonNull
     @Override
-    public CategorySoundAdapter.SoundViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_sound_list_elements, parent, false);
+    public PresetSoundAdapter.SoundViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_sounds, parent, false);
         return new SoundViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SoundViewHolder holder, final int position) {
-        CategorySoundsLogic.SoundWithDuration soundWithDuration = mSoundSet.get(position);
+        PresetContentLogic.SoundWithDuration soundWithDuration = mSoundSet.get(position);
         holder.soundTextView.setText(soundWithDuration.getSoundName());
         holder.soundDuration.setText(soundWithDuration.getSoundDuration());
 
@@ -223,8 +237,7 @@ class PresetSoundAdapter extends RecyclerView.Adapter<PresetSoundAdapter.SoundVi
                 builder.setPositiveButton("Remove",new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        categorySoundsLogic.deleteSoundCategory(soundWithDuration.getSoundName());
-                        System.out.println("DELETED SOUND FROM CATEGORY ::::::::::::::::");
+                        presetContentLogic.deletePresetElement(soundWithDuration.getSoundName());
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -267,4 +280,152 @@ class PresetSoundAdapter extends RecyclerView.Adapter<PresetSoundAdapter.SoundVi
     public void setOnClick(OnItemClicked onClick){
         this.onClick = onClick;
     }
+}
+
+class pSoundPickerDialog extends Dialog implements View.OnClickListener{
+    // Object reference
+    private final PresetContentLogic logic;
+    private final LibrarySoundLogic librarySoundLogic;
+    private ModelViewController modelViewController;
+    private String presetName;
+
+    // View references
+    private Button addSoundbtn;
+    private RecyclerView dialogSounds;
+    private PresetSoundDialogAdapter dialogAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    // Listener references
+
+
+    public pSoundPickerDialog(Activity contextUI, PresetContentLogic logic, LibrarySoundLogic soundLogic, ModelViewController modelViewController) {
+        super(contextUI);
+        this.modelViewController = modelViewController;
+        this.logic = logic;
+        this.librarySoundLogic = soundLogic;
+        presetName = logic.getCurrentPreset();
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.category_add_sound_dialog);
+        getWindow().getDecorView().setBackgroundResource(android.R.color.transparent);
+
+        this.addSoundbtn = findViewById(R.id.dialog_category_addSound);
+        this.dialogSounds = findViewById(R.id.allsounds_RV);
+
+        this.layoutManager = new LinearLayoutManager(contextUI);
+        this.dialogSounds.setLayoutManager(layoutManager);
+        try {
+            dialogAdapter = new PresetSoundDialogAdapter(logic.getAvailableSounds(), logic.getDuration(logic.getAvailableSounds()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        dialogSounds.setAdapter(dialogAdapter);
+
+        addSoundbtn.setOnClickListener(this);
+
+    }
+
+    //Adder de valgte lyde til den category vi har valgt
+    @Override
+    public void onClick(View v) {
+
+        //Laver nogle lister. En med de valgte positioner og en med de lyde der kan vælges i mellem
+        List<Integer> selectedPositions =  new ArrayList<Integer>(dialogAdapter.getChosenSounds());
+        List<String> sounds = logic.getAvailableSounds();
+        // todo måske skulle dette rykkes et sted hen i logikken ?
+        //Et for-loop, hvor vi tager fat i værdien i selectedPositions (Integer), hvilken gemmes i counter.
+        //Counter bruges som et index til sounds listen.
+        int counter = 0;
+        int i;
+        for (i = 0; i < selectedPositions.size() ; i++) {
+            counter = selectedPositions.get(i);
+            logic.addSoundsToPreset(sounds.get(counter));
+        }
+        Toast.makeText(v.getContext(), i + " sounds were added to "+ presetName, Toast.LENGTH_SHORT).show();
+        dismiss();
+    }
+}
+
+class PresetSoundDialogAdapter extends RecyclerView.Adapter<PresetSoundDialogAdapter.SoundViewHolder> {
+    private List<String> mSoundSet;
+    private List<String> nDuration;
+    private HashSet<Integer> chosenSounds = new HashSet<>();
+
+    public PresetSoundDialogAdapter(List<String> mySoundSet, List<String> nDuration){
+        this.mSoundSet = mySoundSet;
+        this.nDuration = nDuration;
+    }
+
+    public static class SoundViewHolder extends RecyclerView.ViewHolder{
+        public TextView soundTextView;
+        public TextView soundDuration;
+        public ImageView addSoundBtn;
+        public LinearLayout linearLayout;
+
+
+        public SoundViewHolder(@NonNull View itemView) {
+            super(itemView);
+            //Måske tilføje de resterende ting for et sound item
+            soundTextView = itemView.findViewById(R.id.sound_title_dialog_TV);
+            soundDuration = itemView.findViewById(R.id.sound_duration_dialog_TV);
+            addSoundBtn = itemView.findViewById(R.id.sound_add_btn);
+            linearLayout = itemView.findViewById(R.id.LinearLayoutList);
+            // ...
+        }
+    }
+
+    //deklarerer interface for onclick
+    private OnItemClicked onClick;
+
+    //interface
+    public interface OnItemClicked{
+        void onItemClick(int position);
+    }
+
+    @NonNull
+    @Override
+    public PresetSoundDialogAdapter.SoundViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_dialog_sound_item, parent, false);
+        return new SoundViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull final SoundViewHolder holder, final int position) {
+        final int pos = holder.getAdapterPosition();
+        holder.soundTextView.setText(mSoundSet.get(position));
+        holder.soundDuration.setText(nDuration.get(position));
+        holder.itemView.setMinimumWidth(250);
+
+
+        holder.addSoundBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Highlighter samt fjerner highlight hvis man dobbelt klikker (klikker igen på et highlightet element)
+                boolean chosen = chosenSounds.contains(pos);
+                if (!chosen) {
+                    holder.linearLayout.setBackgroundResource(R.color.LightGrey);
+                    holder.addSoundBtn.setImageResource(R.drawable.ic_baseline_cancel_24);
+                    chosenSounds.add(pos);
+                } else {
+                    holder.linearLayout.setBackgroundResource(R.color.DialogDarkBlue);
+                    holder.addSoundBtn.setImageResource(R.drawable.ic_baseline_add_circle_outline_24);
+                    chosenSounds.remove(pos);
+                }
+
+            }
+        });
+
+    }
+
+    public HashSet<Integer> getChosenSounds(){
+        return chosenSounds;
+    }
+
+    @Override
+    public int getItemCount() {
+        return mSoundSet.size();
+    }
+    public void setOnClick(OnItemClicked onClick){
+        this.onClick = onClick;
+    }
+
 }

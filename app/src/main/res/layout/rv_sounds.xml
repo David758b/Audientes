@@ -16,7 +16,7 @@
         android:weightSum="1.5">
 
         <TextView
-            android:id="@+id/category_sound_title"
+            android:id="@+id/rv_sound_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sound Title"
@@ -33,7 +33,7 @@
             />
 
         <TextView
-            android:id="@+id/category_sound_duration"
+            android:id="@+id/rv_sound_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.1"
@@ -60,7 +60,7 @@
 
 
     <TextView
-        android:id="@+id/category_tag_title"
+        android:id="@+id/rv_tag_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 

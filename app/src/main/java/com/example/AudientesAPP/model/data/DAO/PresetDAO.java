@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.AudientesAPP.model.DTO.CategoryDTO;
 import com.example.AudientesAPP.model.DTO.PresetDTO;
 import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.data.InterfaceDAO.IDAO;
@@ -80,5 +81,24 @@ public class PresetDAO implements IDAO<PresetDTO> {
         cursor.close();
 
         return presetDTOList;
+    }
+
+    public void updateName(PresetDTO oldPresetDTO, PresetDTO newPresetDTO){
+
+        // UPDATE TABLE_CATEGORY SET CATEGORY_NAME = newName WHERE CATEGORY_NAME = oldName
+        row = new ContentValues();
+
+        row.put(SoundDB.PRESET_NAME,newPresetDTO.getPresetName());
+
+        db.execSQL("UPDATE " + SoundDB.TABEL_Presets+ " SET " + SoundDB.PRESET_NAME + "="
+                + "'" + newPresetDTO.getPresetName()+ "'" + " WHERE " + SoundDB.PRESET_NAME + " = "
+                + "'" + oldPresetDTO.getPresetName() + "'");
+        db.execSQL("UPDATE " + SoundDB.TABEL_PresetElements + " SET " + SoundDB.PRESET_NAME + "="
+                + "'" + newPresetDTO.getPresetName()+ "'" + " WHERE " + SoundDB.PRESET_NAME + " = "
+                + "'" + oldPresetDTO.getPresetName() + "'");
+        db.execSQL("UPDATE " + SoundDB.TABEL_PresetCategories + " SET " + SoundDB.PRESET_NAME + "="
+                + "'" + newPresetDTO.getPresetName()+ "'" + " WHERE " + SoundDB.PRESET_NAME + " = "
+                + "'" + oldPresetDTO.getPresetName() + "'");
+        // UPDATE TABEL_Category SET
     }
 }

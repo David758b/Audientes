@@ -28,6 +28,7 @@ import com.example.AudientesAPP.model.funktionalitet.CategorySoundsLogic;
 import com.example.AudientesAPP.model.funktionalitet.LibraryCategoryLogic;
 import com.example.AudientesAPP.model.funktionalitet.LibrarySoundLogic;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
+import com.example.AudientesAPP.model.funktionalitet.PresetContentLogic;
 import com.example.AudientesAPP.model.funktionalitet.PresetLogic;
 import com.example.AudientesAPP.model.funktionalitet.SoundSaver;
 import com.example.AudientesAPP.model.funktionalitet.Utilities;
@@ -40,6 +41,7 @@ public class ModelViewController {
     private LibrarySoundLogic librarySoundLogic;
     private LibraryCategoryLogic libraryCategoryLogic;
     private CategorySoundsLogic categorySoundsLogic;
+    private PresetContentLogic presetContentLogic;
     private PresetLogic presetLogic;
     private LydAfspiller lydAfspiller;
     private NavController navController;
@@ -101,7 +103,8 @@ public class ModelViewController {
         librarySoundLogic = new LibrarySoundLogic(soundCategoriesDAO,soundDAO);
         categorySoundsLogic = new CategorySoundsLogic(soundCategoriesDAO, soundDAO, prefs);
         libraryCategoryLogic = new LibraryCategoryLogic(categoryDAO, categorySoundsLogic);
-        presetLogic = new PresetLogic(presetDAO);
+        presetContentLogic = new PresetContentLogic(presetElementDAO, soundDAO, prefs);
+        presetLogic = new PresetLogic(presetDAO, presetContentLogic);
 
 
         lydAfspiller = new LydAfspiller(context, soundDAO);
@@ -146,6 +149,10 @@ public class ModelViewController {
 
     public LibraryCategoryLogic getLibraryCategoryLogic() {
         return libraryCategoryLogic;
+    }
+
+    public PresetContentLogic getPresetContentLogic() {
+        return presetContentLogic;
     }
 
     public LydAfspiller getLydAfspiller() {

@@ -215,9 +215,9 @@ class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.Sou
         public SoundViewHolder(@NonNull View itemView) {
             super(itemView);
             //Måske tilføje de resterende ting for et sound item
-            soundTextView = itemView.findViewById(R.id.category_sound_title);
-            soundDuration = itemView.findViewById(R.id.category_sound_duration);
-            categoryTag = itemView.findViewById(R.id.category_tag_title);
+            soundTextView = itemView.findViewById(R.id.rv_sound_title);
+            soundDuration = itemView.findViewById(R.id.rv_sound_duration);
+            categoryTag = itemView.findViewById(R.id.rv_tag_title);
             delete = itemView.findViewById(R.id.delete_sound);
 
             // ...
@@ -235,7 +235,7 @@ class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.Sou
     @NonNull
     @Override
     public CategorySoundAdapter.SoundViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_sound_list_elements, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_sounds, parent, false);
         return new SoundViewHolder(v);
     }
 

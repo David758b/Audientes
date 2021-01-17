@@ -12,4 +12,7 @@ public class PresetDTO {
         return presetName;
     }
 
+    public void setPresetName(String presetName) {
+        this.presetName = presetName;
+    }
 }

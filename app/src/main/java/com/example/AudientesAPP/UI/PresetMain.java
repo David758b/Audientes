@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.funktionalitet.LibraryCategoryLogic;
+import com.example.AudientesAPP.model.funktionalitet.PresetContentLogic;
 import com.example.AudientesAPP.model.funktionalitet.PresetLogic;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -35,6 +37,7 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
     private HashMap<String, PresetItem> presetItems;
     private View v;
     private PresetLogic logic;
+    private PresetContentLogic presetContentLogic;
 
     //Objects
     private ModelViewController modelViewController;
@@ -49,7 +52,7 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
         modelViewController = mainActivity.getModelViewController();
 
         logic = modelViewController.getPresetLogic();
-
+        presetContentLogic = modelViewController.getPresetContentLogic();
 
 
         recyclerView = (RecyclerView) v.findViewById(R.id.presets_RV);
@@ -60,7 +63,7 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
         List<String> presetNames = logic.getPresetNames();
 
 
-        presetItemAdapter = new PresetAdapter(presetNames);
+        presetItemAdapter = new PresetAdapter(presetNames, modelViewController.getNavController(), presetContentLogic);
         recyclerView.setAdapter(presetItemAdapter);
 
         //recyclerView.setPadding(0,75,0,20);
@@ -100,10 +103,15 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
 class PresetAdapter extends RecyclerView.Adapter<PresetAdapter.MyViewHolder>{
 
     private List<String> mPresetSet;
+    private NavController navController;
+    private PresetContentLogic presetContentLogic;
     //private List<PresetDTO> mPresetSet;
 
-    public PresetAdapter(List<String> myPresetSet){
+    public PresetAdapter(List<String> myPresetSet, NavController navController, PresetContentLogic presetContentLogic){
         mPresetSet = myPresetSet;
+        this.navController = navController;
+        this.presetContentLogic = presetContentLogic;
+
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -135,8 +143,8 @@ class PresetAdapter extends RecyclerView.Adapter<PresetAdapter.MyViewHolder>{
 
             @Override
             public void onClick(View v) {
-
-
+                presetContentLogic.setCurrentPreset(mPresetSet.get(position));
+                navController.navigate(R.id.action_presetMain_to_presetContent);
             }
         });
     }

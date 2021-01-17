@@ -41,7 +41,6 @@ public class LibraryCategoryLogic {
         this.listeners = new ArrayList<>();
         this.categories = new ArrayList<>();
         this.categorySoundsLogic = categorySoundsLogic;
-        // TODO: Den skal også kende presetCategoriesLogic
         initCategories();
     }
 
