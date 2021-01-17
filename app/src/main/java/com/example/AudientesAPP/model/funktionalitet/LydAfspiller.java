@@ -32,15 +32,22 @@ public class LydAfspiller implements MediaPlayer.OnCompletionListener{
         this.soundDAO = soundDAO;
     }
 
-    public void playNewSound(int position){
+    public void playNewSound(String soundName){
         isPlaying = true;
         if(mediaPlayer != null) {
             mediaPlayer.setOnCompletionListener(null);
         }
         soundDTOS = soundDAO.getList();
 
-        mediaPlayer = MediaPlayer.create(context, Uri.parse(soundDTOS.get(position).getSoundSrc()));
-        currentSong = soundDTOS.get(position).getSoundName();
+        SoundDTO currentDTO = new SoundDTO("","","");
+        for (SoundDTO dto: soundDTOS) {
+            if(dto.getSoundName().equals(soundName)){
+                currentDTO = dto;
+            }
+        }
+
+        mediaPlayer = MediaPlayer.create(context, Uri.parse(currentDTO.getSoundSrc()));
+        currentSong = currentDTO.getSoundName();
         mediaPlayer.start();
         mediaPlayer.setOnCompletionListener(this);
         notifyListeners();

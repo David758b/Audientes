@@ -55,6 +55,7 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
     private CategorySoundsLogic categorySoundsLogic;
     private LibraryCategoryLogic libCategoryLogic;
     private LibrarySoundLogic librarySoundLogic;
+    private List<String> soundNames = new ArrayList<>();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.category_list_sounds_frag, container, false);
@@ -75,10 +76,9 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
         final String category = modelViewController.getPrefs().getString("Category", "Fejl");
         categoryTitle.setText(category);
         categoryTitle.clearFocus();
-        // todo --> igen mega hardcoding og skal laves et andet sted.
 
         //Dette skal laves om til at være en final liste i logic klassen som er en liste af CategorySoundDTOer
-        List<String> soundNames = categorySoundsLogic.getSoundsList(category);
+        soundNames = categorySoundsLogic.getSoundsList(category);
         List<String> duration = categorySoundsLogic.getDuration(soundNames);
         List<String> categoryTag = librarySoundLogic.getCategories(soundNames);
         try {
@@ -173,7 +173,8 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
 
     @Override
     public void onItemClick(int position) {
-        lydAfspiller.playNewSound(position);
+        onDestroy();
+        lydAfspiller.playNewSound(soundNames.get(position));
     }
 
     @Override

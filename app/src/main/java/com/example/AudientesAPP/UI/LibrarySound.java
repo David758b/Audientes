@@ -18,6 +18,7 @@ import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.example.AudientesAPP.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LibrarySound extends Fragment implements SoundAdapter.OnItemClicked,LydAfspiller.OnLydAfspillerListener {
@@ -30,6 +31,7 @@ public class LibrarySound extends Fragment implements SoundAdapter.OnItemClicked
     private SoundAdapter soundItemAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ModelViewController modelViewController;
+    private List<String> sounds = new ArrayList<>();
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,7 +46,7 @@ public class LibrarySound extends Fragment implements SoundAdapter.OnItemClicked
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        List<String> sounds = modelViewController.getLibrarySoundLogic().getSoundsList();
+        sounds = modelViewController.getLibrarySoundLogic().getSoundsList();
         List<String> duration = modelViewController.getLibrarySoundLogic().getDuration(sounds);
         List<String> categories = modelViewController.getLibrarySoundLogic().getCategories(sounds);
 
@@ -76,7 +78,7 @@ public class LibrarySound extends Fragment implements SoundAdapter.OnItemClicked
     @Override
     public void onItemClick(int position) {
         onDestroy();
-        lydAfspiller.playNewSound(position);
+        lydAfspiller.playNewSound(sounds.get(position));
 
     }
 
