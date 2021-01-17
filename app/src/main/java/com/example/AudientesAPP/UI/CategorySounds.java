@@ -7,13 +7,10 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,13 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.AudientesAPP.R;
-import com.example.AudientesAPP.model.DTO.CategoryDTO;
 import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.funktionalitet.CategorySoundsLogic;
 import com.example.AudientesAPP.model.funktionalitet.LibraryCategoryLogic;
@@ -54,6 +49,7 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
     private ModelViewController modelViewController;
     private CategorySoundsLogic categorySoundsLogic;
     private LibraryCategoryLogic libCategoryLogic;
+    String category;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.category_list_sounds_frag, container, false);
@@ -70,17 +66,14 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
         categorySoundsLogic = modelViewController.getCategorySoundsLogic();
         libCategoryLogic = modelViewController.getLibraryCategoryLogic();
         categorySoundsLogic.addCategorySoundsLogicListener(this);
-        final String category = modelViewController.getPrefs().getString("Category", "Fejl");
+        category = categorySoundsLogic.getCurrentCategory();
         categoryTitle.setText(category);
         categoryTitle.clearFocus();
         // todo --> igen mega hardcoding og skal laves et andet sted.
 
-        //Dette skal laves om til at være en final liste i logic klassen som er en liste af CategorySoundDTOer
-        List<String> soundNames = categorySoundsLogic.getSoundsList(category);
-        List<String> duration = categorySoundsLogic.getDuration(soundNames);
 
         try {
-            soundItemAdapter = new CategorySoundAdapter(soundNames, duration,categorySoundsLogic,modelViewController);
+            soundItemAdapter = new CategorySoundAdapter(categorySoundsLogic.getSoundsWithDuration(),categorySoundsLogic,modelViewController);
             System.out.println("CategorySoundAdapter er lavet-------------");
         }catch(Exception e){
             e.printStackTrace();
@@ -188,14 +181,14 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
 //------------------------------------------- CATEGORYSOUNDADAPTER -----------------------------
 class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.SoundViewHolder> {
 
-    private List<String> mSoundSet;
-    private List<String> nDuration;
+    private List<CategorySoundsLogic.SoundWithDuration> mSoundSet;
+    //private List<String> nDuration;
     private CategorySoundsLogic categorySoundsLogic;
     private ModelViewController modelViewController;
 
-    public CategorySoundAdapter(List<String> mySoundSet, List<String> nDuration, CategorySoundsLogic categorySoundsLogic, ModelViewController modelViewController){
+    public CategorySoundAdapter(List<CategorySoundsLogic.SoundWithDuration> mySoundSet, CategorySoundsLogic categorySoundsLogic, ModelViewController modelViewController){
         this.mSoundSet = mySoundSet;
-        this.nDuration = nDuration;
+        //this.nDuration = nDuration;
         this.categorySoundsLogic = categorySoundsLogic;
         this.modelViewController = modelViewController;
     }
@@ -236,8 +229,9 @@ class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.Sou
 
     @Override
     public void onBindViewHolder(@NonNull SoundViewHolder holder, final int position) {
-        holder.soundTextView.setText(mSoundSet.get(position));
-        holder.soundDuration.setText(nDuration.get(position));
+        CategorySoundsLogic.SoundWithDuration soundWithDuration = mSoundSet.get(position);
+        holder.soundTextView.setText(soundWithDuration.getSoundName());
+        holder.soundDuration.setText(soundWithDuration.getSoundDuration());
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ResourceAsColor")
@@ -254,7 +248,7 @@ class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.Sou
                 builder.setPositiveButton("Remove",new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        categorySoundsLogic.deleteSoundCategory(modelViewController.getPrefs().getString("Category",null),mSoundSet.get(position));
+                        categorySoundsLogic.deleteSoundCategory(soundWithDuration.getSoundName());
                         System.out.println("DELETED SOUND FROM CATEGORY ::::::::::::::::");
                     }
                 });
@@ -321,7 +315,7 @@ class SoundPickerDialog extends Dialog implements View.OnClickListener{
         this.modelViewController = modelViewController;
         this.logic = logic;
         this.librarySoundLogic = soundLogic;
-        categoryName = modelViewController.getPrefs().getString("Category", "NOOO");
+        categoryName = logic.getCurrentCategory();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.category_add_sound_dialog);
         getWindow().getDecorView().setBackgroundResource(android.R.color.transparent);
@@ -332,7 +326,7 @@ class SoundPickerDialog extends Dialog implements View.OnClickListener{
         this.layoutManager = new LinearLayoutManager(contextUI);
         this.dialogSounds.setLayoutManager(layoutManager);
         try {
-            dialogAdapter = new CategorySoundDialogAdapter(this.logic.getAvailableSounds(categoryName), this.logic.getDuration(this.logic.getAvailableSounds(categoryName)));
+            dialogAdapter = new CategorySoundDialogAdapter(logic.getAvailableSounds(), logic.getDuration(logic.getAvailableSounds()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -348,7 +342,7 @@ class SoundPickerDialog extends Dialog implements View.OnClickListener{
 
         //Laver nogle lister. En med de valgte positioner og en med de lyde der kan vælges i mellem
         List<Integer> selectedPositions =  new ArrayList<Integer>(dialogAdapter.getChosenSounds());
-        List<String> sounds = logic.getAvailableSounds(categoryName);
+        List<String> sounds = logic.getAvailableSounds();
         // todo måske skulle dette rykkes et sted hen i logikken ?
         //Et for-loop, hvor vi tager fat i værdien i selectedPositions (Integer), hvilken gemmes i counter.
         //Counter bruges som et index til sounds listen.
@@ -356,7 +350,7 @@ class SoundPickerDialog extends Dialog implements View.OnClickListener{
         int i;
         for (i = 0; i < selectedPositions.size() ; i++) {
             counter = selectedPositions.get(i);
-            logic.addSoundsToCategory(categoryName, sounds.get(counter));
+            logic.addSoundsToCategory(sounds.get(counter));
         }
         Toast.makeText(v.getContext(), i + " sounds were added to "+ categoryName, Toast.LENGTH_SHORT).show();
         dismiss();

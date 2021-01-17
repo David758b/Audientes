@@ -99,7 +99,7 @@ public class ModelViewController {
             prefs.edit().putBoolean("firstDBrun", false).commit();
         }
         librarySoundLogic = new LibrarySoundLogic(soundCategoriesDAO,soundDAO);
-        categorySoundsLogic = new CategorySoundsLogic(soundCategoriesDAO, soundDAO);
+        categorySoundsLogic = new CategorySoundsLogic(soundCategoriesDAO, soundDAO, prefs);
         libraryCategoryLogic = new LibraryCategoryLogic(categoryDAO, categorySoundsLogic);
         presetLogic = new PresetLogic(presetDAO);
 
