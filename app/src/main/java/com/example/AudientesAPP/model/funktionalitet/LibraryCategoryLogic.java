@@ -80,10 +80,6 @@ public class LibraryCategoryLogic {
         notifyListeners();
     }
 
-    public void fragmentJump (String categoryName, NavController navController, Fragment fragment, SharedPreferences prefs) {
-        prefs.edit().putString("Category", categoryName).apply();
-        navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
-    }
 
     /**
      * Updates the category name to a another given category name
@@ -106,6 +102,7 @@ public class LibraryCategoryLogic {
             }
         }
         categorySoundsLogic.initSoundCategories();
+        categorySoundsLogic.setCurrentCategory(newCategoryName);
     }
 
 

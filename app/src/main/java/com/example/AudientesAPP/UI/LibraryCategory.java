@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -30,7 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.AudientesAPP.model.DTO.CategoryDTO;
 import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.R;
-import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
+import com.example.AudientesAPP.model.funktionalitet.CategorySoundsLogic;
 import com.example.AudientesAPP.model.funktionalitet.LibraryCategoryLogic;
 
 import java.util.List;
@@ -38,8 +36,9 @@ import java.util.List;
 import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class LibraryCategory extends Fragment implements LibraryCategoryLogic.OnLibraryLCLogicListener {
-    // Test
+    // Logic
     private LibraryCategoryLogic logic;
+    private CategorySoundsLogic categorySoundsLogic;
 
     //Recyclerview
     private RecyclerView categoryList;
@@ -64,10 +63,11 @@ public class LibraryCategory extends Fragment implements LibraryCategoryLogic.On
         //Listeners
         logic = modelViewController.getLibraryCategoryLogic();
         logic.addLibraryLCLogicListener(this);
+        categorySoundsLogic = modelViewController.getCategorySoundsLogic();
 
 
         try {
-            mAdapter = new CategoryAdapter(logic.getCategories(), getActivity(), modelViewController.getNavController(), logic, this, modelViewController.getPrefs());
+            mAdapter = new CategoryAdapter(logic.getCategories(), getActivity(), modelViewController.getNavController(), logic, this,categorySoundsLogic);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,18 +90,18 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
     private Bundle mBundle;
     private NavController navController;
     private LibraryCategoryLogic logic;
-    private SharedPreferences prefs;
+    private CategorySoundsLogic categorySoundsLogic;
 
     //
     private List<CategoryDTO> data;
 
-    public CategoryAdapter(List<CategoryDTO> data, Activity contextUI, NavController navController, LibraryCategoryLogic logic, Fragment fragment, SharedPreferences prefs) {
+    public CategoryAdapter(List<CategoryDTO> data, Activity contextUI, NavController navController, LibraryCategoryLogic logic, Fragment fragment, CategorySoundsLogic categorySoundsLogic) {
         this.contextUI = contextUI;
         this.data = data;
         this.navController = navController;
+        this.categorySoundsLogic = categorySoundsLogic;
         this.logic = logic;
         this.mFragment = fragment;
-        this.prefs = prefs;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -192,7 +192,8 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
                 } else {
                     // Hop til den rigtige kategori
                     // Dette skal overvejes lidt nærmere... smæk det i logik klassen
-                    logic.fragmentJump(categoryDTO.getCategoryName(), navController, mFragment, prefs);
+                    categorySoundsLogic.setCurrentCategory(categoryDTO.getCategoryName());
+                    navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
                 }
             }
         });
