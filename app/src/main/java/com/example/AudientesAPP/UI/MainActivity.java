@@ -224,6 +224,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             dialog.dismiss();
             prefs.edit().putBoolean("firstrun", false).commit();
             navController.navigate(R.id.libraryMain);
+            // Reloads the activity, so the final lists in the logic-classes have the right sounds from the cloud
+            finish();
+            startActivity(getIntent());
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
     }
 
@@ -232,16 +236,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         List<String> filePath = new ArrayList<>();
         //adding all the files to a list so we can comepare the length with the length of our database to see when everything is dowlnoaded
-//        newFileNames.add("cobratronik_wind");
-//        filePath.add("soundfiles/117136__cobratronik__wind-artic-cold.wav");
+        newFileNames.add("cobratronik_wind");
+        filePath.add("soundfiles/117136__cobratronik__wind-artic-cold.wav");
 //        newFileNames.add("cathedral_ambience_01");
 //        filePath.add("soundfiles/170675__klankbeeld__cathedral-ambience-01.wav");
 //        newFileNames.add("water_dripping_in_cave");
 //        filePath.add("soundfiles/177958__sclolex__water-dripping-in-cave.wav");
 //        newFileNames.add("downtown_calm");
 //        filePath.add("soundfiles/216734__klankbeeld__down-town-calm-140124-01.wav");
-//        newFileNames.add("rain_and_thunder_4");
-//        filePath.add("soundfiles/237729__flathill__rain-and-thunder-4.wav");
+        newFileNames.add("rain_and_thunder_4");
+        filePath.add("soundfiles/237729__flathill__rain-and-thunder-4.wav");
 
         for (int i = 0; i < newFileNames.size(); i++) {
             modelViewController.getDlSoundFiles().downloadSoundFiles(newFileNames.get(i), filePath.get(i));
