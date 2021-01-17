@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -146,6 +147,14 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
         });
         soundItemAdapter.setOnClick(CategorySounds.this);
         modelViewController.getContext().databaseTest();
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                modelViewController.getNavController().navigate(R.id.action_categorySounds_to_libraryCategory);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(mainActivity, callback);
         return v;
     }
     public void initialize(View v){
@@ -304,7 +313,9 @@ class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.Sou
     public void setOnClick(OnItemClicked onClick){
         this.onClick = onClick;
     }
+
 }
+
 
 class SoundPickerDialog extends Dialog implements View.OnClickListener{
     // Object reference

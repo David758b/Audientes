@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -56,6 +57,14 @@ public class LibrarySound extends Fragment implements SoundAdapter.OnItemClicked
         lydAfspiller = modelViewController.getLydAfspiller();
 
         soundItemAdapter.setOnClick(this);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                modelViewController.getNavController().navigate(R.id.action_LibrarySounds_to_LibraryMain);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(mainActivity, callback);
 
         return v;
     }

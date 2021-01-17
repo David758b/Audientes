@@ -19,6 +19,11 @@
         <action
             android:id="@+id/action_LibraryMain_to_HearingTest"
             app:destination="@id/hearingtestMain" />
+
+        <action
+            android:id="@+id/action_LibrarySounds_to_LibraryMain"
+            app:destination="@+id/libraryMain"
+            />
     </fragment>
 
     <fragment
