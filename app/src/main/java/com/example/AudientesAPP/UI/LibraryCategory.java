@@ -136,7 +136,9 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
         Typeface typeface = ResourcesCompat.getFont(contextUI, R.font.audientes_font);
         holder.categoryNameTV.setTypeface(typeface);
         holder.categoryNameTV.setText(categoryDTO.getCategoryName());
-        holder.itemView.getBackground().setTint(Color.parseColor(categoryDTO.getColor()));
+        System.out.println("--------------------------------");
+        System.out.println(categoryDTO.getCategoryName() + "'s farve er:" + categoryDTO.getColor());
+        //holder.itemView.getBackground().setTint(Color.parseColor(categoryDTO.getColor()));
         System.out.println(categoryDTO.getCategoryName() + "'s FARVE---------------------" + categoryDTO.getColor());
 
         holder.delete.setOnClickListener(new View.OnClickListener() {

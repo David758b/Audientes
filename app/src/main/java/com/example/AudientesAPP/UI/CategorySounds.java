@@ -217,7 +217,6 @@ class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.Sou
             //Måske tilføje de resterende ting for et sound item
             soundTextView = itemView.findViewById(R.id.rv_sound_title);
             soundDuration = itemView.findViewById(R.id.rv_sound_duration);
-            categoryTag = itemView.findViewById(R.id.rv_tag_title);
             delete = itemView.findViewById(R.id.delete_sound);
 
             // ...
