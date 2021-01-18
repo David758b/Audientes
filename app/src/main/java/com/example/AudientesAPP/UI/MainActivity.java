@@ -70,6 +70,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         //Dette bruges til at få en nedbrudsrapport
         Sentry.init(options -> {options.setDsn("https://f1a313db1d68416a9f839a67ee979515@o506917.ingest.sentry.io/5597257");});
+        /*
+        boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
+        if (!EMULATOR) {
+	    Sentry.init(....);
+        }
+
+         */
 
         bgThread = Executors.newSingleThreadExecutor();
         uiThread = new Handler(Looper.getMainLooper());
