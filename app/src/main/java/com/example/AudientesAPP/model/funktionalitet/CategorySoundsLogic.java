@@ -9,7 +9,10 @@ import com.example.AudientesAPP.model.data.DAO.SoundDAO;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class CategorySoundsLogic {
     public class SoundWithDuration{
         private String soundName;

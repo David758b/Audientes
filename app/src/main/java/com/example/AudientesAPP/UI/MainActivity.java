@@ -42,7 +42,10 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, DownloadSoundFiles.OnDownloadSoundFilesListener {
     private ModelViewController modelViewController;
     private NavController navController;

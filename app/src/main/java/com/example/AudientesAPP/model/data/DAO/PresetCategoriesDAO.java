@@ -11,7 +11,10 @@ import com.example.AudientesAPP.model.context.ModelViewController;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class PresetCategoriesDAO implements IDAO<PresetCategoriesDTO> {
 
     private ContentValues row;

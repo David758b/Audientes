@@ -11,7 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import com.example.AudientesAPP.R;
-
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class HearingtestMain extends Fragment implements View.OnClickListener {
 
     private ImageView testButton;

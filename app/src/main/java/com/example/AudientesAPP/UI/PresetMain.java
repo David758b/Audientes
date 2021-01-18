@@ -25,7 +25,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class PresetMain extends Fragment implements AdapterView.OnItemClickListener {
     private TextView presetListTV;
     private FloatingActionButton addPreset;
@@ -100,6 +103,10 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
     }
 }
 
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 class PresetAdapter extends RecyclerView.Adapter<PresetAdapter.MyViewHolder>{
 
     private List<String> mPresetSet;

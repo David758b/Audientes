@@ -6,7 +6,10 @@ import android.view.Gravity;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.example.AudientesAPP.R;
-
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class PresetItem extends AppCompatTextView {
 
     public PresetItem (Context context){

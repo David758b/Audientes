@@ -35,6 +35,10 @@ import com.example.AudientesAPP.model.funktionalitet.Utilities;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class ModelViewController {
     private MainActivity context;
     private SharedPreferences prefs;

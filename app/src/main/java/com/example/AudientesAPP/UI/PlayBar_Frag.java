@@ -21,9 +21,11 @@ import com.example.AudientesAPP.model.funktionalitet.Utilities;
 
 import java.util.concurrent.TimeUnit;
 
-
 /**
  * test fragment til en playbar (dvs en menu hvor man kan pause og play en lyd)
+ *
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
  */
 public class PlayBar_Frag extends Fragment implements LydAfspiller.OnLydAfspillerListener, SeekBar.OnSeekBarChangeListener {
 

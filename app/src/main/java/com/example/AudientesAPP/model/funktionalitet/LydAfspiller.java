@@ -16,6 +16,9 @@ import java.util.List;
 
 /**
  * Test klasse til afspilning af lyde. skal nok laves om
+ *
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
  */
 public class LydAfspiller implements MediaPlayer.OnCompletionListener{
     private Context context;

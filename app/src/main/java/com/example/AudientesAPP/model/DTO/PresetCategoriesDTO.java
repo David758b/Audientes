@@ -1,5 +1,8 @@
 package com.example.AudientesAPP.model.DTO;
-
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class PresetCategoriesDTO {
     private String presetName;
     private String categoryName;

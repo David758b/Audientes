@@ -21,7 +21,10 @@ import com.example.AudientesAPP.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class LibrarySound extends Fragment implements SoundAdapter.OnItemClicked,LydAfspiller.OnLydAfspillerListener {
     LydAfspiller lydAfspiller;
     ImageView imageView1;
@@ -102,6 +105,10 @@ public class LibrarySound extends Fragment implements SoundAdapter.OnItemClicked
     }
 }
 
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHolder> {
 
     private List<String> mSoundSet;

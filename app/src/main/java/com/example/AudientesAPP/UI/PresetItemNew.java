@@ -21,7 +21,10 @@ import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.funktionalitet.PresetLogic;
 import com.example.AudientesAPP.model.funktionalitet.Utilities;
-
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class PresetItemNew extends Fragment implements AdapterView.OnItemClickListener {
 
     private ImageView backarrow;

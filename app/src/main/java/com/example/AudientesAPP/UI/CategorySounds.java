@@ -35,7 +35,10 @@ import com.example.AudientesAPP.model.funktionalitet.Utilities;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class CategorySounds extends Fragment implements CategorySoundAdapter.OnItemClicked, LydAfspiller.OnLydAfspillerListener, CategorySoundsLogic.OnCategorySoundsLogicListener {
     private LydAfspiller lydAfspiller;
     private EditText categoryTitle;
@@ -190,6 +193,10 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
     }
 }
 
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 //------------------------------------------- CATEGORYSOUNDADAPTER -----------------------------
 class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.SoundViewHolder> {
 
@@ -305,6 +312,11 @@ class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.Sou
     }
 }
 
+
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 class SoundPickerDialog extends Dialog implements View.OnClickListener{
     // Object reference
     private final CategorySoundsLogic logic;
@@ -368,6 +380,10 @@ class SoundPickerDialog extends Dialog implements View.OnClickListener{
     }
 }
 
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 class CategorySoundDialogAdapter extends RecyclerView.Adapter<CategorySoundDialogAdapter.SoundViewHolder> {
     private List<String> mSoundSet;
     private List<String> nDuration;

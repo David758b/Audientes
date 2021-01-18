@@ -7,7 +7,10 @@ import com.example.AudientesAPP.model.context.ModelViewController;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class ExternalStorage {
 
     private Context context;

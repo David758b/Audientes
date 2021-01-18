@@ -35,7 +35,10 @@ import com.example.AudientesAPP.model.funktionalitet.Utilities;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class PresetContent extends Fragment implements PresetContentLogic.OnPresetContentLogicListener, PresetSoundAdapter.OnItemClicked {
 
     private EditText presetTitle;
@@ -169,7 +172,10 @@ public class PresetContent extends Fragment implements PresetContentLogic.OnPres
     }
 }
 
-
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 class PresetSoundAdapter extends RecyclerView.Adapter<PresetSoundAdapter.SoundViewHolder> {
 
     private List<PresetContentLogic.SoundWithDuration> mSoundSet;
@@ -282,6 +288,11 @@ class PresetSoundAdapter extends RecyclerView.Adapter<PresetSoundAdapter.SoundVi
     }
 }
 
+
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 class pSoundPickerDialog extends Dialog implements View.OnClickListener{
     // Object reference
     private final PresetContentLogic logic;
@@ -345,6 +356,11 @@ class pSoundPickerDialog extends Dialog implements View.OnClickListener{
     }
 }
 
+
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 class PresetSoundDialogAdapter extends RecyclerView.Adapter<PresetSoundDialogAdapter.SoundViewHolder> {
     private List<String> mSoundSet;
     private List<String> nDuration;

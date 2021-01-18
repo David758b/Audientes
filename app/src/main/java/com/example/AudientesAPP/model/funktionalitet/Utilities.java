@@ -8,7 +8,10 @@ import android.view.inputmethod.InputMethodManager;
 import androidx.appcompat.widget.ActivityChooserView;
 
 import java.util.concurrent.TimeUnit;
-
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class Utilities {
     // TODO: Vi bør nok referer utilities gennem modelViewController istedet for direkte i UI'en
 

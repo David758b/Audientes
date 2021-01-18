@@ -34,7 +34,10 @@ import com.example.AudientesAPP.model.funktionalitet.LibraryCategoryLogic;
 import java.util.List;
 
 import petrov.kristiyan.colorpicker.ColorPicker;
-
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class LibraryCategory extends Fragment implements LibraryCategoryLogic.OnLibraryLCLogicListener {
     // Logic
     private LibraryCategoryLogic logic;
@@ -204,6 +207,10 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
     }
 }
 
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 class CreateCategoryDialog extends Dialog implements View.OnClickListener {
     // Views
     private EditText categoryNameET;

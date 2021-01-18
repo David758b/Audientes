@@ -9,7 +9,10 @@ import com.example.AudientesAPP.model.data.DAO.SoundDAO;
 import com.example.AudientesAPP.model.data.ExternalStorage;
 
 import java.io.File;
-
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class SoundSaver {
     private ExternalStorage externalStorage;
     private SoundDAO soundDAO;

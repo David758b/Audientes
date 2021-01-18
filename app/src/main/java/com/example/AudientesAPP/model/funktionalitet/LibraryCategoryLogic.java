@@ -19,10 +19,13 @@ import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+/**
  * To seperate the data that the views use from the actual views
  * We use this class between the view and data
- * */
+ *
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class LibraryCategoryLogic {
     private CategoryDAO categoryDAO;
     List<OnLibraryLCLogicListener> listeners;

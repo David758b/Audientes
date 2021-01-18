@@ -10,7 +10,10 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.AudientesAPP.R;
 import com.google.android.material.tabs.TabLayout;
-
+/**
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class LibraryMain extends Fragment{
 
     private NavController navListController;
