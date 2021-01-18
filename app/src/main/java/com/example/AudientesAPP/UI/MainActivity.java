@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -37,10 +38,14 @@ import com.example.AudientesAPP.model.funktionalitet.LibraryCategoryLogic;
 import com.example.AudientesAPP.model.funktionalitet.PresetLogic;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
+import io.sentry.Sentry;
+import io.sentry.SentryOptions;
 
 /**
  * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
@@ -62,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Dette bruges til at få en nedbrudsrapport
+        Sentry.init(options -> {options.setDsn("https://f1a313db1d68416a9f839a67ee979515@o506917.ingest.sentry.io/5597257");});
 
         bgThread = Executors.newSingleThreadExecutor();
         uiThread = new Handler(Looper.getMainLooper());

@@ -11,6 +11,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data android:name="io.sentry.dsn" android:value="https://f1a313db1d68416a9f839a67ee979515@o506917.ingest.sentry.io/5597257" />
+
+
         <activity android:name="com.example.AudientesAPP.UI.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
