@@ -55,6 +55,8 @@ public class LibraryCategoryLogic {
         //tilføj create category's farve
         CategoryDTO create = new CategoryDTO("Create category", "", "#F2994A");
         categories.add(create);
+        CategoryDTO preset = new CategoryDTO("Presets", "", "#3F51B5");
+        categories.add(preset);
         categories.addAll(categoryDTOS);
     }
 
@@ -121,7 +123,6 @@ public class LibraryCategoryLogic {
         for (int i = 0; i < categories.size(); i++) {
             if(categories.get(i).getCategoryName().equals(categoryName)){
                 categories.remove(i);
-                System.out.println("HAHSIDOHAOISHDOIAHSOFHOIAH");
             }
         }
         for (CategoryDTO a:categories) {

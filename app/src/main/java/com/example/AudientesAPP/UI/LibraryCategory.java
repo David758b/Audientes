@@ -128,9 +128,18 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
 
-        //there should not be a delete button on the create category field
+        /* Hardcoded elements, one for creating new categories, and one for presets.
+         * there should not be a delete button on the create category and preset category element
+         */
+
         if(position == 0){
             holder.delete.setVisibility(View.GONE);
+            holder.categoryIcon.setImageResource(R.drawable.ic_baseline_add_24);
+            holder.categoryIcon.setColorFilter(contextUI.getResources().getColor(R.color.white));
+        }else if (position == 1){
+            holder.delete.setVisibility(View.GONE);
+            holder.categoryIcon.setImageResource(R.drawable.ic_baseline_playlist_play_24);
+            holder.categoryIcon.setColorFilter(contextUI.getResources().getColor(R.color.white));
         }
         final CategoryDTO categoryDTO = data.get(position);
         Typeface typeface = ResourcesCompat.getFont(contextUI, R.font.audientes_font);
