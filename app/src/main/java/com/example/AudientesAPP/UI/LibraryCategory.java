@@ -138,7 +138,7 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
         holder.categoryNameTV.setText(categoryDTO.getCategoryName());
         System.out.println("--------------------------------");
         System.out.println(categoryDTO.getCategoryName() + "'s farve er:" + categoryDTO.getColor());
-        //holder.itemView.getBackground().setTint(Color.parseColor(categoryDTO.getColor()));
+        holder.itemView.getBackground().setTint(Color.parseColor(categoryDTO.getColor()));
         System.out.println(categoryDTO.getCategoryName() + "'s FARVE---------------------" + categoryDTO.getColor());
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
@@ -168,10 +168,6 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
 
                 // Create the Alert dialog
                 AlertDialog alertDialog = builder.create();
-
-
-
-//                alertDialog = builder.create();
 
                 // Show the Alert Dialog box
                 alertDialog.show();
@@ -205,23 +201,6 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
     @Override
     public int getItemCount() {
         return data.size();
-    }
-
-    private void fragmentJump() {
-        /*mFragment = new Fragment2();
-        mBundle = new Bundle();
-        mBundle.putParcelable("item_selected_key", Parcelable);
-        mFragment.setArguments(mBundle);
-        switchContent(R.id.frag1, mFragment);*/
-        //Navigation.findNavController(v).navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
-        navController.navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
-        /*CategoryListSounds fragment = new CategoryListSounds();
-        FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.libraryMain, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();*/
-        //Navigation.findNavController(v).navigate(R.id.action_libraryListCategory_to_CategoryListSounds);
     }
 }
 
