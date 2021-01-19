@@ -15,6 +15,7 @@ public class UtilitiesTest {
         int progressPercentage = utilities.getProgressPercentage(currentDuration, TotalDuration);
 
         assertEquals(10, progressPercentage);
+        System.out.println("Test getProgressPercentage() passed");
     }
 
     @Test
@@ -24,6 +25,7 @@ public class UtilitiesTest {
         int totalDuration = 10000;
         int currentDuration = utilities.progressToTimer(progress, totalDuration);
         assertEquals(2000, currentDuration);
+        System.out.println("Test progressToTime() passed");
     }
 
     @Test
@@ -37,6 +39,7 @@ public class UtilitiesTest {
 
         duration = 5000000;
         assertEquals("1:23:20",utilities.convertFormat(duration));
+        System.out.println("Test convertFormat() passed");
     }
 
 }
