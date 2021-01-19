@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ import com.example.AudientesAPP.model.funktionalitet.LibrarySoundLogic;
 import com.example.AudientesAPP.model.funktionalitet.PresetContentLogic;
 import com.example.AudientesAPP.model.funktionalitet.PresetLogic;
 import com.example.AudientesAPP.model.funktionalitet.Utilities;
+import com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -169,6 +172,7 @@ public class PresetContent extends Fragment implements PresetContentLogic.OnPres
 
     @Override
     public void onItemClick(int position) {
+
     }
 }
 
@@ -271,10 +275,17 @@ class PresetSoundAdapter extends RecyclerView.Adapter<PresetSoundAdapter.SoundVi
         });
 
 
-        holder.soundTextView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClick.onItemClick(position);
+
+                System.out.println("SOUND NAME ;" + presetContentLogic.getSoundsList().get(position));
+
+                SoundEditDialog soundEditDialog = new SoundEditDialog(modelViewController.getContext(),presetContentLogic.getSoundsWithDuration().get(position));
+                //onClick.onItemClick(position);
+
+                soundEditDialog.show();
+                System.out.println("SHOW................DIALog");
             }
         });
     }
@@ -287,6 +298,135 @@ class PresetSoundAdapter extends RecyclerView.Adapter<PresetSoundAdapter.SoundVi
         this.onClick = onClick;
     }
 }
+
+class SoundEditDialog extends Dialog implements View.OnClickListener{
+
+    //Views
+    private TextView soundTitle;
+    private TextView soundVolumeTV;
+    private TextView soundVolumePct;
+    private TextView soundIntervalTV;
+    private TextView soundIntervalStart;
+    private TextView soundIntervalEnd;
+    private TextView loopBtnTV;
+
+    private ImageView soundVolumeDec;
+    private ImageView soundVolumeInc;
+    private ImageView loopBtn;
+
+    private SeekBar volumenSeekBar;
+    private RangeSeekBar<Integer> rangeSeekBar;
+
+    private Button saveBtn;
+
+    //Objects
+    private Activity contextUI;
+    //Listener
+
+    //Variables
+    int soundDurInt;
+
+    public SoundEditDialog(Activity contextUI, PresetContentLogic.SoundWithDuration soundWithDuration) {
+        super(contextUI);
+        this.contextUI = contextUI;
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.preset_frag_edit_sound_dialog);
+        getWindow().getDecorView().setBackgroundResource(android.R.color.transparent);
+        this.soundTitle = findViewById(R.id.preset_sound_title_TV);
+        this.soundVolumeTV = findViewById(R.id.preset_sound_volume_TV);
+        this.soundVolumeDec = findViewById(R.id.preset_sound_volume_decrement);
+        this.soundVolumeInc = findViewById(R.id.preset_sound_volume_increase);
+        this.rangeSeekBar = findViewById(R.id.preset_sound_rangeSeekbar);
+        this.soundIntervalTV = findViewById(R.id.preset_sound_interval_TV);
+        this.soundIntervalEnd= findViewById(R.id.preset_sound_interval_end);
+        this.soundIntervalStart = findViewById(R.id.preset_sound_interval_start);
+        this.loopBtnTV = findViewById(R.id.preset_sound_loop_TV);
+        this.loopBtn = findViewById(R.id.preset_sound_loop_btn);
+        this.saveBtn = findViewById(R.id.preset_sound_save);
+        this.volumenSeekBar = findViewById(R.id.preset_sound_vol_seekbar);
+        this.soundVolumePct = findViewById(R.id.preset_sound_volume_percentage_TV);
+        soundTitle.setText(soundWithDuration.getSoundName());
+        soundIntervalEnd.setText(soundWithDuration.getSoundDuration());
+        this.soundDurInt = Utilities.convertFormatToMili(soundWithDuration.getSoundDuration());
+        rangeSeekBar.setRangeValues(0,100);
+        rangeSeekBar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
+            @Override
+            public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar, Integer minValue, Integer maxValue) {
+                soundIntervalStart.setText(Utilities.convertFormat(Utilities.percentageOfInt(soundDurInt,minValue)*1000));
+                soundIntervalEnd.setText(Utilities.convertFormat(Utilities.percentageOfInt(soundDurInt,maxValue)*1000));
+            }
+        });
+        // Get noticed while dragging
+        rangeSeekBar.setNotifyWhileDragging(true);
+
+        soundVolumeDec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                volumenSeekBar.setProgress(volumenSeekBar.getProgress()-1);
+            }
+        });
+
+        soundVolumeInc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                volumenSeekBar.setProgress(volumenSeekBar.getProgress()+1);
+            }
+        });
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "Saved " + soundTitle.getText(), Toast.LENGTH_SHORT).show();
+                dismiss();
+            }
+        });
+
+        volumenSeekBar.setProgress(100);
+        volumenSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                soundVolumePct.setText(progress + "%");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
+        loopBtn.setOnClickListener(new View.OnClickListener() {
+            boolean isChecked = true;
+            @Override
+            public void onClick(View v) {
+
+                if(isChecked){
+                    loopBtn.setBackgroundResource(R.drawable.ic_baseline_check_box_24);
+                    isChecked = false;
+                }
+                else{
+
+                    loopBtn.setBackgroundResource(R.drawable.ic_baseline_check_box_outline_blank_24);
+                    isChecked = true;
+                }
+            }
+        });
+    }
+
+
+    @Override
+    public void onClick(View v) {
+
+    }
+}
+
+
 
 
 /**

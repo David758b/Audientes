@@ -73,6 +73,25 @@ public class Utilities {
 
     }
 
+    public static int convertFormatToMili(String soundDuration){
+        String minutes;
+        String seconds;
+
+        minutes = soundDuration.split(":")[0];
+        seconds = soundDuration.split(":")[1];
+        int duration = Integer.parseInt(minutes) * 60 + Integer.parseInt(seconds);
+
+        return duration;
+    }
+
+    public static int percentageOfInt(int soundDuration, int percentage){
+        double percent = ((double) percentage)/100.0;
+        double finalInt = percent * soundDuration;
+
+        return (int) finalInt;
+    }
+
+
     public static void hideKeyboard(View v, Activity activity) {
         // Fjerner keyboard fra skærmen
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
