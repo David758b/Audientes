@@ -1,19 +1,15 @@
-package com.example.AudientesAPP.model.data;
+package com.example.AudientesAPP.data;
 
 import android.content.Context;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.AudientesAPP.UI.MainActivity;
 import com.example.AudientesAPP.model.DTO.SoundDTO;
 import com.example.AudientesAPP.model.context.ModelViewController;
-import com.example.AudientesAPP.model.data.DAO.SoundDAO;
+import com.example.AudientesAPP.data.DAO.SoundDAO;
 import com.example.AudientesAPP.model.funktionalitet.Utilities;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,8 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+
 /**
  * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
  *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen

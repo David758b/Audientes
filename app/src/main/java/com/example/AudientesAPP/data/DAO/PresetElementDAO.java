@@ -1,13 +1,12 @@
-package com.example.AudientesAPP.model.data.DAO;
+package com.example.AudientesAPP.data.DAO;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.AudientesAPP.model.DTO.PresetElementDTO;
-import com.example.AudientesAPP.model.context.ModelViewController;
-import com.example.AudientesAPP.model.data.InterfaceDAO.IDAO;
-import com.example.AudientesAPP.model.data.SoundDB;
+import com.example.AudientesAPP.data.InterfaceDAO.IDAO;
+import com.example.AudientesAPP.data.SoundDB;
 
 import java.util.ArrayList;
 import java.util.List;

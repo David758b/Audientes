@@ -52,12 +52,19 @@
         <action
             android:id="@+id/action_presetMain_to_presetContent"
             app:destination="@+id/presetContent"/>
+        <action
+            android:id="@+id/action_presetMain_to_libraryMain"
+            app:destination="@+id/libraryMain"/>
     </fragment>
     <fragment
         android:id="@+id/preset_item_new"
         android:name="com.example.AudientesAPP.UI.PresetItemNew"
-        android:label="presetItemNew"
+        android:label="presetItemNew">
+        <action
+            android:id="@+id/action_presetItemNew_to_presetMain"
+            app:destination="@+id/presetMain"
         />
+    </fragment>
 
     <fragment
         android:id="@+id/presetContent"

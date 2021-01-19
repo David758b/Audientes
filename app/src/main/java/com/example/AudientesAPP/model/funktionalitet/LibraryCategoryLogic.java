@@ -1,20 +1,7 @@
 package com.example.AudientesAPP.model.funktionalitet;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-
-import com.example.AudientesAPP.R;
-import com.example.AudientesAPP.UI.CategorySounds;
 import com.example.AudientesAPP.model.DTO.CategoryDTO;
-import com.example.AudientesAPP.model.DTO.SoundCategoriesDTO;
-import com.example.AudientesAPP.model.context.ModelViewController;
-import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
-import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
+import com.example.AudientesAPP.data.DAO.CategoryDAO;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,15 +1,11 @@
 package com.example.AudientesAPP.model.funktionalitet;
 
-import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.util.Log;
 
-import com.example.AudientesAPP.R;
-import com.example.AudientesAPP.UI.PlayBar_Frag;
 import com.example.AudientesAPP.model.DTO.SoundDTO;
-import com.example.AudientesAPP.model.data.DAO.SoundDAO;
+import com.example.AudientesAPP.data.DAO.SoundDAO;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,16 +14,15 @@ import com.example.AudientesAPP.model.DTO.PresetCategoriesDTO;
 import com.example.AudientesAPP.model.DTO.PresetDTO;
 import com.example.AudientesAPP.model.DTO.PresetElementDTO;
 import com.example.AudientesAPP.model.DTO.SoundCategoriesDTO;
-import com.example.AudientesAPP.model.DTO.SoundDTO;
-import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
-import com.example.AudientesAPP.model.data.DAO.PresetCategoriesDAO;
-import com.example.AudientesAPP.model.data.DAO.PresetDAO;
-import com.example.AudientesAPP.model.data.DAO.PresetElementDAO;
-import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
-import com.example.AudientesAPP.model.data.DAO.SoundDAO;
-import com.example.AudientesAPP.model.data.DownloadSoundFiles;
-import com.example.AudientesAPP.model.data.ExternalStorage;
-import com.example.AudientesAPP.model.data.SoundDB;
+import com.example.AudientesAPP.data.DAO.CategoryDAO;
+import com.example.AudientesAPP.data.DAO.PresetCategoriesDAO;
+import com.example.AudientesAPP.data.DAO.PresetDAO;
+import com.example.AudientesAPP.data.DAO.PresetElementDAO;
+import com.example.AudientesAPP.data.DAO.SoundCategoriesDAO;
+import com.example.AudientesAPP.data.DAO.SoundDAO;
+import com.example.AudientesAPP.data.DownloadSoundFiles;
+import com.example.AudientesAPP.data.ExternalStorage;
+import com.example.AudientesAPP.data.SoundDB;
 import com.example.AudientesAPP.model.funktionalitet.CategorySoundsLogic;
 import com.example.AudientesAPP.model.funktionalitet.LibraryCategoryLogic;
 import com.example.AudientesAPP.model.funktionalitet.LibrarySoundLogic;
@@ -31,9 +30,6 @@ import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.example.AudientesAPP.model.funktionalitet.PresetContentLogic;
 import com.example.AudientesAPP.model.funktionalitet.PresetLogic;
 import com.example.AudientesAPP.model.funktionalitet.SoundSaver;
-import com.example.AudientesAPP.model.funktionalitet.Utilities;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 /**
  * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,

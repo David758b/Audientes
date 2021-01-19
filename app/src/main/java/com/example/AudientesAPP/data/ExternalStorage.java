@@ -1,8 +1,7 @@
-package com.example.AudientesAPP.model.data;
+package com.example.AudientesAPP.data;
 
 import android.content.Context;
 import android.os.Environment;
-import com.example.AudientesAPP.model.context.ModelViewController;
 
 import java.io.File;
 import java.io.FileOutputStream;

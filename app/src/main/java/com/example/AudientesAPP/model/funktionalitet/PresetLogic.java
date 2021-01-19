@@ -1,12 +1,7 @@
 package com.example.AudientesAPP.model.funktionalitet;
 
-import android.content.Context;
-
-import com.example.AudientesAPP.model.DTO.CategoryDTO;
 import com.example.AudientesAPP.model.DTO.PresetDTO;
-import com.example.AudientesAPP.model.context.ModelViewController;
-import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
-import com.example.AudientesAPP.model.data.DAO.PresetDAO;
+import com.example.AudientesAPP.data.DAO.PresetDAO;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,6 @@
 package com.example.AudientesAPP.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -71,6 +73,16 @@ public class PresetMain extends Fragment implements AdapterView.OnItemClickListe
 
         //recyclerView.setPadding(0,75,0,20);
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent startMain = new Intent(Intent.ACTION_MAIN);
+                startMain.addCategory(Intent.CATEGORY_HOME);
+                startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(startMain);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(mainActivity, callback);
 
         return v;
     }

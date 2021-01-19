@@ -3,11 +3,9 @@ package com.example.AudientesAPP.model.funktionalitet;
 import android.content.SharedPreferences;
 
 import com.example.AudientesAPP.model.DTO.PresetElementDTO;
-import com.example.AudientesAPP.model.DTO.PresetElementDTO;
 import com.example.AudientesAPP.model.DTO.SoundDTO;
-import com.example.AudientesAPP.model.data.DAO.PresetElementDAO;
-import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
-import com.example.AudientesAPP.model.data.DAO.SoundDAO;
+import com.example.AudientesAPP.data.DAO.PresetElementDAO;
+import com.example.AudientesAPP.data.DAO.SoundDAO;
 
 import java.util.ArrayList;
 import java.util.List;

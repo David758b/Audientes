@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,32 +19,21 @@ import android.view.View;
 
 import com.example.AudientesAPP.model.context.ModelViewController;
 import com.example.AudientesAPP.model.DTO.CategoryDTO;
-import com.example.AudientesAPP.model.DTO.PresetCategoriesDTO;
-import com.example.AudientesAPP.model.DTO.PresetDTO;
-import com.example.AudientesAPP.model.DTO.PresetElementDTO;
 import com.example.AudientesAPP.model.DTO.SoundCategoriesDTO;
 import com.example.AudientesAPP.model.DTO.SoundDTO;
 import com.example.AudientesAPP.R;
-import com.example.AudientesAPP.model.data.DownloadSoundFiles;
-import com.example.AudientesAPP.model.data.DAO.CategoryDAO;
-import com.example.AudientesAPP.model.data.DAO.PresetCategoriesDAO;
-import com.example.AudientesAPP.model.data.DAO.PresetDAO;
-import com.example.AudientesAPP.model.data.DAO.PresetElementDAO;
-import com.example.AudientesAPP.model.data.DAO.SoundCategoriesDAO;
-import com.example.AudientesAPP.model.data.DAO.SoundDAO;
-import com.example.AudientesAPP.model.funktionalitet.CategorySoundsLogic;
-import com.example.AudientesAPP.model.funktionalitet.LibraryCategoryLogic;
-import com.example.AudientesAPP.model.funktionalitet.PresetLogic;
+import com.example.AudientesAPP.data.DownloadSoundFiles;
+import com.example.AudientesAPP.data.DAO.CategoryDAO;
+import com.example.AudientesAPP.data.DAO.SoundCategoriesDAO;
+import com.example.AudientesAPP.data.DAO.SoundDAO;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import io.sentry.Sentry;
-import io.sentry.SentryOptions;
 
 /**
  * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,

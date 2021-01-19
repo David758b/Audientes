@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -48,6 +49,15 @@ public class PresetItemNew extends Fragment implements AdapterView.OnItemClickLi
         modelViewController = mainActivity.getModelViewController();
         logic = modelViewController.getPresetLogic();
         initialize(v);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                modelViewController.getNavController().navigate(R.id.action_presetItemNew_to_presetMain);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(mainActivity, callback);
+
         return v;
     }
 
@@ -98,4 +108,5 @@ public class PresetItemNew extends Fragment implements AdapterView.OnItemClickLi
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
     }
+
 }

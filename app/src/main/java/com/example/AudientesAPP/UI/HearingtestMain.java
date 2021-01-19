@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 import com.example.AudientesAPP.R;
 /**
@@ -28,6 +30,16 @@ public class HearingtestMain extends Fragment implements View.OnClickListener {
         testButton.setOnClickListener(this);
 
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent startMain = new Intent(Intent.ACTION_MAIN);
+                startMain.addCategory(Intent.CATEGORY_HOME);
+                startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(startMain);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this.getActivity(), callback);
         return rod;
     }
 

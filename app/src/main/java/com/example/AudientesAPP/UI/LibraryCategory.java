@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
@@ -75,6 +77,18 @@ public class LibraryCategory extends Fragment implements LibraryCategoryLogic.On
             e.printStackTrace();
         }
         categoryList.setAdapter(mAdapter);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent startMain = new Intent(Intent.ACTION_MAIN);
+                startMain.addCategory(Intent.CATEGORY_HOME);
+                startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(startMain);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(mainActivity, callback);
+
         return root;
     }
 

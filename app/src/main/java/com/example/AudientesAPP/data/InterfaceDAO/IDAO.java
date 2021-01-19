@@ -1,4 +1,4 @@
-package com.example.AudientesAPP.model.data.InterfaceDAO;
+package com.example.AudientesAPP.data.InterfaceDAO;
 
 import java.util.List;
 /**

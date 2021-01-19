@@ -4,9 +4,8 @@ import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 
 import com.example.AudientesAPP.model.DTO.SoundDTO;
-import com.example.AudientesAPP.model.context.ModelViewController;
-import com.example.AudientesAPP.model.data.DAO.SoundDAO;
-import com.example.AudientesAPP.model.data.ExternalStorage;
+import com.example.AudientesAPP.data.DAO.SoundDAO;
+import com.example.AudientesAPP.data.ExternalStorage;
 
 import java.io.File;
 /**

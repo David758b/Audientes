@@ -1,4 +1,4 @@
-package com.example.AudientesAPP.model.data;
+package com.example.AudientesAPP.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
