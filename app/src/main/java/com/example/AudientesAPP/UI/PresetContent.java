@@ -339,8 +339,8 @@ class SoundEditDialog extends Dialog implements View.OnClickListener{
         this.saveBtn = findViewById(R.id.preset_sound_save);
         soundTitle.setText(soundName);
 
-
     }
+
 
     @Override
     public void onClick(View v) {

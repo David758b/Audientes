@@ -63,6 +63,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="9"
+
             />
         <ImageView
             android:id="@+id/preset_sound_volume_increase"
