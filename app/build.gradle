@@ -40,5 +40,5 @@ dependencies {
     implementation 'com.android.support:design:30.0.0'
     implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
     implementation 'io.sentry:sentry-android:3.1.0'
-
+    implementation 'com.yahoo.mobile.client.android.util.rangeseekbar:rangeseekbar-library:0.1.0'
 }

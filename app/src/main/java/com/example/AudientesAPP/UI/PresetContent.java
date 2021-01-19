@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -169,6 +170,7 @@ public class PresetContent extends Fragment implements PresetContentLogic.OnPres
 
     @Override
     public void onItemClick(int position) {
+
     }
 }
 
@@ -271,7 +273,7 @@ class PresetSoundAdapter extends RecyclerView.Adapter<PresetSoundAdapter.SoundVi
         });
 
 
-        holder.soundTextView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClick.onItemClick(position);
@@ -287,6 +289,52 @@ class PresetSoundAdapter extends RecyclerView.Adapter<PresetSoundAdapter.SoundVi
         this.onClick = onClick;
     }
 }
+
+class SoundEditDialog extends Dialog implements View.OnClickListener{
+
+    //Views
+    private TextView soundTitle;
+    private TextView soundVolumeTV;
+    private TextView soundVolumePct;
+    private TextView soundIntervalTV;
+    private TextView soundIntervalStart;
+    private TextView soundIntervalEnd;
+    private TextView loopBtnTV;
+
+    private ImageView soundVolumeDec;
+    private ImageView soundVolumeInc;
+    private ImageView loopBtn;
+
+    private Button saveBtn;
+
+    //Objects
+
+    //Listener
+
+    //Variables
+
+    public SoundEditDialog(Activity contextUI) {
+        super(contextUI);
+        soundTitle = findViewById(R.id.preset_sound_title_TV);
+        soundVolumeTV = findViewById(R.id.preset_sound_volume_TV);
+        soundVolumeDec = findViewById(R.id.preset_sound_volume_decrement);
+        soundVolumeInc = findViewById(R.id.preset_sound_volume_increase);
+        soundIntervalTV = findViewById(R.id.preset_sound_interval_TV);
+        soundIntervalEnd= findViewById(R.id.preset_sound_interval_end);
+        soundIntervalStart = findViewById(R.id.preset_sound_interval_start);
+        loopBtnTV = findViewById(R.id.preset_sound_loop_TV);
+        loopBtn = findViewById(R.id.preset_sound_loop_btn);
+        saveBtn = findViewById(R.id.preset_sound_save);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+}
+
+
 
 
 /**
