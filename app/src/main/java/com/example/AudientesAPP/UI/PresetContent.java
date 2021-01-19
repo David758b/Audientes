@@ -276,7 +276,14 @@ class PresetSoundAdapter extends RecyclerView.Adapter<PresetSoundAdapter.SoundVi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClick.onItemClick(position);
+
+                System.out.println("SOUND NAME ;" + presetContentLogic.getSoundsList().get(position));
+
+                SoundEditDialog soundEditDialog = new SoundEditDialog(modelViewController.getContext(),presetContentLogic.getSoundsList().get(position));
+                //onClick.onItemClick(position);
+
+                soundEditDialog.show();
+                System.out.println("SHOW................DIALog");
             }
         });
     }
@@ -308,23 +315,30 @@ class SoundEditDialog extends Dialog implements View.OnClickListener{
     private Button saveBtn;
 
     //Objects
-
+    private Activity contextUI;
     //Listener
 
     //Variables
+    String soundName;
 
-    public SoundEditDialog(Activity contextUI) {
+    public SoundEditDialog(Activity contextUI, String soundName) {
         super(contextUI);
-        soundTitle = findViewById(R.id.preset_sound_title_TV);
-        soundVolumeTV = findViewById(R.id.preset_sound_volume_TV);
-        soundVolumeDec = findViewById(R.id.preset_sound_volume_decrement);
-        soundVolumeInc = findViewById(R.id.preset_sound_volume_increase);
-        soundIntervalTV = findViewById(R.id.preset_sound_interval_TV);
-        soundIntervalEnd= findViewById(R.id.preset_sound_interval_end);
-        soundIntervalStart = findViewById(R.id.preset_sound_interval_start);
-        loopBtnTV = findViewById(R.id.preset_sound_loop_TV);
-        loopBtn = findViewById(R.id.preset_sound_loop_btn);
-        saveBtn = findViewById(R.id.preset_sound_save);
+        this.contextUI = contextUI;
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.preset_frag_edit_sound_dialog);
+        getWindow().getDecorView().setBackgroundResource(android.R.color.transparent);
+        this.soundTitle = findViewById(R.id.preset_sound_title_TV);
+        this.soundVolumeTV = findViewById(R.id.preset_sound_volume_TV);
+        this.soundVolumeDec = findViewById(R.id.preset_sound_volume_decrement);
+        this.soundVolumeInc = findViewById(R.id.preset_sound_volume_increase);
+        this.soundIntervalTV = findViewById(R.id.preset_sound_interval_TV);
+        this.soundIntervalEnd= findViewById(R.id.preset_sound_interval_end);
+        this.soundIntervalStart = findViewById(R.id.preset_sound_interval_start);
+        this.loopBtnTV = findViewById(R.id.preset_sound_loop_TV);
+        this.loopBtn = findViewById(R.id.preset_sound_loop_btn);
+        this.saveBtn = findViewById(R.id.preset_sound_save);
+        soundTitle.setText(soundName);
+
 
     }
 
