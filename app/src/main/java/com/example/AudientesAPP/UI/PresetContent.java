@@ -32,6 +32,7 @@ import com.example.AudientesAPP.model.funktionalitet.LibrarySoundLogic;
 import com.example.AudientesAPP.model.funktionalitet.PresetContentLogic;
 import com.example.AudientesAPP.model.funktionalitet.PresetLogic;
 import com.example.AudientesAPP.model.funktionalitet.Utilities;
+import com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -279,7 +280,7 @@ class PresetSoundAdapter extends RecyclerView.Adapter<PresetSoundAdapter.SoundVi
 
                 System.out.println("SOUND NAME ;" + presetContentLogic.getSoundsList().get(position));
 
-                SoundEditDialog soundEditDialog = new SoundEditDialog(modelViewController.getContext(),presetContentLogic.getSoundsList().get(position));
+                SoundEditDialog soundEditDialog = new SoundEditDialog(modelViewController.getContext(),presetContentLogic.getSoundsWithDuration().get(position));
                 //onClick.onItemClick(position);
 
                 soundEditDialog.show();
@@ -312,6 +313,8 @@ class SoundEditDialog extends Dialog implements View.OnClickListener{
     private ImageView soundVolumeInc;
     private ImageView loopBtn;
 
+    private RangeSeekBar<Integer> rangeSeekBar;
+
     private Button saveBtn;
 
     //Objects
@@ -319,9 +322,9 @@ class SoundEditDialog extends Dialog implements View.OnClickListener{
     //Listener
 
     //Variables
-    String soundName;
+    int soundDurInt;
 
-    public SoundEditDialog(Activity contextUI, String soundName) {
+    public SoundEditDialog(Activity contextUI, PresetContentLogic.SoundWithDuration soundWithDuration) {
         super(contextUI);
         this.contextUI = contextUI;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -331,14 +334,26 @@ class SoundEditDialog extends Dialog implements View.OnClickListener{
         this.soundVolumeTV = findViewById(R.id.preset_sound_volume_TV);
         this.soundVolumeDec = findViewById(R.id.preset_sound_volume_decrement);
         this.soundVolumeInc = findViewById(R.id.preset_sound_volume_increase);
+        this.rangeSeekBar = findViewById(R.id.preset_sound_rangeSeekbar);
         this.soundIntervalTV = findViewById(R.id.preset_sound_interval_TV);
         this.soundIntervalEnd= findViewById(R.id.preset_sound_interval_end);
         this.soundIntervalStart = findViewById(R.id.preset_sound_interval_start);
         this.loopBtnTV = findViewById(R.id.preset_sound_loop_TV);
         this.loopBtn = findViewById(R.id.preset_sound_loop_btn);
         this.saveBtn = findViewById(R.id.preset_sound_save);
-        soundTitle.setText(soundName);
-
+        soundTitle.setText(soundWithDuration.getSoundName());
+        soundIntervalEnd.setText(soundWithDuration.getSoundDuration());
+        this.soundDurInt = Utilities.convertFormatToMili(soundWithDuration.getSoundDuration());
+        rangeSeekBar.setRangeValues(0,100);
+        rangeSeekBar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
+            @Override
+            public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar, Integer minValue, Integer maxValue) {
+                soundIntervalStart.setText(Utilities.convertFormat(Utilities.percentageOfInt(soundDurInt,minValue)*1000));
+                soundIntervalEnd.setText(Utilities.convertFormat(Utilities.percentageOfInt(soundDurInt,maxValue)*1000));
+            }
+        });
+        // Get noticed while dragging
+        rangeSeekBar.setNotifyWhileDragging(true);
     }
 
 
