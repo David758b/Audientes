@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -313,6 +314,7 @@ class SoundEditDialog extends Dialog implements View.OnClickListener{
     private ImageView soundVolumeInc;
     private ImageView loopBtn;
 
+    private SeekBar volumenSeekBar;
     private RangeSeekBar<Integer> rangeSeekBar;
 
     private Button saveBtn;
@@ -341,6 +343,8 @@ class SoundEditDialog extends Dialog implements View.OnClickListener{
         this.loopBtnTV = findViewById(R.id.preset_sound_loop_TV);
         this.loopBtn = findViewById(R.id.preset_sound_loop_btn);
         this.saveBtn = findViewById(R.id.preset_sound_save);
+        this.volumenSeekBar = findViewById(R.id.preset_sound_vol_seekbar);
+        this.soundVolumePct = findViewById(R.id.preset_sound_volume_percentage_TV);
         soundTitle.setText(soundWithDuration.getSoundName());
         soundIntervalEnd.setText(soundWithDuration.getSoundDuration());
         this.soundDurInt = Utilities.convertFormatToMili(soundWithDuration.getSoundDuration());
@@ -354,6 +358,65 @@ class SoundEditDialog extends Dialog implements View.OnClickListener{
         });
         // Get noticed while dragging
         rangeSeekBar.setNotifyWhileDragging(true);
+
+        soundVolumeDec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                volumenSeekBar.setProgress(volumenSeekBar.getProgress()-1);
+            }
+        });
+
+        soundVolumeInc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                volumenSeekBar.setProgress(volumenSeekBar.getProgress()+1);
+            }
+        });
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "Saved " + soundTitle.getText(), Toast.LENGTH_SHORT).show();
+                dismiss();
+            }
+        });
+
+        volumenSeekBar.setProgress(100);
+        volumenSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                soundVolumePct.setText(progress + "%");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
+        loopBtn.setOnClickListener(new View.OnClickListener() {
+            boolean isChecked = true;
+            @Override
+            public void onClick(View v) {
+
+                if(isChecked){
+                    loopBtn.setBackgroundResource(R.drawable.ic_baseline_check_box_24);
+                    isChecked = false;
+                }
+                else{
+
+                    loopBtn.setBackgroundResource(R.drawable.ic_baseline_check_box_outline_blank_24);
+                    isChecked = true;
+                }
+            }
+        });
     }
 
 

@@ -38,7 +38,7 @@
             android:id="@+id/preset_sound_volume_percentage_TV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="%"
+            android:text="100%"
             android:textColor="@color/LightGrey"
             android:gravity="center"
             android:layout_weight="1"
@@ -60,6 +60,7 @@
             android:layout_marginStart="50dp"
             />
         <SeekBar
+            android:id="@+id/preset_sound_vol_seekbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="9"
@@ -169,8 +170,8 @@
 
     <ImageView
         android:id="@+id/preset_sound_loop_btn"
-        android:layout_width="25dp"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@drawable/ic_baseline_check_box_outline_blank_24"
         android:backgroundTint="@color/LightGrey"
         android:layout_gravity="center"

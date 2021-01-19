@@ -145,12 +145,15 @@ public class PlayBar_Frag extends Fragment implements LydAfspiller.OnLydAfspille
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         handler.removeCallbacks(mUpdateTimeTask);
-        int totalDuration = lydAfspiller.getDuration();
-        int currentPosition = Utilities.progressToTimer(seekBar.getProgress(), totalDuration);
 
-        lydAfspiller.seekTo(currentPosition);
+            int totalDuration = lydAfspiller.getDuration();
+            int currentPosition = Utilities.progressToTimer(seekBar.getProgress(), totalDuration);
+            lydAfspiller.seekTo(currentPosition);
+            handler.postDelayed(mUpdateTimeTask, 100);
 
-        handler.postDelayed(mUpdateTimeTask, 100);
+
+        ;
+
     }
 
 }
