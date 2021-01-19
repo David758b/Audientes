@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
 
          */
+        
 
         bgThread = Executors.newSingleThreadExecutor();
         uiThread = new Handler(Looper.getMainLooper());

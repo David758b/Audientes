@@ -20,6 +20,7 @@ import com.example.AudientesAPP.R;
 public class HearingtestMain extends Fragment implements View.OnClickListener {
 
     private ImageView testButton;
+    private TextView names;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -28,6 +29,8 @@ public class HearingtestMain extends Fragment implements View.OnClickListener {
 
         testButton = (ImageView) rod.findViewById(R.id.hearingtestbutton);
         testButton.setOnClickListener(this);
+        names = (TextView) rod.findViewById(R.id.namesTV);
+
 
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
