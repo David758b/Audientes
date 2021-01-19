@@ -1,7 +1,5 @@
 package com.example.AudientesAPP.UI;
 
-import android.annotation.SuppressLint;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -14,12 +12,10 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.AudientesAPP.model.context.ModelViewController;
+import com.example.AudientesAPP.model.controller.ModelViewController;
 import com.example.AudientesAPP.model.funktionalitet.LydAfspiller;
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.funktionalitet.Utilities;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * test fragment til en playbar (dvs en menu hvor man kan pause og play en lyd)

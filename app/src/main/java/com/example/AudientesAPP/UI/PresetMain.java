@@ -18,13 +18,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.AudientesAPP.R;
-import com.example.AudientesAPP.model.context.ModelViewController;
-import com.example.AudientesAPP.model.funktionalitet.LibraryCategoryLogic;
+import com.example.AudientesAPP.model.controller.ModelViewController;
 import com.example.AudientesAPP.model.funktionalitet.PresetContentLogic;
 import com.example.AudientesAPP.model.funktionalitet.PresetLogic;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 /**

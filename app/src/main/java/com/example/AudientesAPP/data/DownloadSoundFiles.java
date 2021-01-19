@@ -8,7 +8,7 @@ import android.os.Environment;
 import androidx.annotation.NonNull;
 
 import com.example.AudientesAPP.model.DTO.SoundDTO;
-import com.example.AudientesAPP.model.context.ModelViewController;
+import com.example.AudientesAPP.model.controller.ModelViewController;
 import com.example.AudientesAPP.data.DAO.SoundDAO;
 import com.example.AudientesAPP.model.funktionalitet.Utilities;
 import com.google.android.gms.tasks.OnFailureListener;

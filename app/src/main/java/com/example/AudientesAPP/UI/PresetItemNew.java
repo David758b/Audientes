@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.AudientesAPP.R;
-import com.example.AudientesAPP.model.context.ModelViewController;
+import com.example.AudientesAPP.model.controller.ModelViewController;
 import com.example.AudientesAPP.model.funktionalitet.PresetLogic;
 import com.example.AudientesAPP.model.funktionalitet.Utilities;
 /**

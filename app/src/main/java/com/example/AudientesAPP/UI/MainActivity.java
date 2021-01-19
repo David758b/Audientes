@@ -17,7 +17,7 @@ import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.AudientesAPP.model.context.ModelViewController;
+import com.example.AudientesAPP.model.controller.ModelViewController;
 import com.example.AudientesAPP.model.DTO.CategoryDTO;
 import com.example.AudientesAPP.model.DTO.SoundCategoriesDTO;
 import com.example.AudientesAPP.model.DTO.SoundDTO;

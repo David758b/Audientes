@@ -1,4 +1,4 @@
-package com.example.AudientesAPP.model.context;
+package com.example.AudientesAPP.model.controller;
 
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
