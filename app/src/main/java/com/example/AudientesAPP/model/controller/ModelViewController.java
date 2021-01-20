@@ -97,7 +97,7 @@ public class ModelViewController {
         soundSaver = new SoundSaver(externalStorage,soundDAO);
         if (prefs.getBoolean("firstDBrun", true)) {
             saveRawFiles();
-            //fillDBUp();
+            fillDBUp();
             prefs.edit().putBoolean("firstDBrun", false).commit();
         }
         librarySoundLogic = new LibrarySoundLogic(soundCategoriesDAO,soundDAO);
@@ -217,14 +217,15 @@ public class ModelViewController {
 
     public void saveRawFiles(){
         //Gemmer alle lyde i raw mappen i external storage
-        getSoundSaver().saveSound(R.raw.andreangelo, "andreangelo");
-        getSoundSaver().saveSound(R.raw.brown_noise, "brown_noise");
-        getSoundSaver().saveSound(R.raw.chihuahua, "chihuahua");
-        getSoundSaver().saveSound(R.raw.cricket, "cricket");
-        getSoundSaver().saveSound(R.raw.melarancida__monks_praying, "monks_praying");
-        getSoundSaver().saveSound(R.raw.rain_street, "rain_street");
-        getSoundSaver().saveSound(R.raw.testlyd, "testlyd");
-        getSoundSaver().saveSound(R.raw.train_nature, "train_nature");
+        getSoundSaver().saveSound(R.raw.bublewater, "Bubble water");
+        getSoundSaver().saveSound(R.raw.catmeowing, "Cat meowing");
+        getSoundSaver().saveSound(R.raw.dolphins, "Dolphins");
+        getSoundSaver().saveSound(R.raw.etherealvoice, "Ethereal voice");
+        getSoundSaver().saveSound(R.raw.forestbirds, "Forest birds");
+        getSoundSaver().saveSound(R.raw.frogs, "Frogs");
+        getSoundSaver().saveSound(R.raw.monkspraying, "Monks praying");
+        getSoundSaver().saveSound(R.raw.rainandthunder, "Rain and thunder");
+        getSoundSaver().saveSound(R.raw.rainandthunder, "Running water");
     }
 
 
@@ -234,24 +235,44 @@ public class ModelViewController {
     //Fill db with test data
     public void fillDBUp() {
         CategoryDAO categoryDAO = getCategoryDAO();
-        CategoryDTO newCategory = new CategoryDTO("I Like to move it", "pictureSrc", "Blue");
-        categoryDAO.add(newCategory);
+        CategoryDTO category1 = new CategoryDTO("Animals", "pictureSrc", "Blue");
+        categoryDAO.add(category1);
+        CategoryDTO category2 = new CategoryDTO("Nature", "pictureSrc", "Green");
+        categoryDAO.add(category2);
+        CategoryDTO category3 = new CategoryDTO("Music", "pictureSrc", "Yellow");
+        categoryDAO.add(category3);
 
         PresetDAO presetDAO = getPresetDAO();
-        PresetDTO presetDTO = new PresetDTO("Sove tid");
+        PresetDTO presetDTO = new PresetDTO("Sleeping time");
         presetDAO.add(presetDTO);
 
         SoundCategoriesDAO soundCategoriesDAO = getSoundCategoriesDAO();
-        SoundCategoriesDTO soundCategoriesDTO = new SoundCategoriesDTO("brown_noise", "I Like to move it");
-        soundCategoriesDAO.add(soundCategoriesDTO);
+        SoundCategoriesDTO soundCategoriesDTO1 = new SoundCategoriesDTO("Cat meowing", "Animals");
+        soundCategoriesDAO.add(soundCategoriesDTO1);
+        SoundCategoriesDTO soundCategoriesDTO2 = new SoundCategoriesDTO("Dolphins", "Animals");
+        soundCategoriesDAO.add(soundCategoriesDTO2);
+        SoundCategoriesDTO soundCategoriesDTO3 = new SoundCategoriesDTO("Frogs", "Animals");
+        soundCategoriesDAO.add(soundCategoriesDTO3);
+        SoundCategoriesDTO soundCategoriesDTO4 = new SoundCategoriesDTO("Forest birds", "Animals");
+        soundCategoriesDAO.add(soundCategoriesDTO4);
+        SoundCategoriesDTO soundCategoriesDTO5 = new SoundCategoriesDTO("Bubble water", "Nature");
+        soundCategoriesDAO.add(soundCategoriesDTO5);
+        SoundCategoriesDTO soundCategoriesDTO6 = new SoundCategoriesDTO("Rain and thunder", "Nature");
+        soundCategoriesDAO.add(soundCategoriesDTO6);
+        SoundCategoriesDTO soundCategoriesDTO7 = new SoundCategoriesDTO("Running water", "Nature");
+        soundCategoriesDAO.add(soundCategoriesDTO7);
+        SoundCategoriesDTO soundCategoriesDTO8 = new SoundCategoriesDTO("Ethereal voice", "Music");
+        soundCategoriesDAO.add(soundCategoriesDTO8);
+        SoundCategoriesDTO soundCategoriesDTO9 = new SoundCategoriesDTO("Monks praying", "Music");
+        soundCategoriesDAO.add(soundCategoriesDTO9);
 
         // TODO: Mangler logic klasser til de sidste to tabeller
         PresetCategoriesDAO presetCategoriesDAO = getPresetCategoriesDAO();
-        PresetCategoriesDTO presetCategoriesDTO = new PresetCategoriesDTO("Sove tid", "I Like to move it");
+        PresetCategoriesDTO presetCategoriesDTO = new PresetCategoriesDTO("Sleeping time", "Nature");
         presetCategoriesDAO.add(presetCategoriesDTO);
 
         PresetElementDAO presetElementDAO = getPresetElementDAO();
-        PresetElementDTO newPresetElement = new PresetElementDTO("Sove tid", "brown_noise", 15);
+        PresetElementDTO newPresetElement = new PresetElementDTO("Sleeping time", "Running water", 15);
         presetElementDAO.add(newPresetElement);
     }
 }
