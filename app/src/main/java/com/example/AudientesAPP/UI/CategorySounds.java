@@ -140,7 +140,6 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
             }
         });
         soundItemAdapter.setOnClick(CategorySounds.this);
-        modelViewController.getContext().databaseTest();
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
@@ -165,7 +164,6 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
     @Override
     public void updateCategorySounds(CategorySoundsLogic categorySoundsLogic) {
         soundItemAdapter.notifyDataSetChanged();
-        System.out.println("NOOOTOFYYYYYYY JAJAJAJAJAJAjA");
     }
 
     @Override
@@ -179,12 +177,10 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
     public void onItemClick(int position) {
         onDestroy();
         lydAfspiller.playNewSound(categorySoundsLogic.getSoundsWithDuration().get(position).getSoundName());
-        //lydAfspiller.playNewSound(soundNames.get(position));
     }
 
     @Override
     public void updateLydAfspiller(LydAfspiller lydAfspiller) {
-        //Skal implementeres
     }
 
     @Override
@@ -201,13 +197,11 @@ public class CategorySounds extends Fragment implements CategorySoundAdapter.OnI
 class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.SoundViewHolder> {
 
     private List<CategorySoundsLogic.SoundWithDuration> mSoundSet;
-    //private List<String> nDuration;
     private CategorySoundsLogic categorySoundsLogic;
     private ModelViewController modelViewController;
 
     public CategorySoundAdapter(List<CategorySoundsLogic.SoundWithDuration> mySoundSet, CategorySoundsLogic categorySoundsLogic, ModelViewController modelViewController){
         this.mSoundSet = mySoundSet;
-        //this.nDuration = nDuration;
         this.categorySoundsLogic = categorySoundsLogic;
         this.modelViewController = modelViewController;
     }
@@ -215,7 +209,6 @@ class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.Sou
     public static class SoundViewHolder extends RecyclerView.ViewHolder{
         public TextView soundTextView;
         public TextView soundDuration;
-        public TextView categoryTag;
         public ImageView delete;
 
 
@@ -282,9 +275,7 @@ class CategorySoundAdapter extends RecyclerView.Adapter<CategorySoundAdapter.Sou
 
 
 
-//                alertDialog = builder.create();
 
-                // Show the Alert Dialog box
                 alertDialog.show();
                 Button nbutton = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
                 nbutton.setBackgroundColor(Color.WHITE);

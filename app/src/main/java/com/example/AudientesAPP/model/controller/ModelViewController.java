@@ -58,10 +58,8 @@ public class ModelViewController {
     private PresetElementDAO presetElementDAO;
     private PresetCategoriesDAO presetCategoriesDAO;
     private SoundCategoriesDAO soundCategoriesDAO;
-    //private CategoryDAO categoryDAO;
 
-    //Burde ikke få en instans af main, men kun context som er overklassen og ikke subklasse
-    //Overvej om denne kunne være en singleton
+
     public ModelViewController(MainActivity context) {
         this.context = context;
         //---------------------DATALAG---------------------
@@ -69,23 +67,9 @@ public class ModelViewController {
         db = soundDB.getWritableDatabase();
 
         //Storage reference til firebase
-
-
         externalStorage = new ExternalStorage(context);
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        //---------------------------------------------------------------------------------
-        //---------------------------------------------------------------------------------
-        //----------------------!!!!!!!!!!!!VIGTIGT!!!!!!!!!!!!----------------------------
-        /*
-        - DAO'erne SKAL være initialiseret før soundSaver
-        - soundSaver skal oprettes før saveRawFiles()
-        - saveRawFiles skal laves før fillDBUp()
-        - fillDBUp skal laves før logik klasserne
-         */
-        //----------------------!!!!!!!!!!!!VIGTIGT!!!!!!!!!!!!----------------------------
-        //---------------------------------------------------------------------------------
-        //---------------------------------------------------------------------------------
         soundCategoriesDAO = new SoundCategoriesDAO(db);
         presetCategoriesDAO = new PresetCategoriesDAO(db);
         presetElementDAO = new PresetElementDAO(db);
@@ -118,21 +102,6 @@ public class ModelViewController {
         //koordinationen af at skifte mellem forskellige destinationer
         navController = navHostFragment.getNavController();
 
-//        categoryDAO = new CategoryDAO(this);
-
-        //TESTING
-        //categoryDAO.add("te");
-       /*
-        Cursor cursor = main.getDB().query(SoundDB.TABEL_Category,null,null,null,null,null,null);
-        while(cursor.moveToNext()){
-            String navn = cursor.getString(0);
-            System.out.println("TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST");
-            System.out.println(navn);
-
-        }
-        cursor.close();
-
-        */
     }
 
     public MainActivity getContext() {

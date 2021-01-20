@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -57,20 +58,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.activity_main);
 
         //Dette bruges til at få en nedbrudsrapport
-        Sentry.init(options -> {options.setDsn("https://f1a313db1d68416a9f839a67ee979515@o506917.ingest.sentry.io/5597257");});
-        /*
         boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
         if (!EMULATOR) {
-	    Sentry.init(....);
+            Sentry.init(options -> {options.setDsn("https://f1a313db1d68416a9f839a67ee979515@o506917.ingest.sentry.io/5597257");});
         }
 
-         */
+
 
 
         bgThread = Executors.newSingleThreadExecutor();
         uiThread = new Handler(Looper.getMainLooper());
 
-        //Instansierer dialog **TEST**
+        //Instansierer dialog
         dialog = new ProgressDialog(MainActivity.this);
 
         //Creates a context and gives this for later use in the database
@@ -95,21 +94,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
 
-
-
-
-
-        //-------------------------------Resten er test---------------------------------------------
-        // printTables();
-        // mediaPlayerTest(controller);
-
-        /* This can be run to initialize the database with random test data, and output something
-        fillDBUp();
-        databaseTest();
-         */
-
-
-
     }
 
     @Override
@@ -124,73 +108,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
-
-    //----------------------test-------------------------------------------------------
-
-    //Printing tables
-    public void printTables() {
-        //outputs the table names in the cmd promt
-        Cursor c = modelViewController.getDb().rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
-        if (c.moveToFirst()) {
-            while (!c.isAfterLast()) {
-                System.out.println("Table Name=> " + c.getString(0));
-                //Toast.makeText(this, "Table Name=> "+c.getString(0), Toast.LENGTH_LONG).show();
-                c.moveToNext();
-            }
-        }
-        c.close();
-    }
-
-    //mediaplayer test
-    public void mediaPlayerTest(ModelViewController modelViewController) {
-        //test ----det virker sgu !!!
-        try {
-            MediaPlayer mPlayer = new MediaPlayer();
-            SoundDAO soundDAO = modelViewController.getSoundDAO();
-            List<SoundDTO> list = soundDAO.getList();
-            Uri myUri = null;
-
-            for (SoundDTO dto : list) {
-                if (dto.getSoundName().equals("andreangelo")) {
-                    myUri = Uri.parse(dto.getSoundSrc());
-                }
-            }
-            mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mPlayer.setDataSource(getApplicationContext(), myUri);
-            mPlayer.prepare();
-            mPlayer.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-    //Testing of the database may delete later
-    public void databaseTest() {
-        List list;
-        List list2;
-        SoundCategoriesDAO soundCategoriesDAO = modelViewController.getSoundCategoriesDAO();
-        CategoryDAO categoryDAO = modelViewController.getCategoryDAO();
-        list2 = categoryDAO.getList();
-        list = soundCategoriesDAO.getList();
-        SoundCategoriesDTO DTO;
-        CategoryDTO cDTO;
-        for (Object a : list) {
-            DTO = (SoundCategoriesDTO) a;
-            System.out.println("SOUND-CATEGORY DTO OUTPUT --------------");
-            System.out.println(DTO.getCategoryName());
-            System.out.println(DTO.getSoundName());
- //           System.out.println(DTO.getSoundDuration());
-        }
-        for (Object b: list2) {
-            cDTO = (CategoryDTO) b;
-            System.out.println("CATEGORY DTO OUTPUT --------------");
-            System.out.println(cDTO.getCategoryName());
-
-        }
-    }
-    //--------------------end test ----------------------------------------------------
 
     //Her implementeres listeneren, hvor vi skal definerer hvad der sker når der trkker på
     // et menu item
@@ -243,16 +160,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         List<String> filePath = new ArrayList<>();
         //adding all the files to a list so we can comepare the length with the length of our database to see when everything is dowlnoaded
-//        newFileNames.add("water_dripping_in_cave");
-//        filePath.add("soundfiles/177958__sclolex__water-dripping-in-cave.wav");
-//        newFileNames.add("Cricket");
-//        filePath.add("soundfiles/337435__ev-dawg__cricket.wav");
-//        newFileNames.add("Bees buzzing");
-//        filePath.add("soundfiles/41497941_bees-buzzing-01.mp3");
-//        newFileNames.add("Crows crawing");
-//        filePath.add("soundfiles/41498003_crow-cawing-05.mp3");
-//        newFileNames.add("Chihuaha growl");
-//        filePath.add("soundfiles/smartsound_ANIMAL_DOG_Chihuahua_Growl_Heavy_01.mp3");
+        newFileNames.add("water_dripping_in_cave");
+        filePath.add("soundfiles/177958__sclolex__water-dripping-in-cave.wav");
+        newFileNames.add("Cricket");
+        filePath.add("soundfiles/337435__ev-dawg__cricket.wav");
+        newFileNames.add("Bees buzzing");
+        filePath.add("soundfiles/41497941_bees-buzzing-01.mp3");
+        newFileNames.add("Crows crawing");
+        filePath.add("soundfiles/41498003_crow-cawing-05.mp3");
+        newFileNames.add("Chihuaha growl");
+        filePath.add("soundfiles/smartsound_ANIMAL_DOG_Chihuahua_Growl_Heavy_01.mp3");
         newFileNames.add("Waterfall");
         filePath.add("soundfiles/365915__inspectorj__waterfall-small-a.wav");
 
