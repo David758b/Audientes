@@ -272,7 +272,9 @@ public class ModelViewController {
         presetCategoriesDAO.add(presetCategoriesDTO);
 
         PresetElementDAO presetElementDAO = getPresetElementDAO();
-        PresetElementDTO newPresetElement = new PresetElementDTO("Sleeping time", "Running water", 15);
-        presetElementDAO.add(newPresetElement);
+        PresetElementDTO newPresetElement1 = new PresetElementDTO("Sleeping time", "Bubble water", 15);
+        presetElementDAO.add(newPresetElement1);
+        PresetElementDTO newPresetElement2 = new PresetElementDTO("Sleeping time", "Forest birds", 15);
+        presetElementDAO.add(newPresetElement2);
     }
 }
