@@ -24,6 +24,21 @@
             android:id="@+id/action_LibrarySounds_to_LibraryMain"
             app:destination="@+id/libraryMain"
             />
+        <action
+            android:id="@+id/action_LibraryMain_to_CategoryPreset"
+            app:destination="@+id/CategoryPreset"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/CategoryPreset"
+        android:name="com.example.AudientesAPP.UI.CategoryPreset_Frag"
+        android:label="CategoryPreset">
+        <action
+            android:id="@+id/action_CategoryPreset_to_libraryCategory"
+            app:destination="@+id/libraryMain"
+
+            />
     </fragment>
 
     <fragment

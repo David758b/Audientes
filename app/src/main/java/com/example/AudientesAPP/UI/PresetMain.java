@@ -122,7 +122,7 @@ class PresetAdapter extends RecyclerView.Adapter<PresetAdapter.MyViewHolder>{
     private List<String> mPresetSet;
     private NavController navController;
     private PresetContentLogic presetContentLogic;
-    //private List<PresetDTO> mPresetSet;
+
 
     public PresetAdapter(List<String> myPresetSet, NavController navController, PresetContentLogic presetContentLogic){
         mPresetSet = myPresetSet;

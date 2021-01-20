@@ -2,8 +2,10 @@ package com.example.AudientesAPP.model.funktionalitet;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.net.Uri;
 
+import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.DTO.SoundDTO;
 import com.example.AudientesAPP.data.DAO.SoundDAO;
 
@@ -24,6 +26,8 @@ public class LydAfspiller implements MediaPlayer.OnCompletionListener{
     private SoundDAO soundDAO;
     private List<SoundDTO> soundDTOS;
     private String currentSong;
+    private SoundPool pool;
+    private int lyd1,lyd2;
 
     public LydAfspiller(Context context, SoundDAO soundDAO){
         this.context = context;
@@ -94,6 +98,35 @@ public class LydAfspiller implements MediaPlayer.OnCompletionListener{
     public void addOnLydAfspillerListener(OnLydAfspillerListener listener){
         listeners.add(listener);
     }
+
+
+
+
+    public void playMultipleSounds(){
+
+        SoundPool.Builder spb = new SoundPool.Builder();
+        spb.setMaxStreams(2);
+        pool = spb.build();
+
+        lyd1 = pool.load(context, R.raw.melarancida__monks_praying,1);
+        lyd2 = pool.load(context, R.raw.rain_street,1);
+
+        pool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                System.out.println("Load complete");
+                pool.play(lyd1,1,1,1,1,1);
+                pool.play(lyd2,1,1,1,1,1);
+            }
+        });
+
+    }
+
+
+
+
+
+
 
     private void notifyListeners(){
         for (OnLydAfspillerListener listener: listeners) {

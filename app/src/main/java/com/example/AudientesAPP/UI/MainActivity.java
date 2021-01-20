@@ -39,7 +39,7 @@ import io.sentry.Sentry;
  * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
  *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
  */
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, DownloadSoundFiles.OnDownloadSoundFilesListener {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, DownloadSoundFiles.OnDownloadSoundFilesListener{
     private ModelViewController modelViewController;
     private NavController navController;
     private Executor bgThread;
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
 
          */
-        
+
 
         bgThread = Executors.newSingleThreadExecutor();
         uiThread = new Handler(Looper.getMainLooper());

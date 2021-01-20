@@ -213,6 +213,11 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
                     CreateCategoryDialog categoryDialog = new CreateCategoryDialog(contextUI, logic);
                     categoryDialog.show();
 
+                }else if(position == 1){
+
+                    categorySoundsLogic.setCurrentCategory("Presets");
+                    navController.navigate(R.id.action_LibraryMain_to_CategoryPreset);
+
                 } else {
                     // Hop til den rigtige kategori
                     // Dette skal overvejes lidt nærmere... smæk det i logik klassen
