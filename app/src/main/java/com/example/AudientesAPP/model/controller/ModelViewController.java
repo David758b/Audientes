@@ -97,7 +97,7 @@ public class ModelViewController {
         soundSaver = new SoundSaver(externalStorage,soundDAO);
         if (prefs.getBoolean("firstDBrun", true)) {
             saveRawFiles();
-            fillDBUp();
+            //fillDBUp();
             prefs.edit().putBoolean("firstDBrun", false).commit();
         }
         librarySoundLogic = new LibrarySoundLogic(soundCategoriesDAO,soundDAO);
