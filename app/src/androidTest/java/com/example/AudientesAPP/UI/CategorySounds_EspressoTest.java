@@ -46,7 +46,7 @@ public class CategorySounds_EspressoTest {
                         childAtPosition(
                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                 0)));
-        recyclerView.perform(actionOnItemAtPosition(1, click()));
+        recyclerView.perform(actionOnItemAtPosition(2, click()));
 
         ViewInteraction imageView = onView(
                 allOf(withId(R.id.returnIcon),

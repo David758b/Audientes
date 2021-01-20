@@ -157,6 +157,21 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>
             holder.delete.setVisibility(View.GONE);
             holder.categoryIcon.setImageResource(R.drawable.ic_baseline_playlist_play_24);
             holder.categoryIcon.setColorFilter(contextUI.getResources().getColor(R.color.white));
+        } else if (position == 2){
+            holder.delete.setVisibility(View.GONE);
+            holder.categoryIcon.setImageResource(R.drawable.ic_baseline_bug_report_24);
+            holder.categoryIcon.setColorFilter(contextUI.getResources().getColor(R.color.white));
+
+        } else if (position == 3){
+            holder.delete.setVisibility(View.GONE);
+            holder.categoryIcon.setImageResource(R.drawable.ic_nature2_category);
+            holder.categoryIcon.setColorFilter(contextUI.getResources().getColor(R.color.white));
+
+        } else if(position == 4){
+            holder.delete.setVisibility(View.GONE);
+            holder.categoryIcon.setImageResource(R.drawable.ic_music_category);
+            holder.categoryIcon.setColorFilter(contextUI.getResources().getColor(R.color.white));
+
         }
         final CategoryDTO categoryDTO = data.get(position);
         Typeface typeface = ResourcesCompat.getFont(contextUI, R.font.audientes_font);

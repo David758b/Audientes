@@ -243,16 +243,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         List<String> filePath = new ArrayList<>();
         //adding all the files to a list so we can comepare the length with the length of our database to see when everything is dowlnoaded
-        newFileNames.add("cobratronik_wind");
-        filePath.add("soundfiles/117136__cobratronik__wind-artic-cold.wav");
-//        newFileNames.add("cathedral_ambience_01");
-//        filePath.add("soundfiles/170675__klankbeeld__cathedral-ambience-01.wav");
 //        newFileNames.add("water_dripping_in_cave");
 //        filePath.add("soundfiles/177958__sclolex__water-dripping-in-cave.wav");
-//        newFileNames.add("downtown_calm");
-//        filePath.add("soundfiles/216734__klankbeeld__down-town-calm-140124-01.wav");
-        newFileNames.add("rain_and_thunder_4");
-        filePath.add("soundfiles/237729__flathill__rain-and-thunder-4.wav");
+//        newFileNames.add("Cricket");
+//        filePath.add("soundfiles/337435__ev-dawg__cricket.wav");
+//        newFileNames.add("Bees buzzing");
+//        filePath.add("soundfiles/41497941_bees-buzzing-01.mp3");
+//        newFileNames.add("Crows crawing");
+//        filePath.add("soundfiles/41498003_crow-cawing-05.mp3");
+//        newFileNames.add("Chihuaha growl");
+//        filePath.add("soundfiles/smartsound_ANIMAL_DOG_Chihuahua_Growl_Heavy_01.mp3");
+        newFileNames.add("Waterfall");
+        filePath.add("soundfiles/365915__inspectorj__waterfall-small-a.wav");
 
         for (int i = 0; i < newFileNames.size(); i++) {
             modelViewController.getDlSoundFiles().downloadSoundFiles(newFileNames.get(i), filePath.get(i));

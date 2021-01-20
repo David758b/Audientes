@@ -47,7 +47,8 @@
             android:clickable="true"
             android:backgroundTint="@color/AudientesOrange"
             android:contentDescription="ADD SOUND"
-            app:srcCompat="@drawable/ic_baseline_add_circle_outline_24" />
+            app:srcCompat="@drawable/ic_baseline_add_circle_outline_24"
+            android:focusable="true" />
     </LinearLayout>
 
     <View

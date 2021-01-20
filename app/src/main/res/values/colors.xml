@@ -4,9 +4,9 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="splashBackground">#3F51B5</color>
     <color name="colorAccent">#FFFF</color>
-    <color name="colorListElement2">#fff6</color>
-    <color name="colorListElement3">#ff46</color>
-    <color name="colorListElement4">#03DAC5</color>
+    <color name="colorListElement2">#8BC34A</color>
+    <color name="colorListElement3">#E756FF</color>
+    <color name="colorListElement4">#03A9F4</color>
     <color name="AudientesOrange">#F2994A</color>
     <color name="DialogDarkBlue">#131838</color>
     <color name="LightGrey">#828282</color>
