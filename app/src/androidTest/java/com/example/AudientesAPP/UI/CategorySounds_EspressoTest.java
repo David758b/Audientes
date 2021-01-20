@@ -56,11 +56,11 @@ public class CategorySounds_EspressoTest {
         imageView.check(matches(isDisplayed()));
 
         ViewInteraction editText = onView(
-                allOf(withId(R.id.category_TV), withText("I Like to move it"),
+                allOf(withId(R.id.category_TV), withText("Animals"),
                         withParent(allOf(withId(R.id.linearLayout2),
                                 withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
                         isDisplayed()));
-        editText.check(matches(withText("I Like to move it")));
+        editText.check(matches(withText("Animals")));
 
         ViewInteraction imageView2 = onView(
                 allOf(withId(R.id.category_addSound),

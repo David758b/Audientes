@@ -56,10 +56,10 @@ public class PresetMain_EspressoTest {
         imageButton.check(matches(isDisplayed()));
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.presetName_TV), withText("Sove tid"),
+                allOf(withId(R.id.presetName_TV), withText("Sleeping time"),
                         withParent(withParent(withId(R.id.presets_RV))),
                         isDisplayed()));
-        textView.check(matches(withText("Sove tid")));
+        textView.check(matches(withText("Sleeping time")));
 
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.presetList_TV), withText("PRESET LIST"),
