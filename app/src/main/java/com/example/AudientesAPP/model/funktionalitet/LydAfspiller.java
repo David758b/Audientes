@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.net.Uri;
+import android.os.CountDownTimer;
 
 import com.example.AudientesAPP.R;
 import com.example.AudientesAPP.model.DTO.SoundDTO;
@@ -11,6 +12,7 @@ import com.example.AudientesAPP.data.DAO.SoundDAO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 /**
  * Test klasse til afspilning af lyde. skal nok laves om
@@ -108,15 +110,29 @@ public class LydAfspiller implements MediaPlayer.OnCompletionListener{
         spb.setMaxStreams(2);
         pool = spb.build();
 
-        lyd1 = pool.load(context, R.raw.melarancida__monks_praying,1);
-        lyd2 = pool.load(context, R.raw.rain_street,1);
+        lyd1 = pool.load(context, R.raw.bublewater,1);
+        lyd2 = pool.load(context, R.raw.forestbirds,1);
 
         pool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
                 System.out.println("Load complete");
-                pool.play(lyd1,1,1,1,1,1);
-                pool.play(lyd2,1,1,1,1,1);
+                int stream1 = pool.play(lyd1,1,1,1,1,1);
+                int stream2 = pool.play(lyd2,1,1,1,1,1);
+
+                new CountDownTimer(5000, 1000) {
+                    public void onFinish() {
+                        pool.stop(stream1);
+                        pool.stop(stream2);
+                    }
+
+                    public void onTick(long millisUntilFinished) {
+                        System.out.println("counting down");
+                    }
+                }.start();
+
+
+
             }
         });
 
