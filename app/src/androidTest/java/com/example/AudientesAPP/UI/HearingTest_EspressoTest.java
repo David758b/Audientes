@@ -15,59 +15,53 @@ import com.example.AudientesAPP.R;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class CategorySounds_EspressoTest {
+public class HearingTest_EspressoTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void categorySounds_EspressoTest() {
-        ViewInteraction recyclerView = onView(
-                allOf(withId(R.id.Library_Category_Listview),
+    public void hearingTest_Preset_EspressoTest() {
+        ViewInteraction bottomNavigationItemView = onView(
+                allOf(withId(R.id.hearingTest_nav), withContentDescription("Hearingtest"),
                         childAtPosition(
-                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                0)));
-        recyclerView.perform(actionOnItemAtPosition(2, click()));
-
-        ViewInteraction imageView = onView(
-                allOf(withId(R.id.returnIcon),
-                        withParent(allOf(withId(R.id.linearLayout2),
-                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
+                                childAtPosition(
+                                        withId(R.id.bottom_navigation),
+                                        0),
+                                2),
                         isDisplayed()));
-        imageView.check(matches(isDisplayed()));
+        bottomNavigationItemView.perform(click());
 
-        ViewInteraction editText = onView(
-                allOf(withId(R.id.category_TV), withText("I Like to move it"),
-                        withParent(allOf(withId(R.id.linearLayout2),
-                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
+        ViewInteraction appCompatImageView = onView(
+                allOf(withId(R.id.hearingtestbutton),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.navHost),
+                                        0),
+                                0),
                         isDisplayed()));
-        editText.check(matches(withText("I Like to move it")));
+        appCompatImageView.perform(click());
 
-        ViewInteraction imageView2 = onView(
-                allOf(withId(R.id.category_addSound),
-                        withParent(allOf(withId(R.id.linearLayout4),
-                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
-                        isDisplayed()));
-        imageView2.check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(

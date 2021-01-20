@@ -23,51 +23,61 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class CategorySounds_EspressoTest {
+public class PresetMain_EspressoTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void categorySounds_EspressoTest() {
-        ViewInteraction recyclerView = onView(
-                allOf(withId(R.id.Library_Category_Listview),
+    public void presetMain_EspressoTest() {
+        ViewInteraction bottomNavigationItemView = onView(
+                allOf(withId(R.id.preset_nav), withContentDescription("Presets"),
                         childAtPosition(
-                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                0)));
-        recyclerView.perform(actionOnItemAtPosition(2, click()));
-
-        ViewInteraction imageView = onView(
-                allOf(withId(R.id.returnIcon),
-                        withParent(allOf(withId(R.id.linearLayout2),
-                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
+                                childAtPosition(
+                                        withId(R.id.bottom_navigation),
+                                        0),
+                                1),
                         isDisplayed()));
-        imageView.check(matches(isDisplayed()));
+        bottomNavigationItemView.perform(click());
 
-        ViewInteraction editText = onView(
-                allOf(withId(R.id.category_TV), withText("I Like to move it"),
-                        withParent(allOf(withId(R.id.linearLayout2),
-                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
+        ViewInteraction imageButton = onView(
+                allOf(withId(R.id.add_preset),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
                         isDisplayed()));
-        editText.check(matches(withText("I Like to move it")));
+        imageButton.check(matches(isDisplayed()));
 
-        ViewInteraction imageView2 = onView(
-                allOf(withId(R.id.category_addSound),
-                        withParent(allOf(withId(R.id.linearLayout4),
-                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.presetName_TV), withText("Sove tid"),
+                        withParent(withParent(withId(R.id.presets_RV))),
                         isDisplayed()));
-        imageView2.check(matches(isDisplayed()));
+        textView.check(matches(withText("Sove tid")));
+
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.presetList_TV), withText("PRESET LIST"),
+                        withParent(withParent(withId(R.id.navHost))),
+                        isDisplayed()));
+        textView2.check(matches(withText("PRESET LIST")));
+
+        ViewInteraction frameLayout = onView(
+                allOf(withId(R.id.library_nav), withContentDescription("Library"),
+                        withParent(withParent(withId(R.id.bottom_navigation))),
+                        isDisplayed()));
+        frameLayout.check(matches(isDisplayed()));
+
+        ViewInteraction frameLayout2 = onView(
+                allOf(withId(R.id.hearingTest_nav), withContentDescription("Hearingtest"),
+                        withParent(withParent(withId(R.id.bottom_navigation))),
+                        isDisplayed()));
+        frameLayout2.check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(
