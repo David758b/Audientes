@@ -22,7 +22,14 @@ import com.example.AudientesAPP.model.funktionalitet.PresetLogic;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * This class (fragment) serves the purpurse of prooving a concept. Given more time we could
+ * have implemented the preset feature properly. However, in this fragment we hardcoded one preset
+ * with 2 sounds which can be played simultaneously.
+ *
+ * @author Johan Jens Kryger Larsen, Mohammad Tawrat Nafiu Uddin,
+ *         Christian Merithz Uhrenfeldt Nielsen, David Lukas Mikkelsen
+ */
 public class CategoryPreset_Frag extends Fragment {
 
     private TextView presetTV;
