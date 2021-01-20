@@ -239,7 +239,7 @@ public class ModelViewController {
         categoryDAO.add(category1);
         CategoryDTO category2 = new CategoryDTO("Nature", "pictureSrc", "Green");
         categoryDAO.add(category2);
-        CategoryDTO category3 = new CategoryDTO("Music", "pictureSrc", "Yellow");
+        CategoryDTO category3 = new CategoryDTO("Music", "pictureSrc", "Red");
         categoryDAO.add(category3);
 
         PresetDAO presetDAO = getPresetDAO();
